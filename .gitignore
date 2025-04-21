@@ -4,3 +4,6 @@ target/
 .project
 .settings
 .deployables
+.DS_Store
+/frontend/node_modules
+/frontend/build
