@@ -1,0 +1,141 @@
+@import url(./normalize.css);
+@import url(./reset.css);
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable.css");
+
+/* ---------------- COMMON ------------------*/
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(#fff, #1E1A1A);
+    border-radius: 100px;
+}
+::-webkit-scrollbar-track {
+    background: #fff;
+}
+*, a, h1, h2, h3{
+    font-family: "Pretendard Variable", sans-serif;
+    color:#1E1A1A;
+}
+.main_wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:end;
+}
+.main_wrap > *{
+    width:85%;
+}
+.container{
+    width:80%;
+    margin:0 auto;
+}
+img{
+    width:100%;
+    height:100%;
+    object-fit:fill;
+}
+
+/* ---------------- HEADER ------------------*/
+#aside{
+    width:15%;
+    height:100vh;
+    position:fixed;
+    border-right:1px solid #1E1A1A;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:50px;
+    padding:20px 0 50px;
+    box-sizing:border-box;
+}
+#aside h1 .logo{
+    display:block;
+    width:119px;
+    height:129px;
+    background:url(../img/logo.png) no-repeat;
+    text-indent:-9999em;
+}
+#aside .menu_wrap{
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding-left:70px;
+    box-sizing:border-box;
+}
+#aside .menu > li > a,
+#aside .bottom_menu > li a{
+    font-size:18px;
+    font-weight:500;
+    display:inline-block;
+    padding:5px 0;
+}
+#aside .sub_menu > li a{
+    display:inline-block;
+    font-size:17px;
+    padding:3px 18px;
+}
+#aside .sub_menu{
+    height:300px;
+    opacity:1;
+    visibility:visible;
+    transition:.5s;
+    overflow-y:scroll;
+}
+#aside .sub_menu.fold{
+    height:0;
+    opacity:0;
+    visibility:hidden;
+    overflow-y:hidden;
+}
+#aside .welcome{
+    font-weight:500;
+    font-size:14px;
+    padding-bottom:15px;
+}
+#aside form{
+    display:flex;
+    gap:5px;
+    margin-top:5px;
+}
+#aside form label{
+    display:none;
+}
+#aside form #search{
+    border:none;
+    border-bottom:2px solid #1E1A1A;
+    width:120px;
+    font-size:14px;
+}
+#aside form button{
+    border:none;
+    background:none;
+}
+#aside form button i{
+    font-size:18px;
+}
+
+/* ---------------- FOOTER ------------------*/
+#footer{
+    padding:50px 0;
+    border-top:1px solid #1E1A1A;
+    font-size:15px;
+}
+#footer .container{
+    display:flex;
+    justify-content:space-between;
+}
+#footer p, #footer li{
+    line-height:1.25em;
+}
+#footer .copy{
+    text-transform:uppercase;
+    font-weight:600;
+}
+#footer .right{
+    text-align:right;
+}
+#footer .right > p, span{
+    font-weight:600;
+}
