@@ -11,11 +11,11 @@ const Footer=()=>{
                     <p>흑백서점</p>
                     <ul className="contact">
                         <li>
-                            <span>이영빈</span>
+                            <span>이영빈 </span>
                             <a href="mailto:amorfati9021@gmail.com" target="_blank">amorfati9021@gmail.com</a>
                         </li>
                         <li>
-                            <span>맹주희</span>
+                            <span>맹주희 </span>
                             <a href="mailto:juheemaeng@naver.com" target="_blank">juheemaeng@naver.com</a>
                         </li>
                     </ul>

@@ -65,6 +65,7 @@ img{
     box-sizing:border-box;
 }
 #aside .menu > li > a,
+#aside .menu > li > p,
 #aside .bottom_menu > li a{
     font-size:18px;
     font-weight:500;
