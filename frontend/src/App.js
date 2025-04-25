@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Header from "./components/main/Header";
 import Footer from "./components/main/Footer";
 import Home from "./components/main/Home";
+import Join from "./components/member/Join";
 import BookList from "./components/book/BookList";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
             <div className="main_wrap">
                 <Routes>
                     <Route path="/" element={<Home/>}/>
+                    <Route path={"/member/join"} element={<Join/>}/>
                     <Route path={"/book/all"} element={<BookList/>}/>
                 </Routes>
                 <Footer/>

@@ -53,7 +53,7 @@ const Header=()=>{
                     <div className="bottom">
                         <ul className="bottom_menu">
                             <li className="welcome">-님 환영합니다.</li>
-                            <li><a href="#">회원가입</a></li>
+                            <li><Link to="/member/join">회원가입</Link></li>
                             <li><a href="#">로그인</a></li>
                             <li><a href="#">마이페이지</a></li>
                             <li><a href="#">관리자페이지</a></li>
