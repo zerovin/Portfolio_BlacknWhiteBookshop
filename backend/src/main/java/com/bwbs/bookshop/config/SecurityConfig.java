@@ -21,7 +21,8 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable()) 
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/**").permitAll() 
+                .requestMatchers("/api/**").permitAll()
+                .requestMatchers("/book/list/**").permitAll()
                 .anyRequest().authenticated() 
             )
             .formLogin(withDefaults());
