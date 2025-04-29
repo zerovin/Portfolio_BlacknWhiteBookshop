@@ -125,6 +125,8 @@
 }
 #bookList .book_list .right a+a{
     margin-top:10px;
+}
+#bookList .book_list .right a:last-child{
     background:#1E1A1A;
     color:#fff;
 }
