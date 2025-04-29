@@ -15,6 +15,7 @@
     margin-bottom:10px;
 }
 #main img{
+    height:100%;
     filter: grayscale(1);
     transition:.3s;
 }

@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import {Routes, Route} from "react-router-dom";
 import Header from "./components/main/Header";
 import Footer from "./components/main/Footer";
 import Home from "./components/main/Home";
@@ -9,17 +9,15 @@ import BookList from "./components/book/BookList";
 function App() {
   return (
     <Fragment>
-        <Router>
-            <Header/>
-            <div className="main_wrap">
-                <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path={"/member/join"} element={<Join/>}/>
-                    <Route path={"/book/all"} element={<BookList/>}/>
-                </Routes>
-                <Footer/>
-            </div>
-        </Router>
+      <Header/>
+      <div className="main_wrap">
+          <Routes>
+              <Route path="/" element={<Home/>}/>
+              <Route path={"/member/join"} element={<Join/>}/>
+              <Route path={"/book/all"} element={<BookList/>}/>
+          </Routes>
+          <Footer/>
+      </div>
     </Fragment>
   );
 }

@@ -2,3 +2,145 @@
     padding-top:120px;
     padding-bottom:150px;
 }
+#bookList .top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-bottom:80px;
+    border-bottom:1px solid #ccc;
+    margin-bottom:80px;
+}
+#bookList .top h3{
+    font-size:18px;
+    font-weight:600;
+}
+#bookList .top .filter{
+    display:flex;
+    justify-content:end;
+    gap:15px;
+    font-size:15px;
+    letter-spacing:-.07em;
+}
+#bookList .top .filter li{
+    cursor: pointer;
+}
+#bookList .book_list{
+    margin-bottom:100px;
+}
+#bookList .book_list li{
+    display:grid;
+    grid-template-columns: 7fr 1fr;
+    justify-content:space-between;
+    align-items:center;
+    gap:50px;
+    margin-bottom:50px;
+}
+#bookList .book_list li + li{
+    padding-top:50px;
+    border-top:1px solid #ccc;
+}
+#bookList .book_list .left{
+    display:grid;
+    grid-template-columns: 200px 1fr;
+    gap:20px;
+}
+#bookList .book_list .left a{
+    display:inline-block;
+}
+#bookList .book_list .left img{
+    border:1px solid #1E1A1A;
+    vertical-align:bottom;
+}
+#bookList .book_list .left .text .tt{
+    font-size:18px;
+    font-weight:600;
+    margin-bottom:10px;
+}
+#bookList .book_list .left .text .tt:hover{
+    text-decoration: underline;
+}
+#bookList .book_list .left .text .tt_bottom{
+    display:flex;
+    gap:15px;
+    margin-bottom:30px;
+}
+#bookList .book_list .left .text .tt_bottom p{
+    position:relative;
+    color:#646464;
+}
+#bookList .book_list .left .text .tt_bottom p:first-child{
+    max-width:500px;
+    word-break: keep-all;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+#bookList .book_list .left .text .tt_bottom p + p::before{
+    content:'';
+    width:2px;
+    height:100%;
+    background:#ccc;
+    position:absolute;
+    top:0;
+    right:calc(100% + 7px);
+}
+#bookList .book_list .left .text .price{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    margin-bottom:10px;
+}
+#bookList .book_list .left .text .price p:first-child{
+    background:#1E1A1A;
+    color:#fff;
+    font-weight:600;
+    padding:2px 5px;
+}
+#bookList .book_list .left .text .price p:nth-child(2){
+    font-size:17px;
+    font-weight:700;
+}
+#bookList .book_list .left .text .price p:last-child{
+    color:#9a9a9a;
+    text-decoration: line-through;
+}
+#bookList .book_list .left .text .sales{
+    color:#646464;
+    margin-bottom:50px;
+}
+
+#bookList .book_list .left .text .intro{
+    line-height:1.5em;
+    max-height:120px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical; 
+    -webkit-line-clamp: 5;
+}
+#bookList .book_list .right a{
+    display:inline-block;
+    padding:10px 40px;
+    border:1px solid #1E1A1A;
+    text-align:center;
+}
+#bookList .book_list .right a+a{
+    margin-top:10px;
+    background:#1E1A1A;
+    color:#fff;
+}
+#bookList .pagination{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+}
+#bookList .pagination button{
+    display:inline-block;
+    padding:5px 10px;
+    cursor: pointer;
+}
+#bookList .pagination .active button{
+    background:#1E1A1A;
+    color:#fff;
+    font-weight:600;
+}
