@@ -5,6 +5,7 @@ import Footer from "./components/main/Footer";
 import Home from "./components/main/Home";
 import Join from "./components/member/Join";
 import BookList from "./components/book/BookList";
+import PickUp from "./components/pickup/PickUp";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
               <Route path="/" element={<Home/>}/>
               <Route path={"/member/join"} element={<Join/>}/>
               <Route path={"/book/all"} element={<BookList/>}/>
+              <Route path={"/book/pickup"} element={<PickUp/>}/>
           </Routes>
           <Footer/>
       </div>
