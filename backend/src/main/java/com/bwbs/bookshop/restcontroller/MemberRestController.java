@@ -16,7 +16,7 @@ import com.bwbs.bookshop.entity.MemberEntity;
 import com.bwbs.bookshop.repository.MemberRepository;
 
 @RestController
-@RequestMapping("/api/member")
+@RequestMapping("/member")
 @CrossOrigin(origins = "*")
 public class MemberRestController {
 	@Autowired
