@@ -4,125 +4,123 @@
 }
 
 #Join .sub_title {
-    text-align: center; 
-    margin-bottom: 60px;
-  }
-  
-  #Join .sub_title h1 {
-    font-size: 25px;
-  }
-  
-  #Join form {
-    width: 350px;
-    margin: 0 auto;
-  }
-  
-  #Join form div {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-  }
-  
-  #Join form label {
-    flex: 0 0 100px;
-    font-size: 15px;
-  }
-  
-  #Join form input { 
-    flex: 2;
-    border: none;
-    outline: none;
-    font-size: 15px;
-    border-bottom: 1px solid #000;
-    background: none;
-    padding-bottom: 5px;
-  }
-  
-  #Join .input_wrap {
-    height: 30px;
-    position: relative;
-  }
-
-  #Join .id-check-result{
-  color: red; 
-  font-size: 12px;
-  margin-top: 5px;
-  position: absolute;
-  top: 80%; 
-  left: 100px;
+  text-align: center; 
+  margin-bottom: 60px;
 }
 
-  #Join .email_box {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    transform: translateY(10px);
-  }
+#Join .sub_title h1 {
+  font-size: 25px;
+}
+
+#Join form {
+  width: 350px;
+  margin: 0 auto;
+}
+
+#Join form div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+}
+
+#Join form label {
+  flex: 0 0 100px;
+  font-size: 15px;
+}
+
+#Join form input { 
+  flex: 2;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  border-bottom: 1px solid #000;
+  background: none;
+  padding-bottom: 5px;
+}
+
+#Join .input_wrap {
+  height: 30px;
+  position: relative;
+}
+
+#Join .id-check-result{
+color: red; 
+font-size: 12px;
+margin-top: 5px;
+position: absolute;
+top: 80%; 
+left: 100px;
+}
+
+#Join .email_box {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  transform: translateY(10px);
+}
 
 #Join .email_box input,
 .email_box select {
-    flex: none;
-    width: 100px;
-    height: 30px;
-    font-size: 15px;
-    box-sizing: border-box;
-    border: none; 
-    border-bottom: 1px solid #000; 
-    background: none; 
-  }
+  flex: none;
+  width: 100px;
+  height: 30px;
+  font-size: 15px;
+  box-sizing: border-box;
+  border: none; 
+  border-bottom: 1px solid #000; 
+  background: none; 
+}
 
-  #Join .email_id {
-    flex: 0 0 80px
-  }
+#Join .email_id {
+  flex: 0 0 80px
+}
 
-  #Join .at_mark {
-    flex: 0;
-    padding: 0 5px;
-  }
-  
-  #Join .email_domain {
-    flex: 1;
-  }
+#Join .at_mark {
+  flex: 0;
+  padding: 0 5px;
+}
 
-  #Join .check_btn, .zipcode_btn {
-    margin-left: 10px;
-    padding: 5px 10px; 
-    border: 1px solid black;
-    border-radius: 6px;
-    background-color: white;
-    color: black;
-    font-size: 14px;
-    cursor: pointer;
-    transition: 0.3s;
-    white-space: nowrap;
-  }
+#Join .email_domain {
+  flex: 1;
+}
 
-  #Join .check_btn:hover, .zipcode_btn:hover {
-    background-color: #000;
-    color: white;
-  }
+#Join .check_btn, .zipcode_btn {
+  margin-left: 10px;
+  padding: 5px 10px; 
+  background-color: black;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+  white-space: nowrap;
+}
 
-  #Join .join_btn {
-    display: flex;
-    justify-content: center;  
-    gap: 20px;              
-    margin-top: 40px;
-    margin-bottom: 80px;
-  }
-  
-  #Join .join_btn button {
-    padding: 10px 20px;
-    border: 1px solid black;
-    border-radius: 6px;
-    background-color: white;
-    color: black;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  #Join .join_btn button:hover {
-    background-color: #000;
-    color: white;
-  }
+#Join .check_btn:hover, .zipcode_btn:hover {
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+}
+
+#Join .join_btn {
+  display: flex;
+  justify-content: center;  
+  gap: 20px;              
+  margin-top: 40px;
+}
+
+#Join .join_btn button {
+  padding: 10px 40px;
+  border: 1px solid black;
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#Join .join_btn button:hover {
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+}
