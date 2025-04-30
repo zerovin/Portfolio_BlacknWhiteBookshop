@@ -54,9 +54,12 @@ const Header=()=>{
                         <ul className="bottom_menu">
                             <li className="welcome">-님 환영합니다.</li>
                             <li><Link to="/member/join">회원가입</Link></li>
-                            <li><a href="#">로그인</a></li>
-                            <li><a href="#">마이페이지</a></li>
-                            <li><a href="#">관리자페이지</a></li>
+                            {
+                                
+                            }
+                            <li><Link to={'/member/login'}>로그인</Link></li>
+                            <li><Link to={''}>마이페이지</Link></li>
+                            <li><Link to={''}>관리자페이지</Link></li>
                         </ul>
                         <form action="#" method="get">
                             <label htmlFor="search">검색</label>

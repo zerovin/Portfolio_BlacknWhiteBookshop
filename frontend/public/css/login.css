@@ -1,0 +1,55 @@
+#login{
+    padding:200px 0 250px;
+}
+#login h2{
+    text-align:center;
+    font-size:22px;
+    font-weight:600;
+    margin-bottom:60px;
+}
+#login form{
+    width:300px;
+    margin:0 auto;
+}
+#login form > div:not(:last-child){
+    display:grid;
+    grid-template-columns:80px 1fr;
+    align-items:end;
+    margin-bottom:20px;
+}
+#login form > div:first-child{
+    margin-bottom:35px;
+}
+#login form label{
+    font-size:15px;
+}
+#login form input{
+    border:none;
+    border-bottom:1px solid #1E1A1A;
+}
+#login .warning{
+    font-size:13px;
+    line-height:1.25em;
+    color:#eb0404;
+    padding-bottom:30px;
+}
+#login form button,
+#login form a{
+    display:block;
+    width:100%;
+    padding:10px 0;
+    border:1px solid #1E1A1A;
+    text-align:center;
+}
+#login form button{
+    background:#1E1A1A;
+    color:#fff;
+    margin-bottom:10px;
+    cursor: pointer;
+}
+#login .wrong{
+    font-size:22px;
+    font-weight:600;
+    text-align:center;
+    height:100vh;
+}
