@@ -1,0 +1,303 @@
+/*======BoardList======*/
+#BoardList{
+    padding-top:100px;
+    padding-bottom:100px;
+}
+
+#BoardList .container{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+#BoardList h3{
+    font-size: 22px;
+    font-weight:600;
+    text-align: center;
+}
+
+#BoardList .boardlist {
+    width: 80%;
+    margin: 50px auto;
+    font-family: sans-serif;
+}
+
+#BoardList .boardlist_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+    margin: 0 auto 20px auto;
+}
+
+#BoardList .category {
+    padding: 8px 7px;
+    font-size: 14px;
+    border-bottom: 1px solid black;
+}
+
+#BoardList .insertBtn {
+    background-color: #000;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+#BoardList .boardlist table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#BoardList .boardlist th{
+    padding: 12px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+
+#BoardList .boardlist td {
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+
+#BoardList .boardlist td:nth-child(3) {
+    text-align: left;
+}
+
+.boardlist td a:hover {
+  color: gray;
+}
+
+#BoardList .pagination {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#BoardList .pagination .page,
+.pagination button {
+    margin: 0 5px;
+    padding: 6px 12px;
+    border: 1px solid black;
+    background: none;
+    cursor: pointer;
+}
+
+#BoardList .pagination .active {
+    background-color: #000;
+    color: white;
+}
+
+#BoardList .search-box {
+    text-align: right;
+}
+
+#BoardList .search-box input {
+    padding: 6px;
+    width: 200px;
+    margin-right: 10px;
+}
+
+#BoardList .search-box button {
+    padding: 6px 12px;
+    background-color: #000;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/*======BoardInsert======*/
+#BoardInsert{
+    padding-top:130px;
+    padding-bottom:100px;
+}
+
+#BoardInsert h3{
+    font-size: 22px;
+    font-weight:600;
+    text-align: center;
+}
+
+#BoardInsert .container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+#BoardInsert .top{
+  margin-bottom: 70px;
+}
+
+#BoardInsert .insert .form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#BoardInsert .row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#BoardInsert .row label {
+  width: 80px;
+}
+
+#BoardInsert .title-row .title-input {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid black;
+}
+
+#BoardInsert .category {
+  width: 120px;
+  padding: 9px;
+  font-size: 14px;
+  border: 1px solid black;
+}
+
+#BoardInsert textarea {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid black;
+  width: 100%;
+  height: 300px;
+  resize: vertical;
+}
+
+#BoardInsert .file-row .file-name {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid black;
+}
+
+#BoardInsert .upload-btn {
+  padding: 10px 30px;
+  font-size: 14px;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#BoardInsert .button-row {
+  justify-content: center;
+  gap: 25px;
+  margin-top: 30px;
+}
+
+#BoardInsert .submit-btn,
+.cancel-btn {
+  padding: 10px 40px;
+  border: none;
+  font-size: 14px;
+  background-color: #000;
+  color: white;
+  cursor: pointer;
+}
+
+/*======BoardDetail======*/
+#BoardDetail{
+  padding-top:100px;
+  padding-bottom:100px;
+}
+
+#BoardDetail .container{
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+#BoardDetail h3{
+  font-size: 22px;
+  font-weight:600;
+  text-align: center;
+}
+
+#BoardDetail .detail {
+  width: 100%;
+  border-collapse: collapse;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+#BoardDetail .detail th {
+  padding: 12px;
+  text-align: center;
+  width: 100px;
+  font-weight: bold;
+}
+
+#BoardDetail .detail td {
+  padding: 12px;
+  text-align: left;
+}
+
+#BoardDetail .content {
+  padding: 20px;
+  border: 1px solid black;
+  line-height: 300px;
+  color: black;
+  font-size: 14px;
+  margin-bottom: 40px;
+}
+
+#BoardDetail .btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+#BoardDetail .btn-group button {
+  padding: 10px 40px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: black;
+  color: white;
+}
+
+.comment-section {
+  padding: 20px;
+  margin-top: 30px;
+}
+.comment-section h4 {
+  margin-bottom: 30px;
+}
+.comment-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+.comment-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+.comment-form {
+  display: flex;
+  gap: 10px;
+}
+.comment-form input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+}
+.comment-form button {
+  padding: 10px 40px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}

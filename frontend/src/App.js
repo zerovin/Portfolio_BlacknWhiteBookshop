@@ -7,6 +7,11 @@ import Join from "./components/member/Join";
 import Login from "./components/member/Login";
 import BookList from "./components/book/BookList";
 import PickUp from "./components/pickup/PickUp";
+import BoardList from "./components/board/BoardList";
+import BoardInsert from "./components/board/BoardInsert";
+import BoardDetail from "./components/board/BoardDetail";
+import BoardUpdate from "./components/board/BoardUpdate";
+import BoardDelete from "./components/board/BoardDelete";
 
 function App() {
   return (
@@ -19,6 +24,11 @@ function App() {
               <Route path={"/member/login"} element={<Login/>}/>
               <Route path={"/book/all"} element={<BookList/>}/>
               <Route path={"/book/pickup"} element={<PickUp/>}/>
+              <Route path={"/board/list"} element={<BoardList/>}/>
+              <Route path={"/board/insert"} element={<BoardInsert/>}/>
+              <Route path={"/board/detail"} element={<BoardDetail/>}/>
+              <Route path={"/board/update"} element={<BoardUpdate/>}/>
+              <Route path={"/board/delete"} element={<BoardDelete/>}/>
           </Routes>
           <Footer/>
       </div>

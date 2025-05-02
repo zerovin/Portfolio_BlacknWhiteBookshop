@@ -48,7 +48,7 @@ const Header=()=>{
                                 <li><Link to={"/book/middle"}>중고등참고서</Link></li>
                             </ul>
                         </li>
-                        <li><a href="#">자유게시판</a></li>
+                        <li><Link to="/board/list">자유게시판</Link></li>
                     </ul>
                     <div className="bottom">
                         <ul className="bottom_menu">
