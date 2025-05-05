@@ -34,6 +34,10 @@ img{
     vertical-align:bottom;
 }
 
+#root{
+    position:relative;
+}
+
 /* ---------------- HEADER ------------------*/
 #aside{
     width:15%;
@@ -94,6 +98,9 @@ img{
     font-size:14px;
     padding-bottom:15px;
 }
+#aside .welcome span{
+    font-weight:700;
+}
 #aside form{
     display:flex;
     gap:5px;
@@ -114,6 +121,43 @@ img{
 }
 #aside form button i{
     font-size:18px;
+}
+
+/* ---------------- LOGOUT ------------------*/
+#logout_box{
+    position:fixed; 
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    z-index:1;
+    background:#fff;
+    border:1px solid #1E1A1A;
+    width:300px;
+    height:200px;
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:25px;
+}
+#logout_box.active{
+    display:flex;
+}
+#logout_box p{
+    font-size:17px;
+}
+#logout_box .logout_btn{
+    display:flex;
+    gap:10px;
+}
+#logout_box .logout_btn button{
+    border:1px solid #1E1A1A;
+    padding:10px;
+    cursor:pointer;
+}
+#logout_box .logout_btn button.ok{
+    background:#1E1A1A;
+    color:#fff;
 }
 
 /* ---------------- FOOTER ------------------*/

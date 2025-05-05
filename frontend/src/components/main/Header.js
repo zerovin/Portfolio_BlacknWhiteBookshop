@@ -1,9 +1,13 @@
-import { Fragment, useState, useRef } from "react";
+import { Fragment, useState, useRef, useEffect } from "react";
 import {Link} from "react-router-dom";
-import {useQuery} from "react-query";
 import apiClient from "../../http-commons"
+import { useQuery } from "react-query";
 
 const Header=()=>{
+    const [guest, setGuest]=useState(true);
+    const [userName, setUserName]=useState(null);
+    const [admin, setAdmin]=useState(false);
+    const [logoutActive, setLogoutActive]=useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const toggleMenu=(e)=>{
@@ -11,6 +15,55 @@ const Header=()=>{
         setIsOpen(!isOpen);
         setIsScrolled(!isOpen);
     }
+
+    useEffect(()=>{
+        apiClient.post('/member/isLogin')
+        .then(res=>{
+            if(res.data.loginOk){
+                setGuest(false)
+                setUserName(res.data.userName)
+                if(res.data.userAuth==="ROLE_USER"){
+                    setAdmin(false)
+                }else if(res.data.userAuth==="ROLE_ADMIN"){
+                    setAdmin(true)
+                }
+            }else{
+                setGuest(true)
+            }
+        })
+        .catch(err=>{
+            console.error(err)
+        })
+    },[])
+
+    const checkLogout=()=>{
+        setLogoutActive(true)
+    }
+
+    const logoutCancel=()=>{
+        setLogoutActive(false)
+    }
+
+    const {refetch:logout}=useQuery(['logout'],
+        async()=>{
+            return await apiClient.get(`/member/logout`)
+        },
+        {
+          enabled:false,
+          onSuccess:(res)=>{
+            if(res.data.logout){
+                setGuest(!guest)
+                setUserName(null)
+                setAdmin(false)
+                window.location.href="/"
+            }
+          },
+          onError:(err)=>{
+            console.log(err.response)
+          }
+        }
+    )
+
     return(
         <Fragment>
             <aside id="aside">
@@ -52,14 +105,30 @@ const Header=()=>{
                     </ul>
                     <div className="bottom">
                         <ul className="bottom_menu">
-                            <li className="welcome">-님 환영합니다.</li>
-                            <li><Link to="/member/join">회원가입</Link></li>
                             {
-                                
+                                !guest  &&
+                                <li className="welcome"><span>{userName}</span>님 환영합니다.</li>
                             }
-                            <li><Link to={'/member/login'}>로그인</Link></li>
-                            <li><Link to={''}>마이페이지</Link></li>
-                            <li><Link to={''}>관리자페이지</Link></li>
+                            {
+                                guest &&
+                                <li><Link to="/member/join">회원가입</Link></li>
+                            }
+                            {
+                                guest &&
+                                <li><Link to={'/member/login'}>로그인</Link></li>
+                            }
+                            {
+                                !guest && !admin &&
+                                <li><Link to={''}>마이페이지</Link></li>
+                            }
+                            {
+                                !guest && admin &&
+                                <li><Link to={''}>관리자페이지</Link></li>
+                            }
+                            {
+                                !guest &&
+                                <li><Link onClick={checkLogout}>로그아웃</Link></li>
+                            }
                         </ul>
                         <form action="#" method="get">
                             <label htmlFor="search">검색</label>
@@ -69,6 +138,13 @@ const Header=()=>{
                     </div>
                 </div>
             </aside>
+            <div id="logout_box" className={logoutActive?"active":""}>
+                <p>로그아웃 하시겠습니까?</p>
+                <div className="logout_btn">
+                    <button className="ok" onClick={logout}>로그아웃</button>
+                    <button className="cancel" onClick={logoutCancel}>취소</button>
+                </div>
+            </div>
         </Fragment>
     )
 }

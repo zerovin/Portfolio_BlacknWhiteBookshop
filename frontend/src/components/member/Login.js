@@ -23,10 +23,7 @@ const Login=()=>{
                     setPw('')
                     setWarn("입력하신 정보가 일치하지 않습니다.<br/> 다시 확인해 주세요.")
                     idRef.current.focus()
-                    console.log(res.data.msg)
                 }else if(res.data.msg==="LOGIN"){
-                    window.sessionStorage.setItem('bwbs.id',res.data.id)
-                    window.sessionStorage.setItem('bwbs.name',res.data.name)
                     window.location.href="/"
                 }
             },

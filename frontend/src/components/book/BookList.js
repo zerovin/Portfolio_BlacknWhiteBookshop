@@ -17,7 +17,6 @@ const BookList=()=>{
         return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>{error.message}</p>
     }
 
-    console.log(data)
     const pageChange=(page)=>{
         setCurpage(page)
     }
@@ -31,13 +30,13 @@ const BookList=()=>{
     for(let i=data.data.startpage;i<=data.data.endpage;i++){
         if(curpage===i){
             pageArr.push(
-                <li className="active">
+                <li key={i} className="active">
                     <button onClick={()=>pageChange(i)}>{i}</button>
                 </li>
             )
         }else{
             pageArr.push(
-                <li>
+                <li key={i}>
                     <button onClick={()=>pageChange(i)}>{i}</button>
                 </li>
             )
