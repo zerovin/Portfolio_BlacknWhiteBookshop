@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bwbs.bookshop.entity.MemberEntity;
 import com.bwbs.bookshop.repository.MemberRepository;
 
+import jakarta.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/member")
 @CrossOrigin(origins = "*")
@@ -65,25 +67,57 @@ public class MemberRestController {
     }
 	
 	@PostMapping("/login/{id}/{pw}")
-	public ResponseEntity<Map> memberLogin(@PathVariable("id") String userId, @PathVariable("pw") String userPw){
-		Map map=new HashMap();
+	public ResponseEntity<Map> memberLogin(@PathVariable("id") String userId, @PathVariable("pw") String userPw, HttpSession session){
+		Map<String, Object> result=new HashMap<>();
 		try {
 			boolean exists = memberRepository.findByUserId(userId).isPresent();
 			if(!exists) {
-				map.put("msg", "NOID");
+				result.put("msg", "NOID");
 			}else {
 				MemberEntity vo=memberRepository.findById(userId).get();
 				if(passwordEncoder.matches(userPw, vo.getUserPwd())) {
-					map.put("msg", "LOGIN");
-					map.put("name", vo.getUserName());
-					map.put("id", vo.getUserId());
+					result.put("msg", "LOGIN");
+//					result.put("userId", vo.getUserId());
+//					result.put("userName", vo.getUserName());
+//					result.put("userAuth", vo.getAuthority());
+					vo.setLastlogin(new Date());
+					
+					session.setAttribute("bwbs_userId", vo.getUserId());
+					session.setAttribute("bwbs_userName", vo.getUserName());
+					session.setAttribute("bwbs_userAuth", vo.getAuthority());
 				}else {
-					map.put("msg", "NOPW"); 
+					result.put("msg", "NOPW"); 
 				}
 			}
 		}catch(Exception ex) {
 			return new ResponseEntity<Map>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(map, HttpStatus.OK);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@PostMapping("/isLogin")
+	public ResponseEntity<Map<String, Object>> isLogin(HttpSession session){
+		String userId=(String)session.getAttribute("bwbs_userId");
+		String userName=(String)session.getAttribute("bwbs_userName");
+		String userAuth=(String)session.getAttribute("bwbs_userAuth");
+		
+		Map<String, Object> result=new HashMap<>();
+		if(userId!=null) {
+			result.put("loginOk", true);
+			result.put("userId", userId);
+			result.put("userName", userName);
+			result.put("userAuth", userAuth);
+		}else {
+			result.put("loginOk", false);
+		}
+		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping("/logout")
+	public ResponseEntity<Map<String, Object>> logout(HttpSession session){
+		session.invalidate();
+		Map<String, Object> result=new HashMap<>();
+		result.put("logout", true);
+		return ResponseEntity.ok(result);
 	}
 }
