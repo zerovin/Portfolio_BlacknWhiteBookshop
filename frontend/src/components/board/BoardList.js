@@ -1,7 +1,44 @@
-import { Fragment } from "react"
-import { Link } from "react-router-dom";
+import {useQuery} from "react-query"
+import {useEffect, useState,Fragment} from 'react'
+import {Link} from "react-router-dom"
+import apiClient from "../../http-commons"
 
 const BoardList=()=>{
+    const [category, setCategory]=useState("")
+    const [curpage, setCurpage]=useState(1)
+    const {isLoading,isError,error,data,refetch:loadingNotExecute}=useQuery(['board-list',curpage],
+        async ()=>{
+            return await apiClient.get(`/board/list/${curpage}`,{
+                params:{category}
+            })
+        }
+    )
+    useEffect(()=>{
+        loadingNotExecute()
+    },[curpage, category])
+    const handleCategoryChange=(e)=>{
+        setCategory(e.target.value)
+        setCurpage(1)
+    }
+    if(isLoading)
+        return <h1 className={"text-center"}>서버에서 데이터 전송 지연...</h1>
+    if(isError)
+        return <h1 className={"text-center"}>{error.message}</h1>
+    const pageChange=(page)=>{
+        setCurpage(page)
+    }
+    const prev=()=>{
+        setCurpage(curpage>1?curpage-1:curpage)
+    }
+    const next=()=>{
+        setCurpage(data.data.totalpage && curpage<data.data.totalpage?curpage+1:curpage)
+    }
+    let pageArr=[]
+    for (let i = data.data.startpage; i <= data.data.endpage; i++) {
+        pageArr.push(
+          <button key={i} className={curpage === i ? "page active" : "page"}
+            onClick={() => pageChange(i)}>{i} </button>)  
+    }
     return(
         <Fragment>
             <div id="BoardList">
@@ -12,7 +49,7 @@ const BoardList=()=>{
                     <div className="boardlist">
                         <div className="boardlist_top">
                             <div className="left">
-                                <select className="category">
+                                <select className="category" value={category} onChange={handleCategoryChange}>
                                     <option value="">전체</option>
                                     <option value="후기">구매 후기</option>
                                     <option value="인증">책 인증샷</option>
@@ -36,99 +73,26 @@ const BoardList=()=>{
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>책 인증샷</td>
-                                    <td><Link to="/board/detail/">이벤트 책 후기입니다.</Link></td>
-                                    <td>홍시</td>
-                                    <td>2025-05-01</td>
-                                    <td>3</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>책 인증샷</td>
-                                    <td>이벤트 책 후기입니다.</td>
-                                    <td>홍시</td>
-                                    <td>2025-05-01</td>
-                                    <td>3</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>책 인증샷</td>
-                                    <td>이벤트 책 후기입니다.</td>
-                                    <td>홍시</td>
-                                    <td>2025-05-01</td>
-                                    <td>3</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>책 인증샷</td>
-                                    <td>이벤트 책 후기입니다.</td>
-                                    <td>홍시</td>
-                                    <td>2025-05-01</td>
-                                    <td>3</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>책 인증샷</td>
-                                    <td>이벤트 책 후기입니다.</td>
-                                    <td>홍시</td>
-                                    <td>2025-05-01</td>
-                                    <td>3</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>책 인증샷</td>
-                                    <td>이벤트 책 후기입니다.</td>
-                                    <td>홍시</td>
-                                    <td>2025-05-01</td>
-                                    <td>3</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>책 인증샷</td>
-                                    <td>이벤트 책 후기입니다.</td>
-                                    <td>홍시</td>
-                                    <td>2025-05-01</td>
-                                    <td>3</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>책 인증샷</td>
-                                    <td>이벤트 책 후기입니다.</td>
-                                    <td>홍시</td>
-                                    <td>2025-05-01</td>
-                                    <td>3</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>책 인증샷</td>
-                                    <td>이벤트 책 후기입니다.</td>
-                                    <td>홍시</td>
-                                    <td>2025-05-01</td>
-                                    <td>3</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>책 인증샷</td>
-                                    <td>이벤트 책 후기입니다.</td>
-                                    <td>홍시</td>
-                                    <td>2025-05-01</td>
-                                    <td>3</td>
-                                </tr>
+                                {data.data.list && data.data.list.map((vo)=>
+                                    <tr key={vo.no}>
+                                        <td>{vo.no}</td>
+                                        <td>{vo.category}</td>
+                                        <td><Link to={`/board/detail/${vo.no}`}>{vo.title}</Link></td>
+                                        <td>{vo.userId}</td>
+                                        <td>{vo.regdate && vo.regdate.substring(0, 10)}</td>
+                                        <td>{vo.hit}</td>
+                                    </tr>
+                                )}
                             </tbody>
                         </table>
                     </div>
-                    <div class="pagination">
-                        <button>&lt;</button>
-                        <button class="page active">1</button>
-                        <button class="page">2</button>
-                        <button class="page">3</button>
-                        <button class="page">4</button>
-                        <button class="page">5</button>
-                        <button>&gt;</button>
-                    </div>
-                                       
+                    <div className="pagination">
+                        {data.data.startpage && data.data.startpage > 1 &&
+                         <button onClick={prev}>&lt;</button>}
+                        {pageArr}
+                        {data.data.endpage && data.data.endpage < data.data.totalpage &&   
+                        <button onClick={next}>&gt;</button>}
+                    </div>                   
                 </div>
             </div>
         </Fragment>
