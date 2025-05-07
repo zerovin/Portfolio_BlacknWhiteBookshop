@@ -30,6 +30,7 @@ public class SecurityConfig {
                 .requestMatchers("/member/**").permitAll()
                 .requestMatchers("/member/login/**").permitAll()
                 .requestMatchers("/book/list/**").permitAll()
+                .requestMatchers("/board/**").permitAll()
                 .anyRequest().authenticated() 
             )
             .formLogin(withDefaults());
@@ -43,6 +44,7 @@ public class SecurityConfig {
         config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("*"));
+        config.setExposedHeaders(Arrays.asList("Content-Disposition"));
         config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
