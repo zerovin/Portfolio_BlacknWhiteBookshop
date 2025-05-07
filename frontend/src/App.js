@@ -26,8 +26,8 @@ function App() {
               <Route path={"/book/pickup"} element={<PickUp/>}/>
               <Route path={"/board/list"} element={<BoardList/>}/>
               <Route path={"/board/insert"} element={<BoardInsert/>}/>
-              <Route path={"/board/detail"} element={<BoardDetail/>}/>
-              <Route path={"/board/update"} element={<BoardUpdate/>}/>
+              <Route path={"/board/detail/:no"} element={<BoardDetail/>}/>
+              <Route path={"/board/update/:no"} element={<BoardUpdate/>}/>
               <Route path={"/board/delete"} element={<BoardDelete/>}/>
           </Routes>
           <Footer/>

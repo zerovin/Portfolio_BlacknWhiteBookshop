@@ -247,10 +247,10 @@
 #BoardDetail .content {
   padding: 20px;
   border: 1px solid black;
-  line-height: 300px;
   color: black;
   font-size: 14px;
   margin-bottom: 40px;
+  min-height: 300px; 
 }
 
 #BoardDetail .btn-group {
