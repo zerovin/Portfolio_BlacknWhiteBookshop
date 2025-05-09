@@ -180,6 +180,7 @@ img{
 #footer .right{
     text-align:right;
 }
-#footer .right > p, span{
+#footer .right > p, 
+#footer .right span{
     font-weight:600;
 }

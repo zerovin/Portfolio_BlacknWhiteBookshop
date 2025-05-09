@@ -59,9 +59,9 @@ const BookList=()=>{
                             data.data.book_list && data.data.book_list.map((vo)=>
                                 <li key={vo.no}>
                                     <div className="left">
-                                        <Link to={"/book/detail"+vo.no}><img src={vo.thumb} alt={vo.title}/></Link>
+                                        <Link to={"/book/detail/"+vo.no}><img src={vo.thumb} alt={vo.title}/></Link>
                                         <div className="text">
-                                            <Link to={'/book/detail'+vo.no} className="tt">{vo.title}</Link>
+                                            <Link to={'/book/detail/'+vo.no} className="tt">{vo.title}</Link>
                                             <div className="tt_bottom">
                                                 <p>{vo.writer}</p>
                                                 <p>{vo.publisher}</p>

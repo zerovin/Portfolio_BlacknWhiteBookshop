@@ -1,0 +1,187 @@
+#bookDetail{
+    padding-top:120px;
+    padding-bottom:150px;
+}
+#bookDetail .bread_crumb{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-bottom:50px;
+}
+/* ------------------ DETAIL TOP INFO ------------------- */
+#bookDetail .detail_wrap{
+    display:grid;
+    grid-template-columns:1fr 1.5fr;
+    gap:50px;
+    margin-bottom:160px;
+}
+#bookDetail .img_wrap{
+    background:rgba(248, 248, 248, 0.5);
+    padding:50px 0;
+    text-align:center;
+}
+#bookDetail .img_wrap img{
+    width: 80%;
+}
+#bookDetail .detail_wrap .title{
+    font-size:26px;
+    font-weight:600;
+    margin-bottom:40px;
+}
+#bookDetail .detail_wrap .info{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    margin-bottom:5px;
+}
+#bookDetail .detail_wrap .info p{
+    color:#646464;
+    position:relative;
+}
+#bookDetail .detail_wrap .info p + p::before{
+    content:'|';
+    position:absolute;
+    top:50%;
+    right:calc(100% + 9px);
+    transform:translateY(-60%);
+    color:#646464;
+}
+#bookDetail .detail_wrap .date{
+    color:#646464;
+    margin-bottom:30px;
+}
+#bookDetail .detail_wrap .sales{
+    color:#646464;
+    margin-bottom:60px;
+}
+#bookDetail .detail_wrap .sales span{
+    color:#646464;
+    font-weight:500;
+}
+#bookDetail .detail_wrap .price{
+    display:flex;
+    align-items:end;
+    gap:20px;
+    padding-bottom:30px;
+    border-bottom:1px solid #1E1A1A;
+    margin-bottom:60px;
+}
+#bookDetail .detail_wrap .price .dis{
+    font-size:28px;
+    font-weight:700;
+}
+#bookDetail .detail_wrap .price .prime{
+    color:#646464;
+    text-decoration: line-through;
+}
+#bookDetail .detail_wrap .price .percent{
+    background:#1E1A1A;
+    font-weight:500;
+    color:#fff;
+    padding:5px;
+}
+#bookDetail .detail_wrap .text_bottom > div{
+    display:flex;
+    gap:50px;
+    margin-bottom:10px;
+}
+#bookDetail .detail_wrap .text_bottom > div > p{
+    font-size:14px;
+    color:#646464;
+}
+#bookDetail .detail_wrap .text_bottom > div > p:first-child{
+    font-weight:500;
+}
+#bookDetail .detail_wrap .text_bottom > div > p span{
+    color:#80888a;
+    margin-left:10px;
+}
+#bookDetail .detail_wrap .cal{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-top:1px solid #1E1A1A;
+    margin-top:60px;
+    margin-bottom:10px;
+    padding:20px 40px;
+    background:#f8f8f8;
+}
+#bookDetail .detail_wrap .cal .amount{
+    display:flex;
+    align-items:center;
+}
+#bookDetail .detail_wrap .cal .amount > *{
+    background:#fff;
+}
+
+#bookDetail .detail_wrap .cal .amount button{
+    padding:7px 10px;
+    border:1px solid #eee;
+    cursor: pointer;
+}
+#bookDetail .detail_wrap .cal .amount button i{
+    font-size:14px;
+    color:#646464;
+}
+#bookDetail .detail_wrap .cal .amount p{
+    width:50px;
+    height:32px;
+    line-height:32px;
+    text-align:center;
+    border-top:1px solid #eee;
+    border-bottom:1px solid #eee;
+}
+#bookDetail .detail_wrap .cal .total span{
+    font-size:22px;
+    font-weight:700;
+}
+#bookDetail .detail_wrap .alert{
+    font-size:14px;
+    color:#80888a;
+    margin-bottom:90px;
+}
+#bookDetail .detail_wrap .btns{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:20px;
+}
+#bookDetail .detail_wrap .btns button{
+    width:100%;
+    border:1px solid #1E1A1A;
+    padding:20px;
+}
+#bookDetail .detail_wrap .btns button:last-child{
+    background:#1E1A1A;
+    color:#fff;
+    font-weight:600;
+}
+
+/* ------------------ DETAIL BOTTOM IMG ------------------- */
+#bookDetail .bottom{
+    display:grid;
+    grid-template-columns:2.7fr 1fr;
+    gap:50px;
+}
+#bookDetail .bottom .left > div{
+    padding-bottom:80px;
+    border-bottom:1px solid #eee;
+}
+#bookDetail .bottom .left > div + div{
+    margin-top:50px;
+}
+#bookDetail .bottom .sub_tt{
+    font-size:20px;
+    font-weight:600;
+    margin-bottom:30px;
+}
+#bookDetail .bottom .left p{
+    font-size:15px;
+    line-height:1.25em;
+    letter-spacing:0.02em;
+    color:#80888a;
+}
+
+/* ------------------ DETAIL BOTTOM FIXED ------------------- */
+#bookDetail .bottom .right{
+    border:1px solid #eee;
+}

@@ -6,6 +6,7 @@ import Home from "./components/main/Home";
 import Join from "./components/member/Join";
 import Login from "./components/member/Login";
 import BookList from "./components/book/BookList";
+import BookDetail from "./components/book/BookDetail";
 import PickUp from "./components/pickup/PickUp";
 import BoardList from "./components/board/BoardList";
 import BoardInsert from "./components/board/BoardInsert";
@@ -23,6 +24,7 @@ function App() {
               <Route path={"/member/join"} element={<Join/>}/>
               <Route path={"/member/login"} element={<Login/>}/>
               <Route path={"/book/all"} element={<BookList/>}/>
+              <Route path={"/book/detail/:no"} element={<BookDetail/>}/>
               <Route path={"/book/pickup"} element={<PickUp/>}/>
               <Route path={"/board/list"} element={<BoardList/>}/>
               <Route path={"/board/insert"} element={<BoardInsert/>}/>
