@@ -1,9 +1,11 @@
 import {useQuery} from "react-query"
 import {useEffect, useState,Fragment} from 'react'
-import {Link} from "react-router-dom"
+import {Link, Navigate, useNavigate} from "react-router-dom"
 import apiClient from "../../http-commons"
 
 const BoardList=()=>{
+    const navigate=useNavigate()
+    const [isLogin, setIsLogin]=useState(false)
     const [category, setCategory]=useState("")
     const [curpage, setCurpage]=useState(1)
     const {isLoading,isError,error,data,refetch:loadingNotExecute}=useQuery(['board-list',curpage],
@@ -13,6 +15,15 @@ const BoardList=()=>{
             })
         }
     )
+    useEffect(() => {
+        apiClient.post("/member/isLogin").then(res=>{
+            if (res.data.loginOk) setIsLogin(true)
+            else setIsLogin(false)
+        }).catch(err=>{
+            console.error(err)
+            setIsLogin(false)
+        })
+    }, [])
     useEffect(()=>{
         loadingNotExecute()
     },[curpage, category])
@@ -58,7 +69,9 @@ const BoardList=()=>{
                                 </select>
                             </div>
                             <div className="right">
-                                <Link to="/board/insert" className="insertBtn">글쓰기</Link>
+                                {isLogin?(
+                                <Link to="/board/insert" className="insertBtn">글쓰기</Link>):
+                                <p style={{color: "gray"}}>로그인 후 글쓰기가 가능합니다.</p>}
                             </div>
                         </div>
                         <table>

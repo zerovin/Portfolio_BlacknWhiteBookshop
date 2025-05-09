@@ -4,11 +4,19 @@ import { useNavigate } from "react-router-dom";
 import apiClient from "../../http-commons";
 
 const BoardDetail=()=>{
+    const [loginUserId, setLoginUserId]=useState(null)
     const {no}=useParams()
     const navigate = useNavigate()
     const [post,setPost]=useState(null)
     const fetched=useRef(false)
-
+    useEffect(()=>{
+        apiClient.post("/member/isLogin")
+          .then(res => {
+            if (res.data.loginOk) {
+              setLoginUserId(res.data.userId);
+            }
+          })
+    }, [])
     useEffect(()=>{
         if (fetched.current) return
         fetched.current=true
@@ -80,9 +88,13 @@ const BoardDetail=()=>{
                         </div>
 
                         <div className="btn-group">
-                            <button className="edit-btn" onClick={handleUpdate}>수정</button>
+                            {loginUserId === post.userId && (
+                                <button className="edit-btn" onClick={handleUpdate}>수정</button>
+                            )}
                             <button className="list-btn" onClick={handlelist}>목록</button>
-                            <button className="delete-btn" onClick={handleDelete}>삭제</button>
+                            {loginUserId === post.userId && (
+                                <button className="delete-btn" onClick={handleDelete}>삭제</button>
+                            )}
                         </div>
                         <div className="comment-section">
                             <h4>댓글</h4>
