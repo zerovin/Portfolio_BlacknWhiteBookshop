@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bwbs.bookshop.entity.BoardEntity;
 import com.bwbs.bookshop.repository.BoardRepository;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -114,16 +116,21 @@ public class BoardRestController {
 	@PostMapping("/board/insert")
 	public ResponseEntity<?> insertBoard(@RequestParam("title") String title, @RequestParam("content") String content,
 										 @RequestParam("category") String category, 
-										 @RequestParam(value="file", required=false) MultipartFile file){
-		try {
+										 @RequestParam(value="file", required=false) MultipartFile file,
+										 HttpSession session){
+		try {	
+			String userId=(String) session.getAttribute("userId");
+			if(userId==null) {
+				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+			}
+			
 			BoardEntity entity=new BoardEntity();
 			entity.setTitle(title);
 			entity.setContent(content);
 			entity.setCategory(category);
 			entity.setRegdate(new Date());
 			entity.setHit(0);
-			
-			entity.setUserId("juhee");
+			entity.setUserId(userId);
 			
 			String uploadDir=System.getProperty("user.dir")+"/uploads";
 			File folder=new File(uploadDir);
