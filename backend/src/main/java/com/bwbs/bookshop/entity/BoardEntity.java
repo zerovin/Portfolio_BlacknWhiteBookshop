@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -25,4 +27,8 @@ public class BoardEntity {
 	private Date regdate;
 	private int hit;
 	private Long filesize;
+	
+	@ManyToOne
+	@JoinColumn(name = "USERID", referencedColumnName = "USERID", insertable = false, updatable = false)
+	private MemberEntity member;
 }

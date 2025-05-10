@@ -42,10 +42,10 @@ const BoardList=()=>{
         setCurpage(curpage>1?curpage-1:curpage)
     }
     const next=()=>{
-        setCurpage(data.data.totalpage && curpage<data.data.totalpage?curpage+1:curpage)
+        setCurpage(data.data.totalPage && curpage<data.data.totalPage?curpage+1:curpage)
     }
     let pageArr=[]
-    for (let i = data.data.startpage; i <= data.data.endpage; i++) {
+    for (let i = data.data.startPage; i <= data.data.endPage; i++) {
         pageArr.push(
           <button key={i} className={curpage === i ? "page active" : "page"}
             onClick={() => pageChange(i)}>{i} </button>)  
@@ -91,7 +91,7 @@ const BoardList=()=>{
                                         <td>{vo.no}</td>
                                         <td>{vo.category}</td>
                                         <td><Link to={`/board/detail/${vo.no}`}>{vo.title}</Link></td>
-                                        <td>{vo.userId}</td>
+                                        <td>{vo.userName}</td>
                                         <td>{vo.regdate && vo.regdate.substring(0, 10)}</td>
                                         <td>{vo.hit}</td>
                                     </tr>
@@ -100,10 +100,10 @@ const BoardList=()=>{
                         </table>
                     </div>
                     <div className="pagination">
-                        {data.data.startpage && data.data.startpage > 1 &&
+                        {data.data.startPage && data.data.startPage > 1 &&
                          <button onClick={prev}>&lt;</button>}
                         {pageArr}
-                        {data.data.endpage && data.data.endpage < data.data.totalpage &&   
+                        {data.data.endPage && data.data.endPage < data.data.totalPage &&   
                         <button onClick={next}>&gt;</button>}
                     </div>                   
                 </div>

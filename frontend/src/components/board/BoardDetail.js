@@ -68,7 +68,7 @@ const BoardDetail=()=>{
                                 </tr>
                                 <tr>
                                     <th>이름</th>
-                                    <td>{post.userId}</td>
+                                    <td>{post.userName}</td>
                                     <th>조회수</th>
                                     <td>{post.hit}</td>
                                 </tr>

@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bwbs.bookshop.dto.BoardDetailDTO;
+import com.bwbs.bookshop.dto.BoardListDTO;
+import com.bwbs.bookshop.dto.BoardPageDTO;
 import com.bwbs.bookshop.entity.BoardEntity;
 import com.bwbs.bookshop.repository.BoardRepository;
+import com.bwbs.bookshop.service.BoardService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -48,59 +52,50 @@ import org.springframework.http.ResponseEntity;
 @CrossOrigin(origins="*")
 public class BoardRestController {
 	@Autowired
-	private BoardRepository boardRepository;
+	private BoardRepository bRepository;
+	@Autowired
+	private BoardService bService;
 	
 	@GetMapping("/board/list/{page}")
-	public ResponseEntity<Map> boardList(@PathVariable("page") int page,
+	public ResponseEntity<BoardPageDTO> boardList(@PathVariable int page,
 			           					@RequestParam(name="category", required = false) String category){
-		Map map=new HashMap();
 		try {
-			int rowSize=10;
 			int block=5;
-			int start=(page-1)*rowSize;
 			
-			List<BoardEntity> list;
-	        long total;
+			List<BoardListDTO> list=bService.getBoardList(page, category);
+	        long total=bService.getTotalCount(category);
 
-	        if (category == null || category.isEmpty()) {
-	            list = boardRepository.boardListData(start);
-	            total = boardRepository.count();
-	        } else {
-	            list = boardRepository.findByCategory(category, start);
-	            total = boardRepository.countByCategory(category);
-	        }
-	        
-	        int totalpage=(int)Math.ceil(total/10.0);
-	        int startpage=((page-1)/block*block)+1;
-			int endpage=startpage+block-1;
-			if(endpage>totalpage) endpage=totalpage;
+	        int totalPage=(int)Math.ceil(total/10.0);
+	        int startPage=((page-1)/block*block)+1;
+			int endPage=startPage+block-1;
+			if(endPage>totalPage) endPage=totalPage;
 			
-			map.put("list", list);
-			map.put("curpage", page);
-			map.put("totalpage", totalpage);
-			map.put("startpage", startpage);
-			map.put("endpage", endpage);
+			BoardPageDTO dto = new BoardPageDTO();
+		    dto.setList(list);
+		    dto.setCurPage(page);
+		    dto.setTotalPage(totalPage);
+		    dto.setStartPage(startPage);
+		    dto.setEndPage(endPage);
+		    
+		    return ResponseEntity.ok(dto);
 		}catch(Exception ex) {
 			ex.printStackTrace();
 			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(map,HttpStatus.OK);
 	}
 	@GetMapping("/board/detail/{no}")
-	public ResponseEntity<BoardEntity> boardDetail(@PathVariable("no") int no){
-		Optional<BoardEntity> optional=boardRepository.findById(no);
-		if(optional.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	public ResponseEntity<BoardDetailDTO> boardDetail(@PathVariable("no") int no){
+		try {
+			BoardDetailDTO dto=bService.getBoardDetail(no, true);
+			return ResponseEntity.ok(dto);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}
-		BoardEntity entity=optional.get();
-		entity.setHit(entity.getHit()+1);
-		boardRepository.save(entity);
-		
-		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	@PutMapping("/board/update/{no}")
 	public ResponseEntity<?> updateBoard(@PathVariable int no, @RequestBody BoardEntity updatedData){
-		Optional<BoardEntity> optional=boardRepository.findById(no);
+		Optional<BoardEntity> optional=bRepository.findById(no);
 		if(optional.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -110,7 +105,7 @@ public class BoardRestController {
 		entity.setContent(updatedData.getContent());
 		entity.setCategory(updatedData.getCategory());
 		entity.setHit(originalHit);
-		boardRepository.save(entity);
+		bRepository.save(entity);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	@PostMapping("/board/insert")
@@ -119,7 +114,7 @@ public class BoardRestController {
 										 @RequestParam(value="file", required=false) MultipartFile file,
 										 HttpSession session){
 		try {	
-			String userId=(String) session.getAttribute("userId");
+			String userId=(String) session.getAttribute("bwbs_userId");
 			if(userId==null) {
 				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 			}
@@ -145,7 +140,7 @@ public class BoardRestController {
 				entity.setFilepath("/uploads/"+filename);
 				entity.setFilesize(file.getSize());
 			}
-			boardRepository.save(entity);
+			bRepository.save(entity);
 			return new ResponseEntity<>(HttpStatus.CREATED);
 		}catch(Exception ex) {
 			ex.printStackTrace();
@@ -173,7 +168,7 @@ public class BoardRestController {
 	@DeleteMapping("/board/delete/{no}")
 	public ResponseEntity<?> deleteBoard(@PathVariable("no") int no){
 		try {
-			Optional<BoardEntity> optional=boardRepository.findById(no);
+			Optional<BoardEntity> optional=bRepository.findById(no);
 			if(optional.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
@@ -183,7 +178,7 @@ public class BoardRestController {
 	            File file = new File(uploadDir, new File(entity.getFilepath()).getName());
 	            if (file.exists()) file.delete();
 	        }
-			boardRepository.delete(entity);
+			bRepository.delete(entity);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}catch(Exception ex) {
 			ex.printStackTrace();
