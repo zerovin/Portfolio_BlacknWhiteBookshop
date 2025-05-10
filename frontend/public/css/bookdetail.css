@@ -96,7 +96,7 @@
     color:#80888a;
     margin-left:10px;
 }
-#bookDetail .detail_wrap .cal{
+#bookDetail .cal{
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -106,24 +106,24 @@
     padding:20px 40px;
     background:#f8f8f8;
 }
-#bookDetail .detail_wrap .cal .amount{
+#bookDetail .cal .amount{
     display:flex;
     align-items:center;
 }
-#bookDetail .detail_wrap .cal .amount > *{
+#bookDetail .cal .amount > *{
     background:#fff;
 }
 
-#bookDetail .detail_wrap .cal .amount button{
+#bookDetail .cal .amount button{
     padding:7px 10px;
     border:1px solid #eee;
     cursor: pointer;
 }
-#bookDetail .detail_wrap .cal .amount button i{
+#bookDetail .cal .amount button i{
     font-size:14px;
     color:#646464;
 }
-#bookDetail .detail_wrap .cal .amount p{
+#bookDetail .cal .amount p{
     width:50px;
     height:32px;
     line-height:32px;
@@ -131,7 +131,7 @@
     border-top:1px solid #eee;
     border-bottom:1px solid #eee;
 }
-#bookDetail .detail_wrap .cal .total span{
+#bookDetail .cal .total span{
     font-size:22px;
     font-weight:700;
 }
@@ -140,17 +140,17 @@
     color:#80888a;
     margin-bottom:90px;
 }
-#bookDetail .detail_wrap .btns{
+#bookDetail .btns{
     display:grid;
     grid-template-columns: repeat(3, 1fr);
     gap:20px;
 }
-#bookDetail .detail_wrap .btns button{
+#bookDetail .btns button{
     width:100%;
     border:1px solid #1E1A1A;
     padding:20px;
 }
-#bookDetail .detail_wrap .btns button:last-child{
+#bookDetail .btns button:last-child{
     background:#1E1A1A;
     color:#fff;
     font-weight:600;
@@ -184,4 +184,37 @@
 /* ------------------ DETAIL BOTTOM FIXED ------------------- */
 #bookDetail .bottom .right{
     border:1px solid #eee;
+    padding:40px 30px;
+    height:fit-content;
+}
+#bookDetail .bottom .right .mini_info{
+    display:grid;
+    grid-template-columns:100px 1fr;
+    gap:30px;
+}
+#bookDetail .bottom .right .mini_info img{
+    box-shadow:2px 1px 14px 0 rgba(0, 0, 0, 0.12);
+}
+#bookDetail .bottom .right .mini_info h5{
+    font-size:18px;
+    font-weight:600;
+    line-height:1.2em;
+}
+#bookDetail .bottom .cal{
+    padding:20px 10px;
+    margin-top:40px;
+}
+#bookDetail .bottom .alert{
+    font-size:14px;
+    color:#646464;
+    line-height:1.2em;
+    margin-bottom:30px;
+}
+#bookDetail .bottom .btns{
+    grid-template-columns:auto;
+    grid-template-rows:repeat(3, 1fr);
+    gap:10px;
+}
+#bookDetail .bottom .btns button{
+    padding:15px;
 }

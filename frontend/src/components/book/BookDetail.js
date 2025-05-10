@@ -1,7 +1,12 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const BookDetail=()=>{
+    useEffect(()=>{
+        window.scrollTo({top:0, behavior:'auto'})
+
+    },[])
+
     return(
         <Fragment>
             <div id="bookDetail">
@@ -82,13 +87,13 @@ const BookDetail=()=>{
                         <div className="right">
                             <div className="mini_info">
                                 <img src="../../img/ex1.jpg" alt=""/>
-                                <h5>단 한 번의 삶</h5>
+                                <h5>단 한 번의 삶 단 한 번의 삶 단 한 번의 삶 단 한 번의 삶</h5>
                             </div>
                             <div className="cal">
                                 <div className="amount">
-                                    <button className="miunus">-</button>
+                                    <button className="miunus"><i class="fa-solid fa-minus"></i></button>
                                     <p>1</p>
-                                    <button className="plus">+</button>
+                                    <button className="plus"><i class="fa-solid fa-plus"></i></button>
                                 </div>
                                 <p className="total"><span>15,120</span>원</p>
                             </div>

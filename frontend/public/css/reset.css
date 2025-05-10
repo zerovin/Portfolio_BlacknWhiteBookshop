@@ -55,4 +55,5 @@ input:focus{
 button{
 	border:none;
 	background:none;
+	cursor:pointer;
 }
