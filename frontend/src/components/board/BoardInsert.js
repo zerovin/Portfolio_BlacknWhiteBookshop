@@ -13,8 +13,16 @@ const BoardInsert=()=>{
     }
     const handleSubmit=async(e)=>{
         e.preventDefault()
-        if(!title.trim() || !content.trim()){
-            alert("제목 및 내용을 입력해주세요.")
+        if(!title.trim()){
+            alert("제목을 입력해주세요.")
+            return
+        }
+        if(!content.trim()){
+            alert("내용을 입력해주세요.")
+            return
+        }
+        if(!category.trim()){
+            alert("카테고리를 선택해주세요.")
             return
         }
         const formData=new FormData()
@@ -56,11 +64,11 @@ const BoardInsert=()=>{
                                     <option value="이벤트">이벤트 참여</option>
                                     <option value="자유">자유글</option>
                                 </select>
-                                <input type="text" placeholder="제목을 입력해 주세요" className="title-input" value={title} onChange={(e)=>setTitle(e.target.value)}/>
+                                <input type="text" placeholder="제목을 입력해주세요" className="title-input" value={title} onChange={(e)=>setTitle(e.target.value)}/>
                             </div>
                             <div className="row">
                               
-                                <textarea placeholder="내용을 입력해 주세요" value={content} onChange={(e)=>setContent(e.target.value)}></textarea>
+                                <textarea placeholder="내용을 입력해주세요" value={content} onChange={(e)=>setContent(e.target.value)}></textarea>
                             </div>
                             <div className="row file-row">
                                 <input type="file" onChange={handleFileChange} className="file-name" />
