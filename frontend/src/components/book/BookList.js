@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import apiClient from "../../http-commons";
@@ -10,6 +10,11 @@ const BookList=()=>{
             return await apiClient.get(`/book/list/${curpage}`)
         }
     )
+
+    useEffect(()=>{
+        window.scrollTo({top:0, behavior:'auto'})
+    },[])
+
     if(isLoading){
         return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>로딩중...</p>
     }

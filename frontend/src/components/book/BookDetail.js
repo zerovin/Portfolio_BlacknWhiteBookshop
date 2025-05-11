@@ -1,42 +1,76 @@
-import { Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Fragment, useEffect, useMemo, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import apiClient from "../../http-commons";
+import { useQuery } from "react-query";
+import DOMPurify from "dompurify";
 
 const BookDetail=()=>{
+    const {no}=useParams()
+    const [amount, setAmount]=useState(1);
+    const goTop=()=>{
+        window.scrollTo({top:0, behavior:'smooth'})
+    }
+
+    const {isLoading, isError, error, data}=useQuery(['book_detail',no],
+        async()=>{
+            return await apiClient.get(`/book/detail/${no}`)
+        }
+    )
+
     useEffect(()=>{
         window.scrollTo({top:0, behavior:'auto'})
-
     },[])
+    
+    const total=useMemo(()=>{
+        return ((data?.data?.price || 0)*amount)*0.9;
+    },[data, amount])
+    
+    if(isLoading){
+        return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>로딩중...</p>
+    }
+    if(isError){
+        return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>{error.message}</p>
+    }
+    
+    const safeIntro=DOMPurify.sanitize(data.data.intro);
+    const safeContents=DOMPurify.sanitize(data.data.contents);
+    const plusAmount=()=>{
+        setAmount(prev=>prev+1)
+    }
+    const minusAmount=()=>{
+        setAmount(prev=>(prev>1?prev-1:1))
+    }
 
     return(
         <Fragment>
             <div id="bookDetail">
                 <div className="container">
                     <div className="bread_crumb">
-                        <Link to={"/book/all"}><i class="fa-solid fa-house"></i></Link>
+                        <Link to={"/book/all"}><i className="fa-solid fa-house"></i></Link>
                         <p>&gt;</p>
-                        <Link to={"/book/+category"}>category</Link>
+                        <Link to={"/book/+category"}>{data.data.category}</Link>
                     </div>
                     <div className="detail_wrap">
                         <div className="img_wrap">
-                            <img src="../../img/ex1.jpg" alt=""/>
+                            <img src={data.data.thumb} alt={data.data.title}/>
                         </div>
                         <div className="text">
-                            <h3 className="title">단 한 번의 삶</h3>
+                            <h3 className="title">{data.data.title}</h3>
                             <div className="info">
-                                <p>김영하 저</p>
-                                <p>복복서가</p>
+                                <p>{data.data.writer}</p>
+                                <p>{data.data.publisher}</p>
                             </div>
-                            <p className="date">2025년 04월 06일</p>
-                            <p className="sales"><span>판매지수</span> 123,456</p>
+                            <p className="date">{data.data.pub_date.substring(0, 10)}</p>
+                            <p className="sales"><span>판매지수</span> {data.data.sales.toLocaleString()}</p>
                             <div className="price">
-                                <p className="dis">15,120원</p>
-                                <p className="prime">16,800원</p>
+                                <p className="dis">{(data.data.price*0.9).toLocaleString()}원</p>
+                                <p className="prime">{data.data.price.toLocaleString()}원</p>
                                 <p className="percent">10% 할인</p>
                             </div>
                             <div className="text_bottom">
                                 <div>
                                     <p>적립금</p>
-                                    <p>840원 <span>5% 적립</span></p>
+                                    <p>{(data.data.price*0.05).toLocaleString()}원 <span>5% 적립</span></p>
                                 </div>
                                 <div>
                                     <p>배송비</p>
@@ -45,11 +79,11 @@ const BookDetail=()=>{
                             </div>
                             <div className="cal">
                                 <div className="amount">
-                                    <button className="miunus"><i class="fa-solid fa-minus"></i></button>
-                                    <p>1</p>
-                                    <button className="plus"><i class="fa-solid fa-plus"></i></button>
+                                    <button className="miunus" onClick={minusAmount}><i className="fa-solid fa-minus"></i></button>
+                                    <p>{amount}</p>
+                                    <button className="plus" onClick={plusAmount}><i className="fa-solid fa-plus"></i></button>
                                 </div>
-                                <p className="total"><span>15,120</span>원</p>
+                                <p className="total"><span>{total.toLocaleString()}</span>원</p>
                             </div>
                             <p className="alert">실결제 금액은 적립금, 쿠폰 등에 따라 달라질 수 있습니다.</p>
                             <div className="btns">
@@ -63,39 +97,29 @@ const BookDetail=()=>{
                         <div className="left">
                             <div className="intro">
                                 <h4 className="sub_tt">책 소개</h4>
-                                <p>인생은 탐구하면서 살아가는 것이 아니라, 살아가면서 탐구하는 것이다.
-                                실수는 되풀이된다. 그것이 인생이다…….</p>
+                                <p dangerouslySetInnerHTML={{__html:safeIntro}}></p>
                             </div>
                             <div className="contents">
                                 <h4 className="sub_tt">목차</h4>
-                                <p>1 생의 외침<br/>
-2 거짓말들<br/>
-3 사람이 있는 풍경<br/>
-4 슬픈 일몰의 아버지<br/>
-5 희미한 사랑의 그림자<br/>
-6 오래전 그 십 분의 의미<br/>
-7 불행의 과장법<br/>
-8 착한 주리<br/>
-9 선운사 도솔암 가는 길에<br/>
-10 사랑에 관한 세 가지 메모</p>
+                                <p dangerouslySetInnerHTML={{__html:safeContents}}></p>
                             </div>
                             <div className="detail_img">
                                 <h4 className="sub_tt">출판사 제공 책소개</h4>
-                                <img src="../../img/ex1.jpg" alt=""/>
+                                <img src={data.data.detail_img} alt="출판사 제공 책소개"/>
                             </div>
                         </div>
                         <div className="right">
                             <div className="mini_info">
-                                <img src="../../img/ex1.jpg" alt=""/>
-                                <h5>단 한 번의 삶 단 한 번의 삶 단 한 번의 삶 단 한 번의 삶</h5>
+                                <img src={data.data.thumb} alt={data.data.title}/>
+                                <h5>{data.data.title}</h5>
                             </div>
                             <div className="cal">
                                 <div className="amount">
-                                    <button className="miunus"><i class="fa-solid fa-minus"></i></button>
-                                    <p>1</p>
-                                    <button className="plus"><i class="fa-solid fa-plus"></i></button>
+                                    <button className="miunus" onClick={minusAmount}><i className="fa-solid fa-minus"></i></button>
+                                    <p>{amount}</p>
+                                    <button className="plus" onClick={plusAmount}><i className="fa-solid fa-plus"></i></button>
                                 </div>
-                                <p className="total"><span>15,120</span>원</p>
+                                <p className="total"><span>{total.toLocaleString()}</span>원</p>
                             </div>
                             <p className="alert">실결제 금액은 적립금, 쿠폰 등에 따라 달라질 수 있습니다.</p>
                             <div className="btns">

@@ -159,8 +159,9 @@
 /* ------------------ DETAIL BOTTOM IMG ------------------- */
 #bookDetail .bottom{
     display:grid;
-    grid-template-columns:2.7fr 1fr;
+    grid-template-columns:1fr 340px;
     gap:50px;
+    position:relative;
 }
 #bookDetail .bottom .left > div{
     padding-bottom:80px;
@@ -183,9 +184,14 @@
 
 /* ------------------ DETAIL BOTTOM FIXED ------------------- */
 #bookDetail .bottom .right{
+    width:340px;
     border:1px solid #eee;
     padding:40px 30px;
     height:fit-content;
+    box-sizing: border-box;
+    position:sticky;
+    top:50px;
+    right:0;
 }
 #bookDetail .bottom .right .mini_info{
     display:grid;
