@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.bwbs.bookshop.dto.BookDTO;
 import com.bwbs.bookshop.entity.*;
 @Repository
 public interface BookDAO extends JpaRepository<BookEntity, Integer>{
@@ -15,4 +16,5 @@ public interface BookDAO extends JpaRepository<BookEntity, Integer>{
 	        + "FROM book ORDER BY no ASC) "
 	        + "WHERE num > :start AND num <= :start + 20", nativeQuery=true)
 	List<BookEntity> bookListEntity(@Param("start") int start);
+	public BookEntity findByNo(int no);
 }

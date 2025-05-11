@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bwbs.bookshop.dao.*;
+import com.bwbs.bookshop.dto.BookDTO;
 import com.bwbs.bookshop.entity.*;
 import com.bwbs.bookshop.service.*;
 
@@ -24,8 +25,8 @@ public class BookRestController {
 	private BookService bService;
     
 	@GetMapping("/book/list/{page}")
-	public ResponseEntity<Map> book_list(@PathVariable("page") int page){
-		Map map=new HashMap();
+	public ResponseEntity<Map<String, Object>> book_list(@PathVariable("page") int page){
+		Map<String, Object> map=new HashMap<>();
 		try {
 			int rowSize=20;
 			int start=(rowSize*page)-rowSize;
@@ -51,5 +52,16 @@ public class BookRestController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(map, HttpStatus.OK);
+	}
+	
+	@GetMapping("/book/detail/{no}")
+	public ResponseEntity<BookDTO> book_detail(@PathVariable("no") int no){
+		BookDTO vo=new BookDTO();
+		try {
+			vo=bService.bookDetailData(no);
+		}catch(Exception ex) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(vo, HttpStatus.OK);
 	}
 }

@@ -1,6 +1,8 @@
-package com.bwbs.bookshop.entity;
+package com.bwbs.bookshop.dto;
 
 import java.util.Date;
+
+import com.bwbs.bookshop.entity.BookEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

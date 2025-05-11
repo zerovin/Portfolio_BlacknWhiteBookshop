@@ -30,6 +30,7 @@ public class SecurityConfig {
                 .requestMatchers("/member/**").permitAll()
                 .requestMatchers("/member/login/**").permitAll()
                 .requestMatchers("/book/list/**").permitAll()
+                .requestMatchers("/book/detail/**").permitAll()
                 .requestMatchers("/board/**").permitAll()
                 .anyRequest().authenticated() 
             )
