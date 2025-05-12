@@ -32,6 +32,7 @@ const BookDetail=()=>{
         return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>{error.message}</p>
     }
     
+    const cate=btoa(encodeURIComponent(data.data.category));
     const safeIntro=DOMPurify.sanitize(data.data.intro);
     const safeContents=DOMPurify.sanitize(data.data.contents);
     const plusAmount=()=>{
@@ -46,9 +47,9 @@ const BookDetail=()=>{
             <div id="bookDetail">
                 <div className="container">
                     <div className="bread_crumb">
-                        <Link to={"/book/all"}><i className="fa-solid fa-house"></i></Link>
+                        <Link to={"/book/list/all"}><i className="fa-solid fa-house"></i></Link>
                         <p>&gt;</p>
-                        <Link to={"/book/+category"}>{data.data.category}</Link>
+                        <Link to={`/book/list/${cate}`}>{data.data.category}</Link>
                     </div>
                     <div className="detail_wrap">
                         <div className="img_wrap">

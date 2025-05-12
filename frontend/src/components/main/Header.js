@@ -1,9 +1,10 @@
-import { Fragment, useState, useRef, useEffect } from "react";
+import { Fragment, useState, useEffect } from "react";
 import {Link} from "react-router-dom";
 import apiClient from "../../http-commons"
 import { useQuery } from "react-query";
 
 const Header=()=>{
+    const [menu, setMenu]=useState([]);
     const [guest, setGuest]=useState(true);
     const [userName, setUserName]=useState(null);
     const [admin, setAdmin]=useState(false);
@@ -15,6 +16,18 @@ const Header=()=>{
         setIsOpen(!isOpen);
         setIsScrolled(!isOpen);
     }
+
+    useEffect(()=>{
+        const categoryList=async()=>{
+            try{
+                const res=await apiClient.get('/main/menu')
+                setMenu(res.data)
+            }catch(error){
+                console.error(error)
+            }
+        }
+        categoryList();
+    },[])
 
     useEffect(()=>{
         apiClient.post('/member/isLogin')
@@ -72,33 +85,15 @@ const Header=()=>{
                     <ul className="menu">
                         <li><p className="books" onClick={toggleMenu}>책 <i className={`fa-solid ${isOpen?'fa-caret-up':'fa-caret-down'}`}></i></p>
                             <ul className={`sub_menu ${isOpen?'':'fold'}`}>
-                                <li><Link to={"/book/all"}>전체</Link></li>
-                                <li><Link to={"/book/home"}>가정 살림</Link></li>
-                                <li><Link to={"/book/health"}>건강 취미</Link></li>
-                                <li><Link to={"/book/economy"}>경제 경영</Link></li>
-                                <li><Link to={"/book/language"}>국어 외국어 사전</Link></li>
-                                <li><Link to={"/book/college"}>대학교재</Link></li>
-                                <li><Link to={"/book/toon"}>만화/라이트노벨</Link></li>
-                                <li><Link to={"/book/social"}>사회 정치</Link></li>
-                                <li><Link to={"/book/novel"}>소설/시/희곡</Link></li>
-                                <li><Link to={"/book/test"}>수험서 자격증</Link></li>
-                                <li><Link to={"/book/kids"}>어린이</Link></li>
-                                <li><Link to={"/book/essay"}>에세이</Link></li>
-                                <li><Link to={"/book/travel"}>여행</Link></li>
-                                <li><Link to={"/book/history"}>역사</Link></li>
-                                <li><Link to={"/book/art"}>예술</Link></li>
-                                <li><Link to={"/book/toddler"}>유아</Link></li>
-                                <li><Link to={"/book/Humanity"}>인문</Link></li>
-                                <li><Link to={"/book/person"}>인물</Link></li>
-                                <li><Link to={"/book/improve"}>자기계발</Link></li>
-                                <li><Link to={"/book/science"}>자연과학</Link></li>
-                                <li><Link to={"/book/magazin"}>잡지</Link></li>
-                                <li><Link to={"/book/complete"}>전집</Link></li>
-                                <li><Link to={"/book/religion"}>종교</Link></li>
-                                <li><Link to={"/book/teanager"}>청소년</Link></li>
-                                <li><Link to={"/book/it"}>IT모바일</Link></li>
-                                <li><Link to={"/book/elementary"}>초등참고서</Link></li>
-                                <li><Link to={"/book/middle"}>중고등참고서</Link></li>
+                                <li><Link to={"/book/list/all"}>전체</Link></li>
+                                {
+                                    menu.map((category, idx)=>{
+                                        const cate=btoa(encodeURIComponent(category));
+                                        return(
+                                            <li key={idx+1}><Link to={`/book/list/${cate}`}>{category}</Link></li>
+                                        )
+                                    })
+                                }
                             </ul>
                         </li>
                         <li><Link to="/board/list">자유게시판</Link></li>

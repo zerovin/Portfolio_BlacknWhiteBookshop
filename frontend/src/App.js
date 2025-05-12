@@ -23,7 +23,7 @@ function App() {
               <Route path="/" element={<Home/>}/>
               <Route path={"/member/join"} element={<Join/>}/>
               <Route path={"/member/login"} element={<Login/>}/>
-              <Route path={"/book/all"} element={<BookList/>}/>
+              <Route path={"/book/list/:cate"} element={<BookList/>}/>
               <Route path={"/book/detail/:no"} element={<BookDetail/>}/>
               <Route path={"/book/pickup"} element={<PickUp/>}/>
               <Route path={"/board/list"} element={<BoardList/>}/>

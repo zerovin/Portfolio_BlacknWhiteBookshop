@@ -1,19 +1,23 @@
 import { Fragment, useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import apiClient from "../../http-commons";
 
 const BookList=()=>{
+    const {cate}=useParams();
+    const category=decodeURIComponent(atob(cate));
+    const display=cate==='all'?'전체':category;
     const [curpage, setCurpage] = useState(1);
-    const {isLoading, isError, error, data}=useQuery(["book_List", curpage],
+    const {isLoading, isError, error, data}=useQuery(["book_List", category, curpage],
         async ()=>{
-            return await apiClient.get(`/book/list/${curpage}`)
+            return await apiClient.get(`/book/list/${cate}/${curpage}`)
         }
     )
 
     useEffect(()=>{
         window.scrollTo({top:0, behavior:'auto'})
-    },[])
+        setCurpage(1);
+    },[cate])
 
     if(isLoading){
         return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>로딩중...</p>
@@ -24,6 +28,7 @@ const BookList=()=>{
 
     const pageChange=(page)=>{
         setCurpage(page)
+        window.scrollTo({top:0, behavior:'auto'})
     }
     const prev=()=>{
         setCurpage(data.data.startpage-1)
@@ -53,7 +58,7 @@ const BookList=()=>{
             <div id="bookList">
                 <div className="container">
                     <div className="top">
-                        <h3>전체</h3>
+                        <h3>{display}</h3>
                         <ul className="filter">
                             <li>베스트 순</li>
                             <li>신상품 순</li>
