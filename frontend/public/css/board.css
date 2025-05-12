@@ -189,6 +189,18 @@
   cursor: pointer;
 }
 
+#BoardInsert .upload-change-btn {
+  padding: 10px 18px;
+  text-align: center;
+  font-size: 14px;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 #BoardInsert .button-row {
   justify-content: center;
   gap: 25px;
@@ -227,9 +239,9 @@
   width: 100%;
   border-collapse: collapse;
   border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
   margin-top: 50px;
-  margin-bottom: 30px;
   font-size: 16px;
 }
 

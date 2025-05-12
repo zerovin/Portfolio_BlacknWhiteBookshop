@@ -94,19 +94,53 @@ public class BoardRestController {
 		}
 	}
 	@PutMapping("/board/update/{no}")
-	public ResponseEntity<?> updateBoard(@PathVariable int no, @RequestBody BoardEntity updatedData){
-		Optional<BoardEntity> optional=bRepository.findById(no);
-		if(optional.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	public ResponseEntity<?> updateBoard(@PathVariable int no, @RequestParam("title") String title,
+								  	     @RequestParam("category") String category, @RequestParam("content") String content,
+									     @RequestParam(value="file", required = false) MultipartFile file,
+									     @RequestParam(value="deleteFile", required = false, defaultValue = "false") boolean deleteFile){
+		try {
+			Optional<BoardEntity> optional=bRepository.findById(no);
+			if(optional.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+			BoardEntity entity=optional.get();
+			int originalHit=entity.getHit();
+			entity.setTitle(title);
+			entity.setContent(content);
+			entity.setCategory(category);
+			//entity.setHit(originalHit);
+			
+			if (deleteFile && entity.getFilepath() != null) {
+	            String uploadDir = System.getProperty("user.dir") + "/uploads";
+	            File fileToDelete = new File(uploadDir, new File(entity.getFilepath()).getName());
+	            if (fileToDelete.exists()) fileToDelete.delete();
+
+	            entity.setFilename(null);
+	            entity.setFilepath(null);
+	            entity.setFilesize(null);
+	        }
+			
+			if (file != null && !file.isEmpty()) {
+	            String uploadDir = System.getProperty("user.dir") + "/uploads";
+	            System.out.println("파일 저장 경로: " + System.getProperty("user.dir"));
+	            File folder = new File(uploadDir);
+	            if (!folder.exists()) folder.mkdirs();
+
+	            String uuid = UUID.randomUUID().toString();
+	            String saveName = uuid + "_" + file.getOriginalFilename();
+	            File saveFile = new File(folder, saveName);
+	            file.transferTo(saveFile);
+
+	            entity.setFilename(file.getOriginalFilename());     
+	            entity.setFilepath("/uploads/" + saveName);             
+	            entity.setFilesize(file.getSize());                   
+	        }
+			bRepository.save(entity);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		BoardEntity entity=optional.get();
-		int originalHit=entity.getHit();
-		entity.setTitle(updatedData.getTitle());
-		entity.setContent(updatedData.getContent());
-		entity.setCategory(updatedData.getCategory());
-		entity.setHit(originalHit);
-		bRepository.save(entity);
-		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	@PostMapping("/board/insert")
 	public ResponseEntity<?> insertBoard(@RequestParam("title") String title, @RequestParam("content") String content,
