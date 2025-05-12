@@ -14,13 +14,30 @@ public class BookService {
 	@Autowired
 	private BookDAO bDao;
 	
-	public List<BookDTO> bookListData(int start){
-		List<BookEntity> bEntity=bDao.bookListEntity(start);
+	public List<BookDTO> bookListAll(int start){
+		List<BookEntity> bEntity=bDao.bookListAll(start);
 		return bEntity.stream().map(BookDTO::fromEntity).collect(Collectors.toList());
+	}
+	
+	public List<BookDTO> bookListData(String cate, int start){
+		List<BookEntity> bEntity=bDao.bookListCate(cate, start);
+		return bEntity.stream().map(BookDTO::fromEntity).collect(Collectors.toList());
+	}
+	
+	public int count() {
+		return (int)bDao.count();
+	}
+	
+	public int countByCate(String cate) {
+		return bDao.countByCategory(cate);
 	}
 	
 	public BookDTO bookDetailData(int no) {
 		BookEntity detail=bDao.findByNo(no);
 		return BookDTO.fromEntity(detail);
+	}
+	
+	public List<String> categoryList(){
+		return bDao.categoryList();
 	}
 }

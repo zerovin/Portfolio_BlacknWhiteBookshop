@@ -7,7 +7,9 @@ spring:
     username: share_project
     password: happy
     driver-class-name: oracle.jdbc.OracleDriver
-
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher 
   jpa:
     hibernate:
       ddl-auto: none

@@ -1,4 +1,6 @@
 package com.bwbs.bookshop.restcontroller;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.Clob;
 import java.sql.SQLException;
 import java.util.*;
@@ -24,24 +26,40 @@ public class BookRestController {
 	@Autowired
 	private BookService bService;
     
-	@GetMapping("/book/list/{page}")
-	public ResponseEntity<Map<String, Object>> book_list(@PathVariable("page") int page){
+	@GetMapping("/book/list/{cate}/{page}")
+	public ResponseEntity<Map<String, Object>> book_list(@PathVariable("cate") String cate, @PathVariable("page") int page){
+		String category="";
+		List<BookDTO> bList=new ArrayList<>();
+		int count=0;
 		Map<String, Object> map=new HashMap<>();
+		
 		try {
 			int rowSize=20;
 			int start=(rowSize*page)-rowSize;
-			List<BookDTO> bList=bService.bookListData(start);
 			
-			int count=(int)bDao.count();
-			int totalpage=(int)(Math.ceil(count/(double)rowSize));
 		
+			if(cate.equals("all")) {
+				bList=bService.bookListAll(page);
+				count=bService.count();
+			}else {
+				
+				String firstDecoded=new String(Base64.getDecoder().decode(cate), StandardCharsets.UTF_8);
+				category=URLDecoder.decode(firstDecoded, StandardCharsets.UTF_8);
+				System.out.println(category);
+				bList=bService.bookListData(category, start);
+				int countByCate=bService.countByCate(category);
+				count=(int)countByCate;				
+			}
+			
+			int totalpage=(int)(Math.ceil(count/(double)rowSize));
+			
 			final int BLOCK=10;
 			int startpage=((page-1)/BLOCK*BLOCK)+1;
 			int endpage=((page-1)/BLOCK*BLOCK)+BLOCK;
 			if(endpage>totalpage) {
 				endpage=totalpage;
 			}
-			
+						
 			map.put("book_list", bList);
 			map.put("curpage",page);
 			map.put("startpage", startpage);

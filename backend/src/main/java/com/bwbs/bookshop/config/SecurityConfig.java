@@ -28,9 +28,9 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/member/**").permitAll()
+                .requestMatchers("/main/**").permitAll()
                 .requestMatchers("/member/login/**").permitAll()
-                .requestMatchers("/book/list/**").permitAll()
-                .requestMatchers("/book/detail/**").permitAll()
+                .requestMatchers("/book/**").permitAll()
                 .requestMatchers("/board/**").permitAll()
                 .requestMatchers("/uploads/**").permitAll()
                 .anyRequest().authenticated() 
