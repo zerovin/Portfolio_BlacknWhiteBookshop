@@ -32,6 +32,7 @@ public class SecurityConfig {
                 .requestMatchers("/book/list/**").permitAll()
                 .requestMatchers("/book/detail/**").permitAll()
                 .requestMatchers("/board/**").permitAll()
+                .requestMatchers("/uploads/**").permitAll()
                 .anyRequest().authenticated() 
             )
             .formLogin(withDefaults());

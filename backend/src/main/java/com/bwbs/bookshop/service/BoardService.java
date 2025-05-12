@@ -33,7 +33,7 @@ public class BoardService {
 		
 		List<BoardListDTO> result=new ArrayList<>();
 		for(BoardEntity b:entityList) {
-			BoardListDTO dto=new BoardListDTO(b.getNo(), b.getCategory(), b.getTitle(), b.getMember().getUserName(), b.getRegdate(), b.getHit());
+			BoardListDTO dto=new BoardListDTO(b.getNo(), b.getCategory(), b.getTitle(), b.getMember().getUserName(), b.getRegdate(), b.getHit(), b.getFilename());
 			result.add(dto);
 		}
 		return result;

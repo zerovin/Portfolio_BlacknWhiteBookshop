@@ -230,27 +230,50 @@
   border-bottom: 1px solid black;
   margin-top: 50px;
   margin-bottom: 30px;
+  font-size: 16px;
 }
 
 #BoardDetail .detail th {
   padding: 12px;
   text-align: center;
   width: 100px;
-  font-weight: bold;
 }
 
 #BoardDetail .detail td {
   padding: 12px;
   text-align: left;
+  font-size: 15px;
 }
 
 #BoardDetail .content {
   padding: 20px;
   border: 1px solid black;
   color: black;
-  font-size: 14px;
-  margin-bottom: 40px;
+  font-size: 15px;
+  margin-bottom: 0px;
   min-height: 300px; 
+}
+
+#BoardDetail .file {
+  width: 100%;
+  border-collapse: collapse;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  margin-bottom: 50px;
+  font-size: 15px;
+}
+
+#BoardDetail .file th {
+  padding: 12px;
+  text-align: center;
+  width: 100px;
+  font-size: 15px;
+}
+
+#BoardDetail .file td {
+  padding: 12px;
+  text-align: left;
 }
 
 #BoardDetail .btn-group {

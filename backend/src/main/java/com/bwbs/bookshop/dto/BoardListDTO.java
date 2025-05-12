@@ -12,13 +12,15 @@ public class BoardListDTO {
 	private String userName;
 	private Date regdate;
 	private int hit;
+	private String filename;
 	
-	public BoardListDTO(int no, String category, String title, String userName, Date regdate, int hit) {
+	public BoardListDTO(int no, String category, String title, String userName, Date regdate, int hit, String filename) {
 		this.no=no;
 		this.category=category;
 		this.title=title;
 		this.userName=userName;
 		this.regdate=regdate;
 		this.hit=hit;
+		this.filename=filename;
 	}
 }

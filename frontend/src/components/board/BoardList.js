@@ -15,6 +15,12 @@ const BoardList=()=>{
             })
         }
     )
+    const categoryLabels = {
+        review: "구매 후기",
+        proof: "책 인증샷",
+        event: "이벤트 참여",
+        free: "자유글"
+    }
     useEffect(() => {
         apiClient.post("/member/isLogin").then(res=>{
             if (res.data.loginOk) setIsLogin(true)
@@ -62,10 +68,10 @@ const BoardList=()=>{
                             <div className="left">
                                 <select className="category" value={category} onChange={handleCategoryChange}>
                                     <option value="">전체</option>
-                                    <option value="후기">구매 후기</option>
-                                    <option value="인증">책 인증샷</option>
-                                    <option value="이벤트">이벤트 참여</option>
-                                    <option value="자유">자유글</option>
+                                    <option value="review">구매 후기</option>
+                                    <option value="proof">책 인증샷</option>
+                                    <option value="event">이벤트 참여</option>
+                                    <option value="free">자유글</option>
                                 </select>
                             </div>
                             <div className="right">
@@ -89,8 +95,8 @@ const BoardList=()=>{
                                 {data.data.list && data.data.list.map((vo)=>
                                     <tr key={vo.no}>
                                         <td>{vo.no}</td>
-                                        <td>{vo.category}</td>
-                                        <td><Link to={`/board/detail/${vo.no}`}>{vo.title}</Link></td>
+                                        <td>{categoryLabels[vo.category]}</td>
+                                        <td><Link to={`/board/detail/${vo.no}`}>{vo.title}{vo.filename ? <span style={{ marginLeft: "5px" }}>📎</span> : null}</Link></td>
                                         <td>{vo.userName}</td>
                                         <td>{vo.regdate && vo.regdate.substring(0, 10)}</td>
                                         <td>{vo.hit}</td>

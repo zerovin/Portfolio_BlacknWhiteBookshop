@@ -11,6 +11,12 @@ const BoardInsert=()=>{
     const handleFileChange=(e)=>{
         setFile(e.target.files[0])
     }
+    const categoryLabels = {
+        review: "구매 후기",
+        proof: "책 인증샷",
+        event: "이벤트 참여",
+        free: "자유글"
+    }
     const handleSubmit=async(e)=>{
         e.preventDefault()
         if(!title.trim()){
@@ -59,10 +65,10 @@ const BoardInsert=()=>{
                               
                                 <select className="category" value={category} onChange={(e)=>setCategory(e.target.value)}>
                                     <option value="">분류</option>
-                                    <option value="후기">구매 후기</option>
-                                    <option value="인증">책 인증샷</option>
-                                    <option value="이벤트">이벤트 참여</option>
-                                    <option value="자유">자유글</option>
+                                    <option value="review">구매 후기</option>
+                                    <option value="proof">책 인증샷</option>
+                                    <option value="event">이벤트 참여</option>
+                                    <option value="free">자유글</option>
                                 </select>
                                 <input type="text" placeholder="제목을 입력해주세요" className="title-input" value={title} onChange={(e)=>setTitle(e.target.value)}/>
                             </div>

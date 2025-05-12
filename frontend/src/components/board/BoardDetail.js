@@ -9,6 +9,12 @@ const BoardDetail=()=>{
     const navigate = useNavigate()
     const [post,setPost]=useState(null)
     const fetched=useRef(false)
+    const categoryLabels = {
+        review: "구매 후기",
+        proof: "책 인증샷",
+        event: "이벤트 참여",
+        free: "자유글"
+    }
     useEffect(()=>{
         apiClient.post("/member/isLogin")
           .then(res => {
@@ -17,6 +23,13 @@ const BoardDetail=()=>{
             }
           })
     }, [])
+    useEffect(() => {
+        if (post) {
+          console.log(post);
+          console.log(post.filepath);
+          console.log(post.content);
+        }
+      }, [post]);
     useEffect(()=>{
         if (fetched.current) return
         fetched.current=true
@@ -50,6 +63,7 @@ const BoardDetail=()=>{
         navigate("/board/list")
     }
     if (!post) return <h3>로딩 중...</h3>
+    const storedFilename = post.filepath?.split("/").pop() || ""
     return(
         <Fragment>
             <div id="BoardDetail">
@@ -74,18 +88,36 @@ const BoardDetail=()=>{
                                 </tr>
                                 <tr>
                                     <th>제목</th>
-                                    <td colSpan="3">[{post.category}] {post.title}</td>
-                                </tr>
-                                <tr>
-                                    <th>첨부파일</th>
-                                    <td colSpan="3">{post.filename?(<a href={post.filepath} download>{post.filename}</a>):("첨부파일 없음")}</td>
+                                    <td colSpan="3">[{categoryLabels[post.category]}] {post.title}</td>
                                 </tr>
                             </tbody>
                         </table>
 
                         <div className="content">
                             <p>{post.content}</p>
+                            {post.filepath ? (
+                            <div style={{ marginTop: "20px" }}>
+                                <img src={`http://localhost/board/download?filename=${encodeURIComponent(storedFilename)}`}
+                                alt={post.filename} style={{ maxWidth: "50%", height: "auto", marginTop: "10px" }}/>
+                            </div>) : null}
                         </div>
+
+                        <table className="file">
+                            <tbody>
+                                <tr>
+                                <th>첨부파일</th>
+                                    <td colSpan="3">
+                                    <span role="img" aria-label="file">📎&nbsp;</span>
+                                        {post.filename ? (
+                                        <a href={`http://localhost/board/download?filename=${encodeURIComponent(storedFilename)}`}
+                                        download>{post.filename}</a>
+                                        ) : (
+                                        "첨부파일 없음"
+                                        )}
+                                    </td>
+                                </tr>
+                            </tbody>
+                       </table>
 
                         <div className="btn-group">
                             {loginUserId === post.userId && (

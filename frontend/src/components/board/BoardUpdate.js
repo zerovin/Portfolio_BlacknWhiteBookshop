@@ -5,11 +5,16 @@ import apiClient from "../../http-commons";
 const BoardUpdate=()=>{
     const navigate = useNavigate()
     const {no}=useParams()
-
+    const [filename, setFilename]=useState("")
     const [category, setCategory]=useState("")
     const [title, setTitle]=useState("")
     const [content, setContent]=useState("")
-
+    const categoryLabels = {
+        review: "구매 후기",
+        proof: "책 인증샷",
+        event: "이벤트 참여",
+        free: "자유글"
+    }
     useEffect(()=>{
         const fetchPost=async()=>{
             try{
@@ -17,6 +22,7 @@ const BoardUpdate=()=>{
                 setCategory(res.data.category)
                 setTitle(res.data.title)
                 setContent(res.data.content)
+                setFilename(res.data.filename)
             }catch(error){
                 alert("글을 불러오는데 실패했습니다.")
                 navigate("/board/list")
@@ -58,22 +64,19 @@ const BoardUpdate=()=>{
                             <div className="row title-row">
                                 <select className="category" value={category} onChange={(e)=>setCategory(e.target.value)}>
                                     <option value="">분류</option>
-                                    <option value="후기">구매 후기</option>
-                                    <option value="인증">책 인증샷</option>
-                                    <option value="이벤트">이벤트 참여</option>
-                                    <option value="자유">자유글</option>
+                                    <option value="review">구매 후기</option>
+                                    <option value="proof">책 인증샷</option>
+                                    <option value="event">이벤트 참여</option>
+                                    <option value="free">자유글</option>
                                 </select>
                                 <input type="text" placeholder="제목을 입력해 주세요" className="title-input" 
                                 value={title} onChange={(e)=>setTitle(e.target.value)}/>
                             </div>
                             <div className="row">
-                              
                                 <textarea value={content} onChange={(e)=>setContent(e.target.value)} placeholder="내용을 입력해 주세요"></textarea>
                             </div>
                             <div className="row file-row">
-                               
-                                <input type="text" placeholder="선택된 파일 없음" disabled className="file-name" />
-                                <button type="button" className="upload-btn">파일 올리기</button>
+                                <input type="text" placeholder="선택된 파일 없음" disabled className="file-name" value={filename || "첨부파일 없음"}/>
                             </div>
                             <div className="row button-row">
                                 <button type="submit" className="submit-btn">확인</button>

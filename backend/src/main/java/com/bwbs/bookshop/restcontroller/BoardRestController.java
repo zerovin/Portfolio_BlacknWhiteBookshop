@@ -127,19 +127,21 @@ public class BoardRestController {
 			entity.setHit(0);
 			entity.setUserId(userId);
 			
-			String uploadDir=System.getProperty("user.dir")+"/uploads";
-			File folder=new File(uploadDir);
-			if(!folder.exists()) folder.mkdirs();
-			if(file!=null && !file.isEmpty()) {
-				String uuid=UUID.randomUUID().toString();
-				String filename=uuid+"_"+file.getOriginalFilename();
-				File saveFile=new File(folder, filename);
-				file.transferTo(saveFile);
-				
-				entity.setFilename(file.getOriginalFilename());
-				entity.setFilepath("/uploads/"+filename);
-				entity.setFilesize(file.getSize());
-			}
+			if (file != null && !file.isEmpty()) {
+	            String uploadDir = System.getProperty("user.dir") + "/uploads";
+	            System.out.println("파일 저장 경로: " + System.getProperty("user.dir"));
+	            File folder = new File(uploadDir);
+	            if (!folder.exists()) folder.mkdirs();
+
+	            String uuid = UUID.randomUUID().toString();
+	            String saveName = uuid + "_" + file.getOriginalFilename();
+	            File saveFile = new File(folder, saveName);
+	            file.transferTo(saveFile);
+
+	            entity.setFilename(file.getOriginalFilename());     
+	            entity.setFilepath("/uploads/" + saveName);             
+	            entity.setFilesize(file.getSize());                   
+	        }
 			bRepository.save(entity);
 			return new ResponseEntity<>(HttpStatus.CREATED);
 		}catch(Exception ex) {
@@ -160,10 +162,10 @@ public class BoardRestController {
 	    String encodedName = URLEncoder.encode(filename, "UTF-8").replaceAll("\\+", "%20");
 
 	    return ResponseEntity.ok()
-	            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + encodedName + "\"")
-	            .contentLength(file.length())
-	            .contentType(MediaType.APPLICATION_OCTET_STREAM)
-	            .body(resource);
+	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + encodedName + "\"")
+	        .contentLength(file.length())
+	        .contentType(MediaType.APPLICATION_OCTET_STREAM)
+	        .body(resource);
 	}
 	@DeleteMapping("/board/delete/{no}")
 	public ResponseEntity<?> deleteBoard(@PathVariable("no") int no){
