@@ -1,13 +1,29 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import apiClient from "../../http-commons";
 
 function Join(){
     const [idCheckResult, setIdCheckResult] = useState('')
+    const [postcode, setPostcode] = useState('')
+    const [address, setAddress] = useState('')
+    const [detailAddress, setDetailAddress] = useState('')
+    const navigate = useNavigate()
+    const [formData, setFormData] = useState({
+        userId: '',
+        userPwd: '',
+        userPwdCheck: '',
+        userName: '',
+        emailId: '',
+        emailDomain: 'naver.com',
+        phone: '',
+        post: '',
+        addr1: '',
+        addr2: ''
+    })
     const handleIdCheck=(e)=>{
         e.preventDefault()
 
-        axios.get('http://localhost/member/checkId', {  
+        apiClient.get("/member/checkId", {  
             params: { userId:formData.userId }
         })
         .then(response=>{
@@ -21,25 +37,6 @@ function Join(){
             console.error(error)
         })
     }
-    const [formData, setFormData] = useState({
-        userId: '',
-        userPwd: '',
-        userPwdCheck: '',
-        userName: '',
-        emailId: '',
-        emailDomain: 'naver.com',
-        phone: '',
-        post: '',
-        addr1: '',
-        addr2: ''
-    })
-
-    const [postcode, setPostcode] = useState('')
-    const [address, setAddress] = useState('')
-    const [detailAddress, setDetailAddress] = useState('')
-
-    const navigate = useNavigate()
-
     const handlePostcode=()=>{
         new window.daum.Postcode({
             oncomplete: function (data) {
@@ -54,7 +51,6 @@ function Join(){
             }
         }).open()
     }
-    
     const handleSubmit=async(e)=>{
         e.preventDefault() 
 
@@ -75,7 +71,7 @@ function Join(){
         }
       
         try {
-            const res = await axios.post('/member/join', signupData) 
+            const res = await apiClient.post('/member/join', signupData) 
             console.log(res.data)
             alert('회원가입이 완료되었습니다!')
             navigate("/")
@@ -161,7 +157,7 @@ function Join(){
 
                         <div className="join_btn">
                             <button type="submit">가입</button>
-                            <button type="submit">취소</button>
+                            <button type="button" onClick={() => navigate("/")}>취소</button>
                         </div>
                     </form>
                 </div>
