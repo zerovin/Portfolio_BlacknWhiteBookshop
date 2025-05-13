@@ -1,22 +1,29 @@
 import { Fragment, useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import apiClient from "../../http-commons";
 
 const BookList=()=>{
     const {cate}=useParams();
     const category=decodeURIComponent(atob(cate));
     const display=cate==='all'?'전체':category;
+    const [sort, setSort]=useState("");
+    const [searchParams]=useSearchParams();
+    const mainSort=searchParams.get("sort");
     const [curpage, setCurpage] = useState(1);
-    const {isLoading, isError, error, data}=useQuery(["book_List", category, curpage],
+    const {isLoading, isError, error, data}=useQuery(["book_List", category, curpage, sort],
         async ()=>{
-            return await apiClient.get(`/book/list/${cate}/${curpage}`)
+            return await apiClient.get(`/book/list/${cate}/${curpage}?sort=${sort}`)
         }
     )
 
     useEffect(()=>{
         window.scrollTo({top:0, behavior:'auto'})
         setCurpage(1);
+        setSort("");
+        if(mainSort){
+            setSort(mainSort)
+        }
     },[cate])
 
     if(isLoading){
@@ -60,8 +67,8 @@ const BookList=()=>{
                     <div className="top">
                         <h3>{display}</h3>
                         <ul className="filter">
-                            <li>베스트 순</li>
-                            <li>신상품 순</li>
+                            <li onClick={()=>setSort("best")}>베스트 순</li>
+                            <li onClick={(()=>setSort("new"))}>신상품 순</li>
                         </ul>
                     </div>
                     <ul className="book_list">

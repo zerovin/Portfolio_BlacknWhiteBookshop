@@ -1,6 +1,25 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
+import apiClient from "../../http-commons";
+import { Link } from "react-router-dom";
 
 const Home=()=>{
+    const [bestseller, setBestseller]=useState([]);
+    const [newBook, setNewBook]=useState([]);
+
+    useEffect(()=>{
+        const mainData=async()=>{
+            try{
+                const resultBest=await apiClient.get('/main/best')
+                const resultNew=await apiClient.get('/main/new')
+                setBestseller(resultBest.data)
+                setNewBook(resultNew.data)
+            }catch(error){
+                console.error(error)
+            }
+        }
+        mainData();
+    },[])
+
     return(
         <Fragment>
             <main>
@@ -13,28 +32,27 @@ const Home=()=>{
                     <div className="best">
                         <h2>best seller</h2>
                         <ul className="best_list">
-                            <li className="winner"><a href="#"><img src="./img/ex1.jpg" alt="단 한 번의 삶"/></a></li>
-                            <li><a href="#"><img src="./img/ex2.jpg" alt="듀얼브레인"/></a></li>
-                            <li><a href="#"><img src="./img/ex3.jpg" alt="어른의 품격을 채우는 100일 필사 노트"/></a></li>
-                            <li><a href="#"><img src="./img/ex4.jpg" alt="사카모토데이즈"/></a></li>
-                            <li><a href="#"><img src="./img/ex5.jpg" alt="어른의 행복은 조용하다"/></a></li>
-                            <li><a href="#"><img src="./img/ex6.jpg" alt="소년이 온다"/></a></li>
-                            <li><a href="#"><img src="./img/ex7.jpg" alt="여학교의 별4"/></a></li>
-                            <li><a href="#"><img src="./img/ex8.jpg" alt="작별하지 않는다"/></a></li>
-                            <li><a href="#"><img src="./img/ex9.jpg" alt="젊은작가상 수상작품집"/></a></li>
-                            <li><a href="#"><img src="./img/ex10.jpg" alt="모순"/></a></li>
-                            <li><a href="#" className="read_more"><i className="fa-solid fa-arrow-right"></i>더보기</a></li>
+                            {
+                                bestseller.map((best, idx)=>(
+                                    <li key={idx} className={idx===0?"winner":""}>
+                                        <Link to={`/book/detail/${best.no}`}><img src={best.thumb} alt={best.title}/></Link>
+                                    </li>
+                                ))
+                            }
+                            <li><Link to={"/book/list/all?sort=best"} className="read_more"><i className="fa-solid fa-arrow-right"></i>더보기</Link></li>
                         </ul>
                     </div>
                     <div className="new">
                         <h2>new</h2>
                         <ul className="new_list">
-                            <li><a href="#" className="read_more"><i className="fa-solid fa-arrow-right"></i>더보기</a></li>
-                            <li><a href="#"><img src="./img/ex1.jpg" alt="단 한 번의 삶"/></a></li>
-                            <li><a href="#"><img src="./img/ex2.jpg" alt="듀얼브레인"/></a></li>
-                            <li><a href="#"><img src="./img/ex3.jpg" alt="어른의 품격을 채우는 100일 필사 노트"/></a></li>
-                            <li><a href="#"><img src="./img/ex4.jpg" alt="사카모토데이즈"/></a></li>
-                            <li><a href="#"><img src="./img/ex5.jpg" alt="어른의 행복은 조용하다"/></a></li>
+                            <li><Link to="/book/list/all?sort=new" className="read_more"><i className="fa-solid fa-arrow-right"></i>더보기</Link></li>
+                            {
+                                newBook.map((n, idx)=>(
+                                    <li key={idx}>
+                                        <Link to={`/book/detail/${n.no}`}><img src={n.thumb} alt={n.title}/></Link>
+                                    </li>
+                                ))
+                            }
                         </ul>
                     </div>
                 </div>
