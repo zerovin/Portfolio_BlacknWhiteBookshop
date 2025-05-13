@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bwbs.bookshop.dao.*;
@@ -27,7 +28,7 @@ public class BookRestController {
 	private BookService bService;
     
 	@GetMapping("/book/list/{cate}/{page}")
-	public ResponseEntity<Map<String, Object>> book_list(@PathVariable("cate") String cate, @PathVariable("page") int page){
+	public ResponseEntity<Map<String, Object>> book_list(@PathVariable("cate") String cate, @PathVariable("page") int page, @RequestParam(name="sort") String sort){
 		String category="";
 		List<BookDTO> bList=new ArrayList<>();
 		int count=0;
@@ -39,14 +40,20 @@ public class BookRestController {
 			
 		
 			if(cate.equals("all")) {
-				bList=bService.bookListAll(page);
-				count=bService.count();
+				if(sort.equals("")) {
+					bList=bService.bookListAll(start);
+				}else {
+					bList=bService.bookListAllSort(start, sort);
+				}
+				count=bService.count();					
 			}else {
-				
 				String firstDecoded=new String(Base64.getDecoder().decode(cate), StandardCharsets.UTF_8);
 				category=URLDecoder.decode(firstDecoded, StandardCharsets.UTF_8);
-				System.out.println(category);
-				bList=bService.bookListData(category, start);
+				if(sort.equals("")) {
+					bList=bService.bookListData(category, start);					
+				}else {
+					bList=bService.bookListDataSort(category, start, sort);
+				}
 				int countByCate=bService.countByCate(category);
 				count=(int)countByCate;				
 			}

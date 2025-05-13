@@ -31,7 +31,7 @@ public class BookDTO {
     		entity.getLink(),
     		entity.getIntro(),
     		entity.getContents(),
-    		entity.getPub_date(),
+    		entity.getPubDate(),
     		entity.getPrice(),
     		entity.getSales()
     	);

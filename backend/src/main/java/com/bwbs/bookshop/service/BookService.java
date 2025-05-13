@@ -14,14 +14,46 @@ public class BookService {
 	@Autowired
 	private BookDAO bDao;
 	
+	//Main
+	public List<BookEntity> mainBest(){
+		List<BookEntity> mainBest=bDao.findTop10ByOrderBySalesDesc();
+		return mainBest;
+	}
+	
+	public List<BookEntity> mainNew(){
+		List<BookEntity> mainNew=bDao.findTop5ByOrderByPubDateDesc();
+		return mainNew;
+	}
+	
+	//BookList
 	public List<BookDTO> bookListAll(int start){
 		List<BookEntity> bEntity=bDao.bookListAll(start);
 		return bEntity.stream().map(BookDTO::fromEntity).collect(Collectors.toList());
 	}
 	
+	public List<BookDTO> bookListAllSort(int start, String sort){
+		if(sort.equalsIgnoreCase("best")) {
+			List<BookEntity> bEntity=bDao.bookListAllSortedBySales(start);
+			return bEntity.stream().map(BookDTO::fromEntity).collect(Collectors.toList());
+		}else{
+			List<BookEntity> bEntity=bDao.bookListAllSortedByPubDate(start);
+			return bEntity.stream().map(BookDTO::fromEntity).collect(Collectors.toList());
+		}
+	}
+	
 	public List<BookDTO> bookListData(String cate, int start){
 		List<BookEntity> bEntity=bDao.bookListCate(cate, start);
 		return bEntity.stream().map(BookDTO::fromEntity).collect(Collectors.toList());
+	}
+	
+	public List<BookDTO> bookListDataSort(String cate, int start, String sort){
+		if(sort.equalsIgnoreCase("best")) {
+			List<BookEntity> bEntity=bDao.bookListCateSortedBySales(cate, start);
+			return bEntity.stream().map(BookDTO::fromEntity).collect(Collectors.toList());
+		}else {
+			List<BookEntity> bEntity=bDao.bookListCateSortedByPubDate(cate, start);
+			return bEntity.stream().map(BookDTO::fromEntity).collect(Collectors.toList());
+		}
 	}
 	
 	public int count() {
@@ -40,4 +72,5 @@ public class BookService {
 	public List<String> categoryList(){
 		return bDao.categoryList();
 	}
+	
 }

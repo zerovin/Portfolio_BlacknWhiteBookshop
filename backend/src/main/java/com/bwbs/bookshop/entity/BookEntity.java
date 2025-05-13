@@ -36,6 +36,6 @@ public class BookEntity {
 	@Lob
 	@Column(name="contents")
 	private String contents;
-	private Date pub_date;
+	private Date pubDate;
 	private int price, sales;
 }
