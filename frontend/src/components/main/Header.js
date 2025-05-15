@@ -113,6 +113,10 @@ const Header=()=>{
                                 <li><Link to={'/member/login'}>로그인</Link></li>
                             }
                             {
+                                !guest &&
+                                <li><Link to={'/book/cart'}>장바구니</Link></li>
+                            }
+                            {
                                 !guest && !admin &&
                                 <li><Link to={'/mypage'}>마이페이지</Link></li>
                             }

@@ -88,9 +88,9 @@ const BookDetail=()=>{
                             </div>
                             <p className="alert">실결제 금액은 적립금, 쿠폰 등에 따라 달라질 수 있습니다.</p>
                             <div className="btns">
-                                <button>장바구니</button>
-                                <button>바로픽업</button>
-                                <button>바로구매</button>
+                                <Link to={"/book/cart"}>장바구니</Link>
+                                <Link to={"/book/pickup"}>바로픽업</Link>
+                                <Link to={"/book/buynow"}>바로구매</Link>
                             </div>
                         </div>
                     </div>
@@ -124,9 +124,9 @@ const BookDetail=()=>{
                             </div>
                             <p className="alert">실결제 금액은 적립금, 쿠폰 등에 따라 달라질 수 있습니다.</p>
                             <div className="btns">
-                                <button>장바구니</button>
-                                <button>바로픽업</button>
-                                <button>바로구매</button>
+                                <Link to={"/book/cart"}>장바구니</Link>
+                                <Link to={"/book/pickup"}>바로픽업</Link>
+                                <Link to={"/book/buynow"}>바로구매</Link>
                             </div>
                         </div>
                     </div>

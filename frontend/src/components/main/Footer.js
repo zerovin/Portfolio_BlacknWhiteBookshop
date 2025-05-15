@@ -8,7 +8,7 @@ const Footer=()=>{
                     <p>사용된 이미지 및 폰트 등은 별도의 출처가 있음을 밝혀 드립니다.</p>
                 </div>
                 <div className="right">
-                    <p>흑백서점</p>
+                    <p>흑백책방</p>
                     <ul className="contact">
                         <li>
                             <span>이영빈 </span>
