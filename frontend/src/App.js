@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import {Routes, Route} from "react-router-dom";
+import {Routes, Route, Navigate} from "react-router-dom";
 import Header from "./components/main/Header";
 import Footer from "./components/main/Footer";
 import Home from "./components/main/Home";
@@ -13,6 +13,15 @@ import BoardInsert from "./components/board/BoardInsert";
 import BoardDetail from "./components/board/BoardDetail";
 import BoardUpdate from "./components/board/BoardUpdate";
 import BoardDelete from "./components/board/BoardDelete";
+import MyPage from "./components/mypage/MyPage";
+import MyMain from "./components/mypage/MyMain";
+import MyInfo from "./components/mypage/MyInfo";
+import MyPwd from "./components/mypage/MyPwd";
+import MyOrder from "./components/mypage/MyOrder";
+import MyView from "./components/mypage/MyView";
+import MyWish from "./components/mypage/MyWish";
+import MyPost from "./components/mypage/MyPost";
+import MyQnA from "./components/mypage/MyQnA";
 
 function App() {
   return (
@@ -31,6 +40,16 @@ function App() {
               <Route path={"/board/detail/:no"} element={<BoardDetail/>}/>
               <Route path={"/board/update/:no"} element={<BoardUpdate/>}/>
               <Route path={"/board/delete"} element={<BoardDelete/>}/>
+              <Route path={"/mypage"} element={<MyPage/>}>
+                <Route index element={<MyMain/>}/>
+                <Route path="info" element={<MyInfo/>}/>
+                <Route path="pwd" element={<MyPwd/>}/>
+                <Route path="order" element={<MyOrder/>}/>
+                <Route path="view" element={<MyView/>}/>
+                <Route path="wish" element={<MyWish/>}/>
+                <Route path="post" element={<MyPost/>}/>
+                <Route path="qna" element={<MyQnA/>}/>
+              </Route>
           </Routes>
           <Footer/>
       </div>

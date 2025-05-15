@@ -114,7 +114,7 @@ const Header=()=>{
                             }
                             {
                                 !guest && !admin &&
-                                <li><Link to={''}>마이페이지</Link></li>
+                                <li><Link to={'/mypage'}>마이페이지</Link></li>
                             }
                             {
                                 !guest && admin &&
