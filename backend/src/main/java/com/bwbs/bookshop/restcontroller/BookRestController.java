@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +20,8 @@ import com.bwbs.bookshop.dao.*;
 import com.bwbs.bookshop.dto.BookDTO;
 import com.bwbs.bookshop.entity.*;
 import com.bwbs.bookshop.service.*;
+
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @CrossOrigin(origins="*")
@@ -88,5 +92,15 @@ public class BookRestController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(vo, HttpStatus.OK);
+	}
+	
+	@PostMapping("/book/cart")
+	public ResponseEntity<?> add_cart(HttpSession session){
+		String userId=(String)session.getAttribute("bwbs_userId");
+		if(userId==null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
+		}
+		//cartService.addItem(userId, bookNo)
+		return ResponseEntity.ok().build();
 	}
 }
