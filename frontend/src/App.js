@@ -44,6 +44,7 @@ function App() {
               <Route path={"/board/delete"} element={<BoardDelete/>}/>
               <Route path={"/mypage"} element={<MyPage/>}>
                 <Route index element={<MyMain/>}/>
+                <Route path="main" element={<MyMain/>}/>
                 <Route path="info" element={<MyInfo/>}/>
                 <Route path="pwd" element={<MyPwd/>}/>
                 <Route path="order" element={<MyOrder/>}/>
