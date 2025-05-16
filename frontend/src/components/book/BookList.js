@@ -94,9 +94,9 @@ const BookList=()=>{
                                         </div>
                                     </div>
                                     <div className="right">
-                                        <Link to={"/book/cart"}>장바구니</Link>
-                                        <Link to={"/book/pickup"}>바로픽업</Link>
-                                        <Link to={"/book/buynow"}>바로구매</Link>
+                                        <button>장바구니</button>
+                                        <button>바로픽업</button>
+                                        <button>바로구매</button>
                                     </div>
                                 </li>
                             )

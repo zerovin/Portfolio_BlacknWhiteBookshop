@@ -1,7 +1,24 @@
 import { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
+import { Link, useParams } from "react-router-dom";
+import apiClient from "../../http-commons";
 
 const BookCart=()=>{
+    // const {no}=useParams();
+
+    // const {isLoading, isError, error, data}=useQuery(['book_cart', no],
+    //     async()=>{
+    //         return await apiClient.get(`/book/cart/${no}`)
+    //     }
+    // )
+    // console.log(data)
+
+    // if(isLoading){
+    //     return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>로딩중...</p>
+    // }
+    // if(isError){
+    //     return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>{error.message}</p>
+    // }
     return(
         <Fragment>
             <div id="bookCart">
@@ -17,7 +34,7 @@ const BookCart=()=>{
                     <div className="grid_wrap">
                         <div className="left">
                             <div className="table_top">
-                                <input type="checkbox" id="all_check" className="hidden"/>
+                                <input type="checkbox" id="all_check" className="hidden" defaultChecked={true}/>
                                 <label htmlFor="all_check">전체선택</label>
                             </div>
                             <table>
@@ -33,7 +50,7 @@ const BookCart=()=>{
                                 <tbody>
                                     <tr>
                                         <td className="td_check">
-                                            <input type="checkbox" id="check1" className="hidden"/>
+                                            <input type="checkbox" id="check1" className="hidden" defaultChecked={true}/>
                                             <label htmlFor="check1">선택</label>
                                         </td>
                                         <td className="book_info">
@@ -74,7 +91,7 @@ const BookCart=()=>{
                                     </tr>
                                     <tr>
                                         <td className="td_check">
-                                            <input type="checkbox" id="check2" className="hidden"/>
+                                            <input type="checkbox" id="check2" className="hidden" defaultChecked={true}/>
                                             <label htmlFor="check2">선택</label>
                                         </td>
                                         <td className="book_info">
@@ -115,7 +132,7 @@ const BookCart=()=>{
                                     </tr>
                                     <tr>
                                         <td className="td_check">
-                                            <input type="checkbox" id="check3" className="hidden"/>
+                                            <input type="checkbox" id="check3" className="hidden" defaultChecked={true}/>
                                             <label htmlFor="check3">선택</label>
                                         </td>
                                         <td className="book_info">

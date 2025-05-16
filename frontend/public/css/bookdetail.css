@@ -145,7 +145,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap:20px;
 }
-#bookDetail .btns a{
+#bookDetail .btns button{
     display:block;
     width:100%;
     border:1px solid #1E1A1A;
@@ -153,7 +153,7 @@
     box-sizing:border-box;
     text-align:center;
 }
-#bookDetail .btns a:last-child{
+#bookDetail .btns button:last-child{
     background:#1E1A1A;
     color:#fff;
     font-weight:600;

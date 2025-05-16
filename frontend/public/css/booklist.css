@@ -117,16 +117,16 @@
     -webkit-box-orient: vertical; 
     -webkit-line-clamp: 5;
 }
-#bookList .book_list .right a{
+#bookList .book_list .right button{
     display:inline-block;
     padding:10px 40px;
     border:1px solid #1E1A1A;
     text-align:center;
 }
-#bookList .book_list .right a+a{
+#bookList .book_list .right button+button{
     margin-top:10px;
 }
-#bookList .book_list .right a:last-child{
+#bookList .book_list .right button:last-child{
     background:#1E1A1A;
     color:#fff;
 }

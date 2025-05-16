@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import apiClient from "../../http-commons";
 import { useQuery } from "react-query";
 import DOMPurify from "dompurify";
@@ -7,6 +7,7 @@ import DOMPurify from "dompurify";
 const BookDetail=()=>{
     const {no}=useParams()
     const [amount, setAmount]=useState(1);
+    const [cartModal, setCartModal]=useState(false);
     const goTop=()=>{
         window.scrollTo({top:0, behavior:'smooth'})
     }
@@ -40,6 +41,32 @@ const BookDetail=()=>{
     }
     const minusAmount=()=>{
         setAmount(prev=>(prev>1?prev-1:1))
+    }
+
+    const addCart=async()=>{
+        try{
+            await apiClient.post(
+                '/book/cart',
+                {bookNo:data.data.no, amount:amount},
+                {withCredentials:true}
+            )
+            setCartModal(true);
+        }catch(error){
+            if(error.reponse?.status === 401){
+                alert('로그인이 필요합니다.')
+            }else{
+                alert('장바구니 담기에 실패했습니다.')
+            }
+        }
+    }
+
+    const goCart=()=>{
+        setCartModal(false);
+        Navigate('/book/cart');
+    }
+
+    const closeModal=()=>{
+        setCartModal(false);
     }
 
     return(
@@ -88,9 +115,9 @@ const BookDetail=()=>{
                             </div>
                             <p className="alert">실결제 금액은 적립금, 쿠폰 등에 따라 달라질 수 있습니다.</p>
                             <div className="btns">
-                                <Link to={"/book/cart"}>장바구니</Link>
-                                <Link to={"/book/pickup"}>바로픽업</Link>
-                                <Link to={"/book/buynow"}>바로구매</Link>
+                                <button>장바구니</button>
+                                <button>바로픽업</button>
+                                <button>바로구매</button>
                             </div>
                         </div>
                     </div>
@@ -124,9 +151,9 @@ const BookDetail=()=>{
                             </div>
                             <p className="alert">실결제 금액은 적립금, 쿠폰 등에 따라 달라질 수 있습니다.</p>
                             <div className="btns">
-                                <Link to={"/book/cart"}>장바구니</Link>
-                                <Link to={"/book/pickup"}>바로픽업</Link>
-                                <Link to={"/book/buynow"}>바로구매</Link>
+                                <button onClick={addCart}>장바구니</button>
+                                <button>바로픽업</button>
+                                <button>바로구매</button>
                             </div>
                         </div>
                     </div>
