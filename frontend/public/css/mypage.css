@@ -148,6 +148,12 @@
     padding: 12px;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
+
+}
+#Myorder .table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
 }
 #Myorder .table td {
     padding: 12px;
