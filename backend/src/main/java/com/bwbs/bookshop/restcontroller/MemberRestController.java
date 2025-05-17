@@ -170,4 +170,34 @@ public class MemberRestController {
 		}
 		return "Fail";	
 	}
+	@PutMapping("/pwdChange")
+	public String pwdChange(@RequestBody Map<String, String> pwdData, HttpSession session) {
+		String userId=(String) session.getAttribute("bwbs_userId");
+		if(userId==null) {
+			return "NotLogin";
+		}
+		String curPwd=pwdData.get("curPwd");
+		String newPwd=pwdData.get("newPwd");
+		
+		Optional<MemberEntity> entity=memberRepository.findById(userId);
+		if(entity.isPresent()) {
+			MemberEntity m=entity.get();
+			
+			if(!passwordEncoder.matches(curPwd, m.getUserPwd())) {
+				return "WrongPwd";
+			}
+			
+			m.setUserPwd(passwordEncoder.encode(newPwd));
+			
+			try {
+				memberRepository.save(m);
+				return "Success";
+			}catch(Exception ex) {
+				ex.printStackTrace();
+				return "Fail";
+			}
+		}else {
+			return "NotFound";
+		}
+	}
 }
