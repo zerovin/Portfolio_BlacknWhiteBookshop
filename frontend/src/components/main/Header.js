@@ -97,7 +97,6 @@ const Header=()=>{
                             </ul>
                         </li>
                         <li><Link to="/board/list">자유게시판</Link></li>
-                        <li><Link to={'/mypage/main'}>마이페이지</Link></li>
                     </ul>
                     <div className="bottom">
                         <ul className="bottom_menu">
