@@ -7,167 +7,208 @@
   font-weight:600;
   text-align: center;
 }
-
 #PickUp .container{
-  max-width: 1200px;
   margin: 0 auto;
   padding: 30px;
 }
-
-#PickUp .top {
-  margin-bottom: 80px;
+#PickUp .top{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:80px;
 }
-
-#PickUp .content {
+#PickUp .top h3{
+  font-size: 18px;
+  font-weight: 600;
+}
+#PickUp .top .process{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+#PickUp .top .process span{
+  background:#1E1A1A;
+  color:#fff;
+  font-weight:600;
+  padding:3px 10px;
+}
+#PickUp .content{
   display: flex;
+  flex-wrap: wrap;
   gap: 40px; 
 }
-
-#PickUp .left {
-  flex: 2;
-  background: #f9f9f9;
-  padding: 20px;
-
+#PickUp .left{
+  flex: 1 1 0%;
+  min-width: 400px;
 }
-
-#PickUp .right {
-  flex: 1;
-  max-width: 320px;
+#PickUp .right{
+  flex: 0 0 280px;
+  max-width: 300px;
   background: #fff;
   border: 1px solid #ddd;
   padding: 20px;
   align-self: flex-start;
 }
-
-#PickUp .payment {
+#PickUp .payment{
   background: #fdfdfd;
   border: none;
-  padding: 20px;
+  padding: 20px 10px;
 }
-
-#PickUp .payment h2 {
+#PickUp .payment h2{
   font-size: 20px;
   margin-bottom: 20px;
 }
-
-#PickUp .payment .row {
+#PickUp .payment .row{
   display: flex;
   justify-content: space-between;
+  margin-bottom: 20px;
+}
+#PickUp .payment .row.discount span:last-child{
+  color: gray;
   margin-bottom: 10px;
 }
-
-#PickUp .payment .row.discount span:last-child {
-  color: gray;
-}
-
-#PickUp .total {
+#PickUp .total{
   display: flex;
   justify-content: space-between;
   font-size: 18px;
   font-weight: bold;
   margin: 20px 0;
   border-top: 1px solid #ccc;
-  padding-top: 10px;
+  padding-top: 30px;
 }
-
-#PickUp .point {
+#PickUp .point{
   display: flex;
   justify-content: space-between;
   font-size: 14px;
   color: #666;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
-#PickUp .agreement {
+#PickUp .agreement{
   font-size: 14px;
   margin-bottom: 20px;
 }
 
-#PickUp .payBtn {
+#PickUp .payBtn{
   width: 100%;
-  padding: 12px;
+  padding: 20px 20px;
   background: black;
   color: white;
   border: none;
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
 }
-
-
-#PickUp .left h3 {
+#PickUp .left h3{
   font-size: 18px;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
   padding-left: 10px;
 }
-
-#PickUp .pickup_info,
-.member_info,
-.order {
-  background: #fff;
-  border: 1px solid #ddd;
-  padding: 20px;
+#PickUp .pickup_info, .order{
+  border-top: 1px solid black;
+  padding: 30px 50px;
   margin-bottom: 30px;
 }
-
-#PickUp .pickup_info ul {
+#PickUp .pickup_info ul{
   list-style: none;
   padding: 0;
+  font-weight: 600;
 }
-
-#PickUp .pickup_info li {
+#PickUp .pickup_info li{
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
-}
-
-#PickUp .member_info .row {
-  display: flex;
-  justify-content: space-between;
+  height: 30px;
   align-items: center;
 }
-
-#PickUp .changeBtn {
+#PickUp .pickup_info li:last-child {
+  margin-bottom: 0;
+}
+#PickUp .pickup_info input[type="date"],
+#PickUp .pickup_info select {
+  padding: 4px 8px;
+  border: none;
+  border-bottom: 1px solid black;
+  font-size: 14px;
+  margin-left: 10px;
+}
+#PickUp .pickup_info .wrap-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 10px;
+  font-size: 15px;
+}
+#PickUp .pickup_info .wrap-option input[type="checkbox"] {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+#PickUp .changeBtn{
   padding: 6px 12px;
   font-size: 13px;
   background: white;
   border: 1px solid black;
+  margin-left: 20px;
 }
-
 #PickUp .order .row {
   display: flex;
-  
-  gap: 16px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+  gap: 10px;
 }
-
-#PickUp .order img {
+#PickUp .row .thumb {
   width: 60px;
-  height: auto;
-  border: 1px solid #ddd;
   flex-shrink: 0;
 }
-
-#PickUp .product {
+#PickUp .row .thumb img {
+  width: 100%;
+  border: 1px solid #ddd;
+}
+#PickUp .row .title {
+  flex: 3;
+  font-weight: 600;
+  padding-left: 20px;
+}
+#PickUp .row .origin {
+  flex: 1.2;
+  text-align: right;
+  text-decoration: line-through;
+  color: #aaa;
+}
+#PickUp .row .price {
+  flex: 1.2;
+  text-align: left;
+  font-weight: 500;
+  color: #000;
+}
+#PickUp .row .qty {
+  flex: 0.8;
+  text-align: center;
+  font-size: 14px;
+}
+#PickUp .row .t_price {
+  flex: 1.2;
+  text-align: right;
+  font-weight: bold;
+  color: #111;
+}
+#PickUp .product{
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-
-#PickUp .product.title {
+#PickUp .product.title{
   font-weight: bold;
   margin-bottom: 6px;
 }
-
-#PickUp .product.option {
+#PickUp .product.option{
   font-size: 13px;
   color: #888;
   margin-bottom: 4px;
 }
-
-#PickUp .product.price {
+#PickUp .product.price{
   font-weight: bold;
 }
-
-#PickUp .product.origin {
+#PickUp .product.origin{
   text-decoration: line-through;
   margin-left: 6px;
   color: #999;
