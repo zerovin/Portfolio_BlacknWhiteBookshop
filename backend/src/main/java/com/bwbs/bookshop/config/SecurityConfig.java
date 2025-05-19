@@ -14,6 +14,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 @Configuration
 public class SecurityConfig {
 	@Bean
@@ -29,13 +31,25 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/member/**").permitAll()
                 .requestMatchers("/main/**").permitAll()
-                .requestMatchers("/member/login/**").permitAll()
                 .requestMatchers("/book/**").permitAll()
+                .requestMatchers("/cart/**").permitAll()
                 .requestMatchers("/board/**").permitAll()
                 .requestMatchers("/uploads/**").permitAll()
                 .anyRequest().authenticated() 
             )
             .formLogin(withDefaults());
+            /*
+            .formLogin(form -> form.disable())
+            .httpBasic(httpBasic -> httpBasic.disable())
+            .logout(logout -> logout.disable())
+        	.exceptionHandling(ex -> ex
+	            .authenticationEntryPoint((request, response, authException) -> {
+	                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+	                response.setContentType("application/json");
+	                response.getWriter().write("{\"error\": \"로그인이 필요합니다\"}");
+	            })
+	        );
+	        */
 
         return http.build();
     }

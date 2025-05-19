@@ -93,14 +93,4 @@ public class BookRestController {
 		}
 		return new ResponseEntity<>(vo, HttpStatus.OK);
 	}
-	
-	@PostMapping("/book/cart")
-	public ResponseEntity<?> add_cart(HttpSession session){
-		String userId=(String)session.getAttribute("bwbs_userId");
-		if(userId==null) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
-		}
-		//cartService.addItem(userId, bookNo)
-		return ResponseEntity.ok().build();
-	}
 }
