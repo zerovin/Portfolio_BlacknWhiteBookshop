@@ -227,3 +227,48 @@
 #bookDetail .bottom .btns button{
     padding:15px;
 }
+
+/* ---------------- GO CART ------------------*/
+#addcart_box{
+    position:fixed; 
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    z-index:1;
+    background:#fff;
+    border:1px solid #1E1A1A;
+    width:300px;
+    height:200px;
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:25px;
+}
+#addcart_box.active{
+    display:flex;
+}
+#addcart_box p{
+    text-align:center;
+    line-height:1.4em;
+}
+#addcart_box p:first-child{
+    font-size:17px;
+    font-weight:600;
+}
+#addcart_box p:last-child{
+    font-size:15px;
+}
+#addcart_box .gocart_btn{
+    display:flex;
+    gap:10px;
+}
+#addcart_box .gocart_btn button{
+    border:1px solid #1E1A1A;
+    padding:10px;
+    cursor:pointer;
+}
+#addcart_box .gocart_btn button.ok{
+    background:#1E1A1A;
+    color:#fff;
+}

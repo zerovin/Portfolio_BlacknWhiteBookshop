@@ -1,13 +1,14 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import apiClient from "../../http-commons";
 import { useQuery } from "react-query";
 import DOMPurify from "dompurify";
 
 const BookDetail=()=>{
     const {no}=useParams()
-    const [amount, setAmount]=useState(1);
+    const [quantity, setQuantity]=useState(1);
     const [cartModal, setCartModal]=useState(false);
+    const Navigate=useNavigate();
     const goTop=()=>{
         window.scrollTo({top:0, behavior:'smooth'})
     }
@@ -23,8 +24,8 @@ const BookDetail=()=>{
     },[])
     
     const total=useMemo(()=>{
-        return ((data?.data?.price || 0)*amount)*0.9;
-    },[data, amount])
+        return ((data?.data?.price || 0)*quantity)*0.9;
+    },[data, quantity])
     
     if(isLoading){
         return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>로딩중...</p>
@@ -37,22 +38,22 @@ const BookDetail=()=>{
     const safeIntro=DOMPurify.sanitize(data.data.intro);
     const safeContents=DOMPurify.sanitize(data.data.contents);
     const plusAmount=()=>{
-        setAmount(prev=>prev+1)
+        setQuantity(prev=>prev+1)
     }
     const minusAmount=()=>{
-        setAmount(prev=>(prev>1?prev-1:1))
+        setQuantity(prev=>(prev>1?prev-1:1))
     }
 
     const addCart=async()=>{
         try{
             await apiClient.post(
-                '/book/cart',
-                {bookNo:data.data.no, amount:amount},
+                '/cart/add',
+                {bookNo:data.data.no, quantity:quantity},
                 {withCredentials:true}
             )
             setCartModal(true);
         }catch(error){
-            if(error.reponse?.status === 401){
+            if(error.response?.status === 401){
                 alert('로그인이 필요합니다.')
             }else{
                 alert('장바구니 담기에 실패했습니다.')
@@ -62,7 +63,7 @@ const BookDetail=()=>{
 
     const goCart=()=>{
         setCartModal(false);
-        Navigate('/book/cart');
+        Navigate('/cart/list');
     }
 
     const closeModal=()=>{
@@ -102,20 +103,20 @@ const BookDetail=()=>{
                                 </div>
                                 <div>
                                     <p>배송비</p>
-                                    <p>무료 <span>해외배경의 경우 지역에 따라 상이</span></p>
+                                    <p>무료 <span>해외배송의 경우 지역에 따라 상이</span></p>
                                 </div>
                             </div>
                             <div className="cal">
                                 <div className="amount">
                                     <button className="miunus" onClick={minusAmount}><i className="fa-solid fa-minus"></i></button>
-                                    <p>{amount}</p>
+                                    <p>{quantity}</p>
                                     <button className="plus" onClick={plusAmount}><i className="fa-solid fa-plus"></i></button>
                                 </div>
                                 <p className="total"><span>{total.toLocaleString()}</span>원</p>
                             </div>
                             <p className="alert">실결제 금액은 적립금, 쿠폰 등에 따라 달라질 수 있습니다.</p>
                             <div className="btns">
-                                <button>장바구니</button>
+                                <button onClick={addCart}>장바구니</button>
                                 <button>바로픽업</button>
                                 <button>바로구매</button>
                             </div>
@@ -144,7 +145,7 @@ const BookDetail=()=>{
                             <div className="cal">
                                 <div className="amount">
                                     <button className="miunus" onClick={minusAmount}><i className="fa-solid fa-minus"></i></button>
-                                    <p>{amount}</p>
+                                    <p>{quantity}</p>
                                     <button className="plus" onClick={plusAmount}><i className="fa-solid fa-plus"></i></button>
                                 </div>
                                 <p className="total"><span>{total.toLocaleString()}</span>원</p>
@@ -156,6 +157,16 @@ const BookDetail=()=>{
                                 <button>바로구매</button>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div id="addcart_box" className={cartModal?"active":""}>
+                    <div>
+                        <p>상품이 장바구니에 담겼습니다.</p> 
+                        <p>장바구니로 이동하시겠습니까?</p>
+                    </div>
+                    <div className="gocart_btn">
+                        <button className="ok" onClick={goCart}>이동</button>
+                        <button className="cancel" onClick={closeModal}>취소</button>
                     </div>
                 </div>
             </div>

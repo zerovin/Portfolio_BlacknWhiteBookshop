@@ -1,24 +1,29 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { useQuery } from "react-query";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import apiClient from "../../http-commons";
 
-const BookCart=()=>{
-    // const {no}=useParams();
+const CartList=()=>{
+    const {isLoading, error, data}=useQuery(['cart_list'],
+        async()=>{
+            const res=await apiClient.get('/cart/list/', {withCredentials:true})
+            return res.data
+        }
+    )
+    console.log(data)
 
-    // const {isLoading, isError, error, data}=useQuery(['book_cart', no],
-    //     async()=>{
-    //         return await apiClient.get(`/book/cart/${no}`)
-    //     }
-    // )
-    // console.log(data)
+    useEffect(()=>{
+        window.scrollTo({top:0, behavior:'auto'})
+    },[])
 
-    // if(isLoading){
-    //     return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>로딩중...</p>
-    // }
-    // if(isError){
-    //     return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>{error.message}</p>
-    // }
+    if(isLoading){
+        return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>로딩중...</p>
+    }
+    if(error){
+        return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>{error.message}</p>
+    }
+
+
     return(
         <Fragment>
             <div id="bookCart">
@@ -206,4 +211,4 @@ const BookCart=()=>{
         </Fragment>
     )
 }
-export default BookCart;
+export default CartList;
