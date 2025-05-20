@@ -114,7 +114,7 @@ const Header=()=>{
                             }
                             {
                                 !guest &&
-                                <li><Link to={'/book/cart'}>장바구니</Link></li>
+                                <li><Link to={'/cart/list'}>장바구니</Link></li>
                             }
                             {
                                 !guest && !admin &&
