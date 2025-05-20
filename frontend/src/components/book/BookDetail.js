@@ -2,6 +2,7 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import apiClient from "../../http-commons";
 import { useQuery } from "react-query";
+import { setCookie } from "../util/cookie"
 import DOMPurify from "dompurify";
 
 const BookDetail=()=>{
@@ -27,6 +28,15 @@ const BookDetail=()=>{
     const total=useMemo(()=>{
         return ((data?.data?.price || 0)*quantity)*0.9;
     },[data, quantity])
+
+    useEffect(()=>{
+        if(data?.data){
+            const book=data.data;
+            const cookieKey="book_"+book.no
+            setCookie(cookieKey, book.thumb)
+        }
+    },[])
+
     useEffect(()=>{
         apiClient.post("/member/isLogin")
         .then(res=>{
@@ -100,7 +110,7 @@ const BookDetail=()=>{
     const closeModal=()=>{
         setCartModal(false);
     }
-
+    
     return(
         <Fragment>
             <div id="bookDetail">
