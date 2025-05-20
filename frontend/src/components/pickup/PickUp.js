@@ -1,6 +1,50 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState, useMemo } from "react"
+import { useLocation } from "react-router-dom"
+import apiClient from "../../http-commons"
 
 const PickUp=()=>{
+    const location = useLocation()
+    const { userId, items } = location.state || {}
+    const [userInfo, setUserInfo] = useState({ name: "", phone: "" })
+    const [wrap, setWrap] = useState(false)
+    const discountedTotal = useMemo(()=>{
+        if (!items) return 0
+        return items.reduce((sum, item)=>{
+            const discounted = Math.floor(item.price * 0.9)
+            return sum + (discounted * item.quantity)
+        }, 0)
+    }, [items])
+    const discountAmount=useMemo(()=>{
+        if (!items) return 0;
+        return items.reduce((sum, item)=>{
+          const discountPerBook = item.price - Math.floor(item.price * 0.9)
+          return sum + discountPerBook * item.quantity
+        }, 0)
+    }, [items])
+    const point = useMemo(()=>{
+        return Math.floor(discountedTotal * 0.01)
+    }, [discountedTotal])
+    const wrapFee = wrap ? 100 : 0
+    const finalTotal = discountedTotal + wrapFee
+    const formatPhone = (phone)=>{
+        if (!phone) return ""
+        return phone.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")
+    }
+    useEffect(()=>{
+        if(userId){
+          apiClient.get(`/member/info/${userId}`)
+            .then(res=>{
+              const data=res.data
+              setUserInfo({
+                name: data.userName,
+                phone: data.phone
+              })
+            })
+            .catch(err=>{
+              console.error("회원 정보 조회 실패", err)
+            })
+        }
+    }, [userId])
     return(
         <Fragment>
             <div id="PickUp">
@@ -30,59 +74,41 @@ const PickUp=()=>{
                                     </li>
                                     <li>픽업 매장<span>흑백책방 홍대점</span></li>
                                     <li>수령 방법<span>바로픽업</span></li>
-                                    <li>수령인<span>맹주희 / 010-1234-1234</span></li>
+                                    <li>수령인<span>{userInfo.name} / {formatPhone(userInfo.phone)}</span></li>
                                     <li className="wrap-row">
                                         포장 옵션
                                         <span className="wrap-option">
                                             <label htmlFor="wrap">포장 서비스를 이용합니다. (+100원)</label>
-                                            <input type="checkbox" id="wrap" />
+                                            <input type="checkbox" id="wrap" checked={wrap} onChange={(e)=>setWrap(e.target.checked)}/>
                                         </span>
                                     </li>
                                 </ul>
                             </div>
                             <div className="order">
                                 <h3>주문 상품</h3>
-                                <div className="row">
+                                {items && items.map((item, idx)=>(
+                                <div className="row" key={idx}>
                                     <div className="thumb">
-                                        <img src="/img/ex1.jpg" alt="책 썸네일" />
+                                      <img src={item.thumb} alt={item.title} />
                                     </div>
-                                    <div className="title">단 한 번의 삶</div>
-                                    <div className="origin">16,800원</div>
-                                    <div className="price">15,120원</div>
-                                    <div className="qty">1</div>
-                                    <div className="t_price">15,120원</div>
+                                    <div className="title">{item.title}</div>
+                                    <div className="origin">{item.price.toLocaleString()}원</div>
+                                    <div className="price">{Math.floor(item.price * 0.9).toLocaleString()}원</div>
+                                    <div className="qty">{item.quantity}</div>
+                                    <div className="t_price">{(Math.floor(item.price * 0.9) * item.quantity).toLocaleString()}원</div>
                                 </div>
-                                <div className="row">
-                                    <div className="thumb">
-                                        <img src="/img/ex2.jpg" alt="책 썸네일" />
-                                    </div>
-                                    <div className="title">듀얼 브레인</div>
-                                    <div className="origin">16,800원</div>
-                                    <div className="price">15,120원</div>
-                                    <div className="qty">1</div>
-                                    <div className="t_price">15,120원</div>
-                                </div>
-                                <div className="row">
-                                    <div className="thumb">
-                                        <img src="/img/ex3.jpg" alt="책 썸네일" />
-                                    </div>
-                                    <div className="title">100가지의 필사노트</div>
-                                    <div className="origin">16,800원</div>
-                                    <div className="price">15,120원</div>
-                                    <div className="qty">1</div>
-                                    <div className="t_price">15,120원</div>
-                                </div>
+                                ))}
                             </div>
                         </div>
                         <div className="right">
                             <div className="payment">
                                 <div className="row">
                                     <span>상품 금액</span>
-                                    <span>22,000원</span>
+                                    <span>{discountedTotal.toLocaleString()}원</span>
                                 </div>
                                 <div className="row">
                                     <span>포장 옵션</span>
-                                    <span>+100원</span>
+                                    <span>{wrap ? "+100원" : "0원"}</span>
                                 </div>
                                 <div className="row">
                                     <span>배송비</span>
@@ -90,15 +116,15 @@ const PickUp=()=>{
                                 </div>
                                 <div className="row discount">
                                     <span>상품 할인</span>
-                                    <span>-2,200원</span>
+                                    <span>-{discountAmount.toLocaleString()}원</span>
                                 </div>
                                 <div className="total">
                                     <span>결제 예정 금액</span>
-                                    <strong>0원</strong>
+                                    <strong>{finalTotal.toLocaleString()}원</strong>
                                 </div>
                                 <div className="point">
                                     <span>적립 예정 포인트</span>
-                                    <span>1,100P</span>
+                                    <span>{point.toLocaleString()}P</span>
                                 </div>
                                 <button type="button" className="payBtn">결제하기</button>
                             </div>

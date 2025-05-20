@@ -200,4 +200,13 @@ public class MemberRestController {
 			return "NotFound";
 		}
 	}
+	@GetMapping("/info/{userId}")
+    public ResponseEntity<MemberEntity> getMemberInfo(@PathVariable String userId) {
+        Optional<MemberEntity> optional = memberRepository.findById(userId);
+        if (optional.isPresent()) {
+            return ResponseEntity.ok(optional.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

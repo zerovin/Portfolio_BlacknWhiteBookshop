@@ -8,6 +8,7 @@ const BookDetail=()=>{
     const {no}=useParams()
     const [quantity, setQuantity]=useState(1);
     const [cartModal, setCartModal]=useState(false);
+    const [loginUser, setLoginUser]=useState(null)
     const Navigate=useNavigate();
     const goTop=()=>{
         window.scrollTo({top:0, behavior:'smooth'})
@@ -26,7 +27,16 @@ const BookDetail=()=>{
     const total=useMemo(()=>{
         return ((data?.data?.price || 0)*quantity)*0.9;
     },[data, quantity])
-    
+    useEffect(()=>{
+        apiClient.post("/member/isLogin")
+        .then(res=>{
+            if(res.data.loginOk){
+                setLoginUser(res.data.userId)
+            }else{
+                setLoginUser(null)
+            }
+        }).catch(()=>setLoginUser(null))
+    },[])
     if(isLoading){
         return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>로딩중...</p>
     }
@@ -59,6 +69,27 @@ const BookDetail=()=>{
                 alert('장바구니 담기에 실패했습니다.')
             }
         }
+    }
+
+    const goPickup=()=>{
+        if(!loginUser){
+            alert("로그인이 필요합니다.")
+            return
+        }
+        Navigate("/book/pickup",{
+            state:{
+                userId:loginUser,
+                items:[
+                    {
+                        bno:data.data.no,
+                        title:data.data.title,
+                        thumb:data.data.thumb,
+                        quantity:quantity,
+                        price:data.data.price
+                    }
+                ]
+            }
+        })
     }
 
     const goCart=()=>{
@@ -117,7 +148,7 @@ const BookDetail=()=>{
                             <p className="alert">실결제 금액은 적립금, 쿠폰 등에 따라 달라질 수 있습니다.</p>
                             <div className="btns">
                                 <button onClick={addCart}>장바구니</button>
-                                <button>바로픽업</button>
+                                <button onClick={goPickup}>바로픽업</button>
                                 <button>바로구매</button>
                             </div>
                         </div>
@@ -153,7 +184,7 @@ const BookDetail=()=>{
                             <p className="alert">실결제 금액은 적립금, 쿠폰 등에 따라 달라질 수 있습니다.</p>
                             <div className="btns">
                                 <button onClick={addCart}>장바구니</button>
-                                <button>바로픽업</button>
+                                <button onClick={goPickup}>바로픽업</button>
                                 <button>바로구매</button>
                             </div>
                         </div>
