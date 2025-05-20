@@ -7,6 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 /*
@@ -24,7 +25,8 @@ CONTENTS            CLOB
 DETAIL_IMG          VARCHAR2(2000) 
 LINK                VARCHAR2(1000) 
  */
-@Entity(name="book")
+@Entity
+@Table(name="book")
 @Data
 public class BookEntity {
 	@Id

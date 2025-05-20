@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.Data;
@@ -18,7 +19,8 @@ USERID   NOT NULL VARCHAR2(50)
 QUANTITY          NUMBER       
 ADD_DATE          DATE 
  */
-@Entity(name="cart")
+@Entity
+@Table(name="cart")
 @Data
 public class CartEntity {
 	@Id

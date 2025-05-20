@@ -1,17 +1,22 @@
 package com.bwbs.bookshop.restcontroller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bwbs.bookshop.dao.CartDAO;
+import com.bwbs.bookshop.dto.CartBookDTO;
 import com.bwbs.bookshop.dto.CartRequestDTO;
 import com.bwbs.bookshop.entity.CartEntity;
 import com.bwbs.bookshop.service.*;
@@ -38,12 +43,25 @@ public class CartRestController {
 	
 	@GetMapping("/cart/list")
 	public ResponseEntity<?> cart_list(HttpSession session){
-		System.out.println("aaaaaaaaaaaaaaaaa");
 		String userId=(String)session.getAttribute("bwbs_userId");
-//		if(userId==null) {
-//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
-//		}
-		List<CartEntity> cartList=cDAO.findByUserid(userId);
+		if(userId==null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다");
+		}
+		List<CartBookDTO> cartList=cDAO.findCartWithBookByUserid(userId);
 		return ResponseEntity.ok(cartList);
+	}
+	
+	@PutMapping("/cart/update")
+	public ResponseEntity<?> updateQuntity(@RequestBody Map<String, Object> request){
+		int cno=Integer.parseInt(request.get("cno").toString());
+		int quantity=Integer.parseInt(request.get("quantity").toString());
+		cService.updateQuantity(cno, quantity);
+		return ResponseEntity.ok().build();
+	}
+	
+	@DeleteMapping("/cart/delete/{cno}")
+	public ResponseEntity<?> deleteItem(@PathVariable int cno){
+		cService.deleteCart(cno);
+		return ResponseEntity.ok().build();
 	}
 }

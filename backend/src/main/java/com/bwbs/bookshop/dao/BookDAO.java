@@ -15,7 +15,7 @@ public interface BookDAO extends JpaRepository<BookEntity, Integer>{
 	List<BookEntity> findTop10ByOrderBySalesDesc();
 	List<BookEntity> findTop5ByOrderByPubDateDesc();
 	
-	@Query("SELECT DISTINCT category FROM book")
+	@Query("SELECT DISTINCT category FROM BookEntity")
 	List<String> categoryList();
 	
 	//BookList
