@@ -107,7 +107,7 @@ const CartList=()=>{
         const month=now.getMonth()+1;
         const date=now.getDate();
         const day=weekdays[now.getDay()];
-        return `${isToday}(${month}/${date})`
+        return `${isToday}(${month}/${date}, ${day})`
     }
 
     const openDeleteModal=(cno)=>{
