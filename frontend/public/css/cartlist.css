@@ -27,8 +27,12 @@
     align-items:center;
     gap:15px;
 }
-#cartList .top .process span{
+#cartList .top .process p:first-child span{
     background:#1E1A1A;
+    color:#fff;
+}
+#cartList .top .process span{
+    background:#ccc;
     color:#fff;
     font-weight:600;
     padding:3px 10px;
@@ -234,7 +238,7 @@
 #cartList .grid_wrap .right .buy_info .bold{
     font-weight:600;
 }
-#cartList .grid_wrap .right a{
+#cartList .grid_wrap .right button{
     display:block;
     width:100%;
     text-align:center;
@@ -243,18 +247,18 @@
     font-size:17px;
     font-weight:600;
 }
-#cartList .grid_wrap .right a.disabled{
+#cartList .grid_wrap .right button.disabled{
     pointer-events: none;
     opacity:.5;
 }
-#cartList .grid_wrap .right a.buy{
+#cartList .grid_wrap .right button.buy{
     margin-top:30px;
     background:#1E1A1A;
     color:#fff;
 }
 
 /* ---------------- DELETE BOX ------------------*/
-#delete_box{
+#modal_box{
     position:fixed; 
     top:50%;
     left:50%;
@@ -270,22 +274,22 @@
     align-items:center;
     gap:25px;
 }
-#delete_box.active{
+#modal_box.active{
     display:flex;
 }
-#delete_box p{
+#modal_box p{
     font-size:17px;
 }
-#delete_box .delete_btn{
+#modal_box .modal_btn{
     display:flex;
     gap:10px;
 }
-#delete_box .delete_btn button{
+#modal_box .modal_btn *{
     border:1px solid #1E1A1A;
     padding:10px;
     cursor:pointer;
 }
-#delete_box .delete_btn button.ok{
+#modal_box .modal_btn *.ok{
     background:#1E1A1A;
     color:#fff;
 }

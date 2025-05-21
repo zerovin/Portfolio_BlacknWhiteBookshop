@@ -8,6 +8,7 @@ const CartList=()=>{
     const [deleteCno, setDeleteCno]=useState(null);
     const [checkBooks, setCheckBooks]=useState(new Set());
     const [deleteModal, setDeleteModal]=useState(false);
+    const [payModal, setPayModal]=useState(false);
 
     const {isLoading, error, data}=useQuery(['cart_list'],
         async()=>{
@@ -119,6 +120,14 @@ const CartList=()=>{
         setDeleteCno(null)
         setDeleteModal(false)
     }
+
+    const openPayModal=()=>{
+        setPayModal(true)
+    }
+
+    const closePayModal=()=>{
+        setPayModal(false)
+    }
     
 
     return(
@@ -184,7 +193,7 @@ const CartList=()=>{
                                                 </td>
                                                 <td className="delivery">
                                                     <div>
-                                                        <p className="notice">오후 7시 이전 주문시<br/> 당일배송, 바로픽업 가능</p>
+                                                        <p className="notice">오후 5시 이전 주문시<br/> 당일배송, 바로픽업 가능</p>
                                                         <p className="border">당일배송</p>
                                                         <p>{deliveryDay()} 도착</p>
                                                     </div>
@@ -225,19 +234,28 @@ const CartList=()=>{
                                     <p>적립 예정 포인트</p>
                                     <p>{(total*0.05).toLocaleString()} P</p>
                                 </div>
-                                <Link to={allQuantity>0?"/book/buy":"#"} className={`buy ${allQuantity===0?"disabled":""}`}>주문하기 ({allQuantity})</Link>
+                                <button className={`buy ${allQuantity===0?"disabled":""}`} onClick={openPayModal}>주문하기 ({allQuantity})</button>
                             </div>
-                            <Link to={allQuantity>0?"/book/pickup":"#"} className={allQuantity===0?"disabled":""}>바로픽업 주문 ({allQuantity})</Link>
+                            <button className={allQuantity===0?"disabled":""}>바로픽업 주문 ({allQuantity})</button>
                         </div>
                     </div>
                 </div>
-                <div id="delete_box" className={deleteModal?"active":""}>
+                <div id="modal_box" className={deleteModal?"active":""}>
                     <div>
                         <p>선택 상품을 삭제하시겠어요?</p>
                     </div>
-                    <div className="delete_btn">
+                    <div className="modal_btn">
                         <button className="ok" onClick={()=>deleteCart.mutate(deleteCno)}>삭제</button>
                         <button className="cancel" onClick={closeDeleteModal}>취소</button>
+                    </div>
+                </div>
+                <div id="modal_box" className={payModal?"active":""}>
+                    <div>
+                        <p>{allQuantity}개의 상품을 주문하시겠어요?</p>
+                    </div>
+                    <div className="modal_btn">
+                        <Link to={'/cart/order'} className="ok">주문</Link>
+                        <button className="cancel" onClick={closePayModal}>취소</button>
                     </div>
                 </div>
             </div>
