@@ -124,7 +124,6 @@ public class MemberRestController {
 	@GetMapping("/myinfo")
 	public ResponseEntity<Map<String, Object>> mypage(HttpSession session){
 		String userId=(String) session.getAttribute("bwbs_userId");
-		
 		Map<String, Object> result=new HashMap<>();
 		
 		if(userId==null) {

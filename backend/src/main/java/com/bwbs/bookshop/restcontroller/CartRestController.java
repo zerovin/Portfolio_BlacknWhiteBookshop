@@ -1,5 +1,6 @@
 package com.bwbs.bookshop.restcontroller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import com.bwbs.bookshop.dao.CartDAO;
 import com.bwbs.bookshop.dto.CartBookDTO;
 import com.bwbs.bookshop.dto.CartRequestDTO;
 import com.bwbs.bookshop.entity.CartEntity;
+import com.bwbs.bookshop.entity.OrderEntity;
 import com.bwbs.bookshop.service.*;
 
 import jakarta.servlet.http.HttpSession;
@@ -30,6 +32,8 @@ public class CartRestController {
 	private CartDAO cDAO;
 	@Autowired
 	private CartService cService;
+	@Autowired
+	private OrderService oService;
 	
 	@PostMapping("/cart/add")
 	public ResponseEntity<?> add_cart(@RequestBody CartRequestDTO cartR,  HttpSession session){
@@ -63,5 +67,20 @@ public class CartRestController {
 	public ResponseEntity<?> deleteItem(@PathVariable int cno){
 		cService.deleteCart(cno);
 		return ResponseEntity.ok().build();
+	}
+	
+	@PostMapping("/cart/order")
+	public void saveOrders(@RequestBody List<OrderEntity> orders, HttpSession session){
+		String userid=(String)session.getAttribute("bwbs_userId");
+		LocalDateTime today=LocalDateTime.now();
+		List<OrderEntity> updateOrders=orders.stream()
+			.map(order -> {
+				order.setUserid(userid);
+				order.setOrderDate(today);
+				return order;
+			})
+			.toList();
+		oService.saveAll(updateOrders);
+		//장바구니 목록에서 주문한 cno들 삭제
 	}
 }
