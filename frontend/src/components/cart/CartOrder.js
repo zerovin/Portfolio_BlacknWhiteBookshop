@@ -1,10 +1,16 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import apiClient from "../../http-commons";
 
 const CartOrder=()=>{
     const [checkBooks, setCheckBooks]=useState(new Set());
+    const [name, setName]=useState('');
+    const [phone, setPhone]=useState('');
+    const [postcode, setPostcode]=useState('');
+    const [addr1, setAddr1]=useState('');
+    const [addr2, setAddr2]=useState('');
+    const [msg, setMsg]=useState('');
 
     const {isLoading, error, data}=useQuery(['cart_list'],
         async()=>{
@@ -13,13 +19,29 @@ const CartOrder=()=>{
         }
     )
 
+    const {isLoading:memberLoading, error:memberError, data:memberInfo}=useQuery(['member_info'],
+        async()=>{
+            const res=await apiClient.get('/member/myinfo')
+            return res.data
+        }
+    )
     useEffect(()=>{
         window.scrollTo({top:0, behavior:'auto'})
         if(data){
             const allCheckBooks=new Set(data.map(item=>item.cno))
             setCheckBooks(allCheckBooks)
         }
-    },[data])
+        if(memberInfo){
+            setName(memberInfo.userName)
+            setPhone(memberInfo.phone)
+            setPostcode(memberInfo.post)
+            setAddr1(memberInfo.addr1)
+            setAddr2(memberInfo.addr2)
+        }
+        if(window.IMP){
+            window.IMP.init('imp57640514')
+        }
+    },[data, memberInfo])
 
     const total=useMemo(()=>{
         if(!data) return 0;
@@ -35,11 +57,26 @@ const CartOrder=()=>{
             .reduce((sum, item)=>sum+item.quantity,0)
     },[data, checkBooks])
 
-    if(isLoading){
+    if(isLoading || memberLoading){
         return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>로딩중...</p>
     }
-    if(error){
+    if(error || memberError){
         return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>{error.message}</p>
+    }
+
+    const searchPost=()=>{
+        new window.daum.Postcode({
+            oncomplete: function (data) {
+                let addr = ''
+                if (data.userSelectedType === 'R') {
+                  addr = data.roadAddress
+                } else {
+                  addr = data.jibunAddress
+                }
+                setPostcode(data.zonecode)
+                setAddr1(addr)
+            }
+        }).open()
     }
 
     const deliveryDay=()=>{
@@ -55,6 +92,60 @@ const CartOrder=()=>{
         const date=now.getDate();
         const day=weekdays[now.getDay()];
         return `${isToday}(${month}/${date}, ${day})`
+    }
+
+    const payOrder=()=>{
+        const phoneCheck=(phone)=>{
+            return /^[0-9]{11}$/.test(phone)
+        }
+        if(name.trim()==='') alert('받는 분 성함을 입력하세요.')
+        if(phone.trim()===''){
+            alert('받는 분 연락처를 입력하세요.')
+        }else if(!phoneCheck(phone)){
+            alert('전화번호는 \'-\' 없이 11자리의 숫자만 입력해야 합니다.')
+        }            
+        if(addr1.trim()==='') alert('주소를 입력하세요.')
+        
+        payment() 
+    }
+
+    const payment=()=>{
+        const {IMP}=window;
+        IMP.request_pay(
+            {
+            pg: 'html5_inicis',
+            pay_method: 'card',
+            merchant_uid: `mid_${new Date().getTime()}`,
+            name:`${data[0].title} 외 ${allQuantity}권`,
+            amount: total,
+            buyer_email: memberInfo.email,
+            buyer_name: name,
+            buyer_tel: phone,
+            buyer_addr: `${addr1} ${addr2}`,
+            buyer_postcode: postcode,
+            },
+            async function(afterPay){
+                const orders=data.map(item=>({
+                    cno:item.cno,
+                    bno:item.bno,
+                    title:item.title,
+                    thumb:item.thumb,
+                    quantity:item.quantity,
+                    price:item.price*0.9,
+                    total:(item.price*0.9)*item.quantity,
+                    receiver:name,
+                    phone:phone,
+                    addr:`[${postcode}]${addr1} ${addr2}`,
+                    msg:msg
+                }))
+                try{
+                    await apiClient.post('/cart/order', orders)
+                    Navigate('/cart/paycomplete')
+                }catch(error){
+                    console.error(error)
+                }
+            }
+        )
     }
 
     return(
@@ -75,14 +166,21 @@ const CartOrder=()=>{
                                 <div className="del">
                                     <h3>배송지 정보</h3>
                                     <div className="deli_right">
-                                        <input type="text" name="name" value="이름"/>
-                                        <input type="text" name="phone" value="폰번호"/>
-                                        <input type="text" name="address" value="주소"/>
+                                        <label htmlFor="name">받는 분</label>
+                                        <input type="text" name="name" placeholder="이름" value={name} onChange={(e)=>setName(e.target.value)}/>
+                                        <input type="text" name="phone" placeholder="-제외한 휴대폰번호" value={phone} onChange={(e)=>setPhone(e.target.value)}/>
+                                        <label htmlFor="addr1">주소</label>
+                                        <div className="post_area">
+                                            <input type="text" name="postcode" placeholder="우편번호" readOnly value={postcode}/>
+                                            <button onClick={searchPost}>우편번호 검색</button>
+                                        </div>
+                                        <input type="text" name="addr1" placeholder="우편번호 검색을 클릭해주세요" readOnly value={addr1} onChange={(e)=>setAddr1(e.target.value)}/>
+                                        <input type="text" name="addr2" placeholder="상세주소" value={addr2} onChange={(e)=>setAddr2(e.target.value)}/>
                                     </div>
                                 </div>
                                 <div className="del">
                                     <h3>배송요청사항</h3>
-                                    <input type="text" name="msg"/>
+                                    <input type="text" name="msg" value={msg} onChange={(e)=>setMsg(e.target.value)}/>
                                 </div>
                             </div>
                             <div className="cart_list left_border">
@@ -152,7 +250,7 @@ const CartOrder=()=>{
                                     <p>적립 예정 포인트</p>
                                     <p>{(total*0.05).toLocaleString()} P</p>
                                 </div>
-                                <button className="buy">결제하기</button>
+                                <button className="buy" onClick={payOrder}>결제하기</button>
                             </div>
                         </div>
                     </div>

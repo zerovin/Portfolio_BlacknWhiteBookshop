@@ -67,17 +67,42 @@
 #cartOrder .grid_wrap .left .del:first-child{
     margin-bottom:50px;
 }
+#cartOrder .grid_wrap .left .del label{
+    font-weight:600;
+    display:block;
+    margin-bottom:20px;
+}
+#cartOrder .grid_wrap .left .del label:last-of-type{
+    margin-top:30px;
+}
 #cartOrder .grid_wrap .left .del input{
     display:block;
     border:none;
     border-bottom:1px solid #1E1A1A;
     padding:0 10px 5px;
+    width:200px;
+}
+#cartOrder .grid_wrap .left .del input::placeholder{
+    color:#ccc;
 }
 #cartOrder .grid_wrap .left .del input+input{
     margin-top:20px;
 }
-#cartOrder .grid_wrap .left .del input:last-child{
-    width:60%;
+#cartOrder .grid_wrap .left .del input[name="addr1"],
+#cartOrder .grid_wrap .left .del input[name="msg"]{
+    width:333px;
+}
+#cartOrder .grid_wrap .left .del .post_area{
+    display:flex;
+    align-items:end;
+    gap:20px;
+    margin-bottom:20px;
+}
+#cartOrder .grid_wrap .left .del .post_area button{
+    background:#1E1A1A;
+    color:#fff;
+    padding:10px 15px;
+    font-size:14px;
 }
 
 /* ------------------ CART TABLE -------------------- */
