@@ -29,6 +29,10 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -220,5 +224,15 @@ public class BoardRestController {
 			ex.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	@GetMapping("board/mypost")
+	public ResponseEntity<Page<BoardListDTO>> getMyPost(@RequestParam int page, HttpSession session){
+		String userId = (String) session.getAttribute("bwbs_userId");
+		if(userId == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		
+		Pageable pageable = PageRequest.of(page-1, 10, Sort.by("no").descending());
+		Page<BoardEntity> entityPage = bService.getUserBoardList(userId, pageable);
+		Page<BoardListDTO> dtoPage = entityPage.map(BoardListDTO::new);
+		return ResponseEntity.ok(dtoPage);
 	}
 }

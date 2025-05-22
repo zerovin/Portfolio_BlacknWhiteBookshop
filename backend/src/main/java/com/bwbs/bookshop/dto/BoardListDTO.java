@@ -2,6 +2,8 @@ package com.bwbs.bookshop.dto;
 
 import java.util.Date;
 
+import com.bwbs.bookshop.entity.BoardEntity;
+
 import lombok.Data;
 
 @Data
@@ -22,5 +24,14 @@ public class BoardListDTO {
 		this.regdate=regdate;
 		this.hit=hit;
 		this.filename=filename;
+	}
+	public BoardListDTO(BoardEntity entity) {
+		this.no=entity.getNo();
+		this.category=entity.getCategory();
+		this.title=entity.getTitle();
+		this.userName=entity.getMember().getUserName();
+		this.regdate=entity.getRegdate();
+		this.hit=entity.getHit();
+		this.filename=entity.getFilename();
 	}
 }

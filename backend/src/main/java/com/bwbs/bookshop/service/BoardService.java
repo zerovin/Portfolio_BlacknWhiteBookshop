@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -59,5 +60,8 @@ public class BoardService {
 		}else {
 			throw new NoSuchElementException("해당 게시글이 존재하지 않습니다");
 		}
+	}
+	public Page<BoardEntity> getUserBoardList(String userId, Pageable pageable){
+		return bRepository.findByUserIdOrderByNoDesc(userId, pageable);
 	}
 }

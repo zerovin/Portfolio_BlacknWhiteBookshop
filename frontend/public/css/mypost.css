@@ -1,0 +1,86 @@
+#MyPost{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+#MyPost .container{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+}
+#MyPost h3{
+    font-size: 22px;
+    font-weight:600;
+    text-align: center;
+}
+#MyPost .boardlist {
+    width: 80%;
+    margin: 50px auto;
+    font-family: sans-serif;
+}
+#MyPost .boardlist_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+    margin: 0 auto 20px auto;
+}
+#MyPost .category {
+    padding: 8px 7px;
+    font-size: 14px;
+    border-bottom: 1px solid black;
+}
+#MyPost .insertBtn {
+    background-color: #000;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+#MyPost .boardlist table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    table-layout: fixed;
+}
+#MyPost .boardlist th{
+    padding: 12px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+#MyPost .boardlist th:nth-child(1), #MyPost .boardlist td:nth-child(1) { width: 10%; }
+#MyPost .boardlist th:nth-child(2), #MyPost .boardlist td:nth-child(2) { width: 15%; }
+#MyPost .boardlist th:nth-child(3), #MyPost .boardlist td:nth-child(3) { width: 30%; }
+#MyPost .boardlist th:nth-child(4), #MyPost .boardlist td:nth-child(4) { width: 15%; }
+#MyPost .boardlist th:nth-child(5), #MyPost .boardlist td:nth-child(5) { width: 15%; }
+#MyPost .boardlist th:nth-child(6), #MyPost .boardlist td:nth-child(6) { width: 10%; }
+#MyPost .boardlist td {
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+#MyPost .boardlist td:nth-child(3) {
+    text-align: left;
+}
+.boardlist td a:hover {
+  color: gray;
+}
+#MyPost .pagination {
+    text-align: center;
+    margin-bottom: 20px;
+}
+#MyPost .pagination .page,
+.pagination button {
+    margin: 0 5px;
+    padding: 6px 12px;
+    border: 1px solid black;
+    background: none;
+    cursor: pointer;
+}
+#MyPost .pagination .active {
+    background-color: #000;
+    color: white;
+}
