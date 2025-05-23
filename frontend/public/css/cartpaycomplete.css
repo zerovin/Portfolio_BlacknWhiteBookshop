@@ -1,6 +1,6 @@
 #paycomplete{
-    padding-top:300px;
-    padding-bottom:350px;
+    padding-top:120px;
+    padding-bottom:320px;
     text-align:center;
 }
 #paycomplete .success{
@@ -21,4 +21,28 @@
 #paycomplete .after_btn a:first-child{
     background:#1E1A1A;
     color:#fff;
+}
+#paycomplete .top{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:200px;
+}
+#paycomplete .top h3{
+    font-size: 18px;
+    font-weight: 600;
+}
+#paycomplete .top .process{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+#paycomplete .top .process p:last-child span{
+    background:#1E1A1A;
+    color:#fff;
+}
+#paycomplete .top .process span{
+    background:#ccc;
+    color:#fff;
+    font-weight:600;
+    padding:3px 10px;
 }
