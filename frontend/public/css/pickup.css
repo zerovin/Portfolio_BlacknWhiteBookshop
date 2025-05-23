@@ -1,7 +1,7 @@
 #PickUp{
   padding-top:100px;
   padding-bottom:120px;
-  }
+}
 #PickUp h3{
   font-size: 22px;
   font-weight:600;
@@ -25,8 +25,26 @@
   align-items:center;
   gap:15px;
 }
+#PickUp .top .process_3{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+#PickUp .top .process p:nth-child(2) span{
+    background:#1E1A1A;
+    color:#fff;
+}
+#PickUp .top .process_3 p:nth-child(3) span{
+    background:#1E1A1A;
+    color:#fff;
+}
 #PickUp .top .process span{
-  background:#1E1A1A;
+  background:#ccc;
+  color:#fff;
+  font-weight:600;
+  padding:3px 10px;
+}#PickUp .top .process_3 span{
+  background:#ccc;
   color:#fff;
   font-weight:600;
   padding:3px 10px;
@@ -82,12 +100,10 @@
   color: #666;
   margin-bottom: 30px;
 }
-
 #PickUp .agreement{
   font-size: 14px;
   margin-bottom: 20px;
 }
-
 #PickUp .payBtn{
   width: 100%;
   padding: 20px 20px;
@@ -99,11 +115,13 @@
 }
 #PickUp .left h3{
   font-size: 18px;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 40px;
   padding-left: 10px;
 }
 #PickUp .pickup_info, .order{
-  border-top: 1px solid black;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
   padding: 30px 50px;
   margin-bottom: 30px;
 }
@@ -152,6 +170,7 @@
   display: flex;
   align-items: center;
   padding: 12px 0;
+
   border-bottom: 1px solid #eee;
   gap: 10px;
 }
@@ -213,4 +232,28 @@
   margin-left: 6px;
   color: #999;
   font-size: 13px;
+}
+#PickUp .complete{
+    padding-top:120px;
+    padding-bottom:160px;
+    text-align:center;
+}
+#PickUp .success{
+    font-size:20px;
+    font-weight:600;
+    margin-bottom:50px;
+}
+#PickUp .after_btn{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+}
+#PickUp .after_btn a{
+    border:1px solid #1E1A1A;
+    padding:15px 20px;
+}
+#PickUp .after_btn a:first-child{
+    background:#1E1A1A;
+    color:#fff;
 }

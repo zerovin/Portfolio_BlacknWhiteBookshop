@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .requestMatchers("/main/**").permitAll()
                 .requestMatchers("/book/**").permitAll()
                 .requestMatchers("/cart/**").permitAll()
+                .requestMatchers("/pickup/**").permitAll()
                 .requestMatchers("/board/**").permitAll()
                 .requestMatchers("/uploads/**").permitAll()
                 .anyRequest().authenticated() 

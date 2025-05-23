@@ -10,7 +10,7 @@ const CartList=()=>{
     const [checkBooks, setCheckBooks]=useState(new Set());
     const [deleteModal, setDeleteModal]=useState(false);
     const [payModal, setPayModal]=useState(false);
-
+    const [loginUser, setLoginUser]=useState(null)
     const {isLoading, error, data}=useQuery(['cart_list'],
         async()=>{
             const res=await apiClient.get('/cart/list')
@@ -41,6 +41,12 @@ const CartList=()=>{
             }
         }
     )
+
+    useEffect(()=>{
+        apiClient.post("/member/isLogin").then(res=>{
+            if(res.data.loginOk) setLoginUser(res.data)
+        })
+    },[])
 
     useEffect(()=>{
         window.scrollTo({top:0, behavior:'auto'})
@@ -135,6 +141,25 @@ const CartList=()=>{
         navigate('/cart/order',{state:{selectBooks}})
     }
     
+    const goPickup=()=>{
+        if(allQuantity === 0) return
+        const pickupItems = data
+            .filter(item=>checkBooks.has(item.cno))
+            .map(item=>({
+                bno: item.bno,
+                cno: item.cno,
+                title: item.title,
+                price: item.price,
+                quantity: item.quantity,
+                thumb: item.thumb
+            }))
+        navigate("/pickup/order",{
+            state:{
+                userId: loginUser?.userId,
+                items: pickupItems
+            }
+        })
+    }
 
     return(
         <Fragment>
@@ -242,7 +267,7 @@ const CartList=()=>{
                                 </div>
                                 <button className={`buy ${allQuantity===0?"disabled":""}`} onClick={openPayModal}>주문하기 ({allQuantity})</button>
                             </div>
-                            <button className={allQuantity===0?"disabled":""}>바로픽업 주문 ({allQuantity})</button>
+                            <button className={allQuantity===0?"disabled":""} onClick={goPickup}>바로픽업 주문 ({allQuantity})</button>
                         </div>
                     </div>
                 </div>

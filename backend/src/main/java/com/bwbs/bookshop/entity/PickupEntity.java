@@ -14,8 +14,9 @@ public class PickupEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pickup_seq_gen")
     @SequenceGenerator(name = "pickup_seq_gen", sequenceName = "pickup_seq", allocationSize = 1)
     private int no;
-	private String userId, ptime, wrap;
-	
+	@Column(name = "USERID")
+	private String userId;
+	private String ptime, wrap, name, phone;
 	@Temporal(TemporalType.DATE)
     private Date pdate;
 	

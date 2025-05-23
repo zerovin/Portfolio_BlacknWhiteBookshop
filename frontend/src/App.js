@@ -11,6 +11,7 @@ import CartList from "./components/cart/CartList";
 import CartOrder from "./components/cart/CartOrder";
 import CartPaycomplete from "./components/cart/CartPaycomplete.js";
 import PickUp from "./components/pickup/PickUp";
+import PickUpComplete from "./components/pickup/PickUpComplete.js";
 import BoardList from "./components/board/BoardList";
 import BoardInsert from "./components/board/BoardInsert";
 import BoardDetail from "./components/board/BoardDetail";
@@ -40,7 +41,8 @@ function App() {
               <Route path={"/cart/list"} element={<CartList/>}/>
               <Route path={"/cart/order"} element={<CartOrder/>}/>
               <Route path={"/cart/paycomplete"} element={<CartPaycomplete/>}/>
-              <Route path={"/book/pickup"} element={<PickUp/>}/>
+              <Route path={"/pickup/order"} element={<PickUp/>}/>
+              <Route path={"/pickup/complete"} element={<PickUpComplete/>}/>
               <Route path={"/board/list"} element={<BoardList/>}/>
               <Route path={"/board/insert"} element={<BoardInsert/>}/>
               <Route path={"/board/detail/:no"} element={<BoardDetail/>}/>
