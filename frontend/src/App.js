@@ -9,6 +9,7 @@ import BookList from "./components/book/BookList";
 import BookDetail from "./components/book/BookDetail";
 import CartList from "./components/cart/CartList";
 import CartOrder from "./components/cart/CartOrder";
+import CartPaycomplete from "./components/cart/CartPaycomplete.js";
 import PickUp from "./components/pickup/PickUp";
 import BoardList from "./components/board/BoardList";
 import BoardInsert from "./components/board/BoardInsert";
@@ -38,6 +39,7 @@ function App() {
               <Route path={"/book/detail/:no"} element={<BookDetail/>}/>
               <Route path={"/cart/list"} element={<CartList/>}/>
               <Route path={"/cart/order"} element={<CartOrder/>}/>
+              <Route path={"/cart/paycomplete"} element={<CartPaycomplete/>}/>
               <Route path={"/book/pickup"} element={<PickUp/>}/>
               <Route path={"/board/list"} element={<BoardList/>}/>
               <Route path={"/board/insert"} element={<BoardInsert/>}/>

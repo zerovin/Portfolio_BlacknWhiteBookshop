@@ -1,9 +1,10 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../../http-commons";
 
 const CartList=()=>{
+    const navigate=useNavigate();
     const queryClient=useQueryClient();
     const [deleteCno, setDeleteCno]=useState(null);
     const [checkBooks, setCheckBooks]=useState(new Set());
@@ -127,6 +128,11 @@ const CartList=()=>{
 
     const closePayModal=()=>{
         setPayModal(false)
+    }
+    
+    const gopay=()=>{
+        const selectBooks=Array.from(checkBooks);
+        navigate('/cart/order',{state:{selectBooks}})
     }
     
 
@@ -254,7 +260,7 @@ const CartList=()=>{
                         <p>{allQuantity}개의 상품을 주문하시겠어요?</p>
                     </div>
                     <div className="modal_btn">
-                        <Link to={'/cart/order'} className="ok">주문</Link>
+                        <button className="ok" onClick={gopay}>주문</button>
                         <button className="cancel" onClick={closePayModal}>취소</button>
                     </div>
                 </div>

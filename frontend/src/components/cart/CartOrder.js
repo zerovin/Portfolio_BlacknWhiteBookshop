@@ -1,10 +1,12 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import apiClient from "../../http-commons";
 
 const CartOrder=()=>{
-    const [checkBooks, setCheckBooks]=useState(new Set());
+    const location=useLocation();
+    const navigate=useNavigate();
+    const {selectBooks}=location.state||{selectBooks:[]};
     const [name, setName]=useState('');
     const [phone, setPhone]=useState('');
     const [postcode, setPostcode]=useState('');
@@ -15,7 +17,7 @@ const CartOrder=()=>{
     const {isLoading, error, data}=useQuery(['cart_list'],
         async()=>{
             const res=await apiClient.get('/cart/list')
-            return res.data;
+            return res.data.filter(item=>selectBooks.includes(item.cno))
         }
     )
 
@@ -27,10 +29,6 @@ const CartOrder=()=>{
     )
     useEffect(()=>{
         window.scrollTo({top:0, behavior:'auto'})
-        if(data){
-            const allCheckBooks=new Set(data.map(item=>item.cno))
-            setCheckBooks(allCheckBooks)
-        }
         if(memberInfo){
             setName(memberInfo.userName)
             setPhone(memberInfo.phone)
@@ -44,18 +42,18 @@ const CartOrder=()=>{
     },[data, memberInfo])
 
     const total=useMemo(()=>{
-        if(!data) return 0;
+        const selectItem = new Set(selectBooks)
         return data
-            .filter(item=>checkBooks.has(item.cno))
+            .filter(item=>selectItem.has(item.cno))
             .reduce((sum, item)=>sum+item.price*item.quantity, 0)
-    },[data, checkBooks])
+    },[data, selectBooks])
 
     const allQuantity=useMemo(()=>{
-        if(!data) return 0;
+        const selectItem = new Set(selectBooks)
         return data
-            .filter(item=>checkBooks.has(item.cno))
+            .filter(item=>selectItem.has(item.cno))
             .reduce((sum, item)=>sum+item.quantity,0)
-    },[data, checkBooks])
+    },[data, selectBooks])
 
     if(isLoading || memberLoading){
         return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>로딩중...</p>
@@ -98,14 +96,21 @@ const CartOrder=()=>{
         const phoneCheck=(phone)=>{
             return /^[0-9]{11}$/.test(phone)
         }
-        if(name.trim()==='') alert('받는 분 성함을 입력하세요.')
+        if(name.trim()===''){
+            alert('받는 분 성함을 입력하세요.')
+            return;
+        }
         if(phone.trim()===''){
             alert('받는 분 연락처를 입력하세요.')
+            return;
         }else if(!phoneCheck(phone)){
             alert('전화번호는 \'-\' 없이 11자리의 숫자만 입력해야 합니다.')
+            return;
         }            
-        if(addr1.trim()==='') alert('주소를 입력하세요.')
-        
+        if(addr1.trim()===''){
+            alert('주소를 입력하세요.')
+            return;
+        }
         payment() 
     }
 
@@ -117,7 +122,7 @@ const CartOrder=()=>{
             pay_method: 'card',
             merchant_uid: `mid_${new Date().getTime()}`,
             name:`${data[0].title} 외 ${allQuantity}권`,
-            amount: total,
+            amount: total*0.9,
             buyer_email: memberInfo.email,
             buyer_name: name,
             buyer_tel: phone,
@@ -126,7 +131,6 @@ const CartOrder=()=>{
             },
             async function(afterPay){
                 const orders=data.map(item=>({
-                    cno:item.cno,
                     bno:item.bno,
                     title:item.title,
                     thumb:item.thumb,
@@ -138,9 +142,10 @@ const CartOrder=()=>{
                     addr:`[${postcode}]${addr1} ${addr2}`,
                     msg:msg
                 }))
+                const cnoList=data.map(item=>item.cno)
                 try{
-                    await apiClient.post('/cart/order', orders)
-                    Navigate('/cart/paycomplete')
+                    await apiClient.post('/cart/order', {orders, cnoList})
+                    navigate('/cart/paycomplete')
                 }catch(error){
                     console.error(error)
                 }

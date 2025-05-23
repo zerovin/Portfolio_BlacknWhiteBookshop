@@ -1,0 +1,24 @@
+#paycomplete{
+    padding-top:300px;
+    padding-bottom:350px;
+    text-align:center;
+}
+#paycomplete .success{
+    font-size:20px;
+    font-weight:600;
+    margin-bottom:50px;
+}
+#paycomplete .after_btn{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+}
+#paycomplete .after_btn a{
+    border:1px solid #1E1A1A;
+    padding:15px 20px;
+}
+#paycomplete .after_btn a:first-child{
+    background:#1E1A1A;
+    color:#fff;
+}
