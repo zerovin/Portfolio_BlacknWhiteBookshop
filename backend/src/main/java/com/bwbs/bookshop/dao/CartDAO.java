@@ -19,4 +19,6 @@ public interface CartDAO extends JpaRepository<CartEntity, Integer>{
 			+ "FROM CartEntity c JOIN BookEntity b ON c.bno=b.no "
 			+ "WHERE c.userid=:userId")
 	List<CartBookDTO> findCartWithBookByUserid(@Param("userId") String userId);
+	
+	void deleteByCnoIn(List<Integer> cnoList);
 }

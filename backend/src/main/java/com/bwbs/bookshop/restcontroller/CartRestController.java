@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bwbs.bookshop.dao.CartDAO;
 import com.bwbs.bookshop.dto.CartBookDTO;
 import com.bwbs.bookshop.dto.CartRequestDTO;
+import com.bwbs.bookshop.dto.OrderDTO;
 import com.bwbs.bookshop.entity.CartEntity;
 import com.bwbs.bookshop.entity.OrderEntity;
 import com.bwbs.bookshop.service.*;
@@ -70,17 +71,16 @@ public class CartRestController {
 	}
 	
 	@PostMapping("/cart/order")
-	public void saveOrders(@RequestBody List<OrderEntity> orders, HttpSession session){
+	public void saveOrders(@RequestBody OrderDTO request, HttpSession session){
 		String userid=(String)session.getAttribute("bwbs_userId");
 		LocalDateTime today=LocalDateTime.now();
-		List<OrderEntity> updateOrders=orders.stream()
+		List<OrderEntity> updateOrders=request.getOrders().stream()
 			.map(order -> {
 				order.setUserid(userid);
 				order.setOrderDate(today);
 				return order;
 			})
 			.toList();
-		oService.saveAll(updateOrders);
-		//장바구니 목록에서 주문한 cno들 삭제
+		oService.saveAllAndDeleteCart(updateOrders, request.getCnoList());
 	}
 }

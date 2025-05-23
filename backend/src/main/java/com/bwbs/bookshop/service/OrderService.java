@@ -5,15 +5,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bwbs.bookshop.dao.CartDAO;
 import com.bwbs.bookshop.dao.OrderDAO;
 import com.bwbs.bookshop.entity.OrderEntity;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class OrderService {
 	@Autowired
 	private OrderDAO oDAO;
+	@Autowired
+	private CartDAO cDAO;
 	
-	public void saveAll(List<OrderEntity> orderList) {
+	@Transactional
+	public void saveAllAndDeleteCart(List<OrderEntity> orders, List<Integer> cnoList) {
 		/*
 		List<OrderEntity> list=orderList.stream()
 				.map(vo -> OrderEntity.builder()
@@ -32,7 +38,9 @@ public class OrderService {
 				)
 				.toList();
 		*/
-		oDAO.saveAll(orderList);
-		//장바구니 목록에서 주문한 cno들 삭제
+		oDAO.saveAll(orders);
+		if(cnoList != null && !cnoList.isEmpty()) {
+			cDAO.deleteByCnoIn(cnoList);
+		}
 	}
 }
