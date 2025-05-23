@@ -1,9 +1,10 @@
 import { Fragment, useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import apiClient from "../../http-commons";
 
 const BookList=()=>{
+    const navigate=useNavigate();
     const {cate}=useParams();
     const category=decodeURIComponent(atob(cate));
     const display=cate==='all'?'전체':category;
@@ -11,6 +12,8 @@ const BookList=()=>{
     const [searchParams]=useSearchParams();
     const mainSort=searchParams.get("sort");
     const [curpage, setCurpage] = useState(1);
+    const [cartModal, setCartModal]=useState(false);
+
     const {isLoading, isError, error, data}=useQuery(["book_List", category, curpage, sort],
         async ()=>{
             return await apiClient.get(`/book/list/${cate}/${curpage}?sort=${sort}`)
@@ -24,7 +27,7 @@ const BookList=()=>{
         if(mainSort){
             setSort(mainSort)
         }
-    },[cate])
+    },[cate, mainSort])
 
     if(isLoading){
         return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>로딩중...</p>
@@ -58,6 +61,32 @@ const BookList=()=>{
                 </li>
             )
         }
+    }
+
+     const addCart=async(bno)=>{
+        try{
+            await apiClient.post(
+                '/cart/add',
+                {bookNo:bno, quantity:1},
+                {withCredentials:true}
+            )
+            setCartModal(true);
+        }catch(error){
+            if(error.response?.status === 401){
+                alert('로그인이 필요합니다.')
+            }else{
+                alert('장바구니 담기에 실패했습니다.')
+            }
+        }
+    }
+
+    const goCart=()=>{
+        setCartModal(false);
+        navigate('/cart/list');
+    }
+
+    const closeModal=()=>{
+        setCartModal(false);
     }
 
     return(
@@ -94,7 +123,7 @@ const BookList=()=>{
                                         </div>
                                     </div>
                                     <div className="right">
-                                        <button>장바구니</button>
+                                        <button onClick={()=>addCart(vo.no)}>장바구니</button>
                                         <button>바로픽업</button>
                                         <button>바로구매</button>
                                     </div>
@@ -117,6 +146,16 @@ const BookList=()=>{
                             </li>
                         }
                     </ul>
+                </div>
+                <div id="addcart_box" className={cartModal?"active":""}>
+                    <div>
+                        <p>상품이 장바구니에 담겼습니다.</p> 
+                        <p>장바구니로 이동하시겠습니까?</p>
+                    </div>
+                    <div className="gocart_btn">
+                        <button className="ok" onClick={goCart}>이동</button>
+                        <button className="cancel" onClick={closeModal}>취소</button>
+                    </div>
                 </div>
             </div>
         </Fragment>
