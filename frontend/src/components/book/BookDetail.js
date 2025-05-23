@@ -35,7 +35,7 @@ const BookDetail=()=>{
             const cookieKey="book_"+book.no
             setCookie(cookieKey, book.thumb)
         }
-    },[])
+    },[data])
 
     useEffect(()=>{
         apiClient.post("/member/isLogin")
@@ -86,7 +86,7 @@ const BookDetail=()=>{
             alert("로그인이 필요합니다.")
             return
         }
-        Navigate("/book/pickup",{
+        Navigate("/pickup/order",{
             state:{
                 userId:loginUser,
                 items:[
