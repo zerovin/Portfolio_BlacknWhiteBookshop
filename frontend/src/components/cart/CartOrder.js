@@ -6,18 +6,27 @@ import apiClient from "../../http-commons";
 const CartOrder=()=>{
     const location=useLocation();
     const navigate=useNavigate();
-    const {selectBooks}=location.state||{selectBooks:[]};
     const [name, setName]=useState('');
     const [phone, setPhone]=useState('');
     const [postcode, setPostcode]=useState('');
     const [addr1, setAddr1]=useState('');
     const [addr2, setAddr2]=useState('');
     const [msg, setMsg]=useState('');
+    const selectBooks=location.state?.selectBooks||[];
+    const directBuy=location.state?.directBuy||[];
+    const orderList=directBuy.length>0?directBuy:selectBooks;
 
     const {isLoading, error, data}=useQuery(['cart_list'],
         async()=>{
             const res=await apiClient.get('/cart/list')
             return res.data.filter(item=>selectBooks.includes(item.cno))
+        }
+    )
+
+    const {isLoading:directLoading, error:directError, data:directBook}=useQuery(['direct_book',directBuy],
+        async()=>{
+            const res=await apiClient.get(`/book/detail/${directBuy}`,{withCredentials:true})
+            return res.data
         }
     )
 
@@ -27,6 +36,7 @@ const CartOrder=()=>{
             return res.data
         }
     )
+
     useEffect(()=>{
         window.scrollTo({top:0, behavior:'auto'})
         if(memberInfo){
@@ -39,26 +49,26 @@ const CartOrder=()=>{
         if(window.IMP){
             window.IMP.init('imp57640514')
         }
-    },[data, memberInfo])
+    },[data, memberInfo, directBook])
 
     const total=useMemo(()=>{
-        const selectItem = new Set(selectBooks)
+        const selectItem = new Set(orderList)
         return data
             .filter(item=>selectItem.has(item.cno))
             .reduce((sum, item)=>sum+item.price*item.quantity, 0)
-    },[data, selectBooks])
+    },[data, orderList])
 
     const allQuantity=useMemo(()=>{
-        const selectItem = new Set(selectBooks)
+        const selectItem = new Set(orderList)
         return data
             .filter(item=>selectItem.has(item.cno))
             .reduce((sum, item)=>sum+item.quantity,0)
-    },[data, selectBooks])
+    },[data, orderList])
 
-    if(isLoading || memberLoading){
+    if(isLoading || memberLoading || directLoading){
         return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>로딩중...</p>
     }
-    if(error || memberError){
+    if(error || memberError || directError){
         return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>{error.message}</p>
     }
 

@@ -89,6 +89,20 @@ const BookList=()=>{
         setCartModal(false);
     }
 
+    const gopay=async(bno)=>{
+        try{
+            const res=await apiClient.get('/member/myinfo')
+            if(res.status===200 && res.data.userId){
+                navigate('/cart/order',{state:{directBuy:bno}})
+            }else{
+                alert('로그인이 필요합니다.')
+            }
+        }catch(error){
+            alert('로그인이 필요합니다.')
+        }
+    }
+
+
     return(
         <Fragment>
             <div id="bookList">
@@ -125,7 +139,7 @@ const BookList=()=>{
                                     <div className="right">
                                         <button onClick={()=>addCart(vo.no)}>장바구니</button>
                                         <button>바로픽업</button>
-                                        <button>바로구매</button>
+                                        <button onClick={()=>gopay(vo.no)}>바로구매</button>
                                     </div>
                                 </li>
                             )
