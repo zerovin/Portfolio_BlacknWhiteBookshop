@@ -1,18 +1,18 @@
 #Mypage{
-    padding-top:70px;
-    padding-bottom:30px;
+    padding-top: 80px;
 }
 #Mypage p{
     text-align: center;
-    font-size: 30px;
+    font-size: 15px;
 }
 #Mypage h3{
-    font-size: 22px;
+    font-size: 20px;
     font-weight:600;
     text-align: center;
+    justify-content: space-between;
 }
 #Mypage .container{
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 30px;
 }
@@ -26,14 +26,51 @@
 }
 #Mypage .tab-menu a {
     padding: 10px 30px;
-    /* background: black; */
-    /* color: white; */
+    /* background: black; 
+    color: white; */
 }
 #Mypage .tab-menu a.active {
     background: white;
     color: black;
     font-weight: bold;
     border-bottom: 1px solid black;
+}
+#Mypage .welcome {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 50px;
+}
+#Mypage .section {
+    margin-bottom: 50px;
+}
+#Mypage .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #999;
+    padding-bottom: 8px;
+    margin-bottom: 30px;
+}
+#Mypage .section-header h3 {
+    font-size: 16px;
+}
+#Mypage .section-header a {
+    font-size: 13px;
+    color: #555;
+    text-decoration: none;
+}
+#Mypage .empty-box {
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+    padding: 100px 0;
+}
+#Mypage .grid-section {
+    display: flex;
+    gap: 25px;
+}
+#Mypage .grid-section .section {
+    flex: 1;
 }
 /*========= 회원정보 변경 =========*/
 #Mypage form {

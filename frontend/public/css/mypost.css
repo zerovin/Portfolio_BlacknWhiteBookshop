@@ -1,6 +1,6 @@
 #MyPost{
     padding-top: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 50px;
 }
 #MyPost .container{
     max-width: 1200px;
@@ -46,7 +46,7 @@
     table-layout: fixed;
 }
 #MyPost .boardlist th{
-    padding: 12px;
+    padding: 10px;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     text-align: center;

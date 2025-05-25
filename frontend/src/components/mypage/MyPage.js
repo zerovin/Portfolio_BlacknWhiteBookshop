@@ -1,12 +1,26 @@
 import { Link, useLocation, Outlet } from "react-router-dom"
+import { useEffect, useState } from "react"
+import apiClient from "../../http-commons"
 
 const MyPage=()=>{
+    const [userName, setUserName]=useState("")
+    useEffect(()=>{
+        const getUser=async()=>{
+            try{
+                const res=await apiClient.get("/member/myinfo")
+                setUserName(res.data.userName)
+            }catch(err){
+                console.error(err)
+            }
+        }
+        getUser()
+    },[])
     const location=useLocation()
     return(
         <div id="Mypage">
             <div className="container">
                 <div className="top">
-                    <h3>마이페이지</h3>
+                    <h3>{userName} 님의 마이페이지</h3>
                 </div>
                 <div className="tab-menu">
                     <Link to="main" className={location.pathname.endsWith("main") ? "active" : ""}>홈</Link>
