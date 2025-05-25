@@ -13,6 +13,7 @@ const BookList=()=>{
     const mainSort=searchParams.get("sort");
     const [curpage, setCurpage] = useState(1);
     const [cartModal, setCartModal]=useState(false);
+    const [loginUser, setLoginUser]=useState(null)
 
     const {isLoading, isError, error, data}=useQuery(["book_List", category, curpage, sort],
         async ()=>{
@@ -29,6 +30,17 @@ const BookList=()=>{
         }
     },[cate, mainSort])
 
+    useEffect(()=>{
+        apiClient.post("/member/isLogin")
+        .then(res=>{
+            if(res.data.loginOk){
+                setLoginUser(res.data.userId)
+            }else{
+                setLoginUser(null)
+            }
+        }).catch(()=>setLoginUser(null))
+    },[])
+    
     if(isLoading){
         return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>로딩중...</p>
     }
@@ -85,6 +97,28 @@ const BookList=()=>{
         navigate('/cart/list');
     }
 
+    const goPickup=(vo)=>{
+        console.log("vo:", vo)
+        if(!loginUser){
+            alert("로그인이 필요합니다.")
+            return
+        }
+        navigate("/pickup/order",{
+            state:{
+                userId:loginUser,
+                items:[
+                    {
+                        bno:vo.no,
+                        title:vo.title,
+                        thumb:vo.thumb,
+                        quantity:1,
+                        price:vo.price
+                    }
+                ]
+            }
+        })
+    }
+
     const closeModal=()=>{
         setCartModal(false);
     }
@@ -138,7 +172,7 @@ const BookList=()=>{
                                     </div>
                                     <div className="right">
                                         <button onClick={()=>addCart(vo.no)}>장바구니</button>
-                                        <button>바로픽업</button>
+                                        <button onClick={()=>goPickup(vo)}>바로픽업</button>
                                         <button onClick={()=>gopay(vo.no)}>바로구매</button>
                                     </div>
                                 </li>

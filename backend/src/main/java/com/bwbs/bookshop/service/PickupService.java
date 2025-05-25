@@ -1,6 +1,7 @@
 package com.bwbs.bookshop.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class PickupService {
 	@Autowired
 	private PickupRepository pRepository;
 	@Autowired
-	private CartDAO cCAO;
+	private CartDAO cCao;
 	
 	@Transactional
     public void savePickup(PickupDTO dto) {
@@ -43,7 +44,13 @@ public class PickupService {
         pRepository.save(pickup); 
         
         if(dto.getCnoList() != null && !dto.getCnoList().isEmpty()) {
-        	cCAO.deleteAllById(dto.getCnoList());
+        	List<Integer> cleanList = dto.getCnoList().stream()
+        	        .filter(Objects::nonNull) // null 제거!
+        	        .toList();
+
+        	    if (!cleanList.isEmpty()) {
+        	    	cCao.deleteAllById(cleanList);
+        	    }
         }
     }
 }

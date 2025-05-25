@@ -20,6 +20,6 @@ public class PickupEntity {
 	@Temporal(TemporalType.DATE)
     private Date pdate;
 	
-	@OneToMany(mappedBy = "pickup", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "pickup", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PbookEntity> pbooks;
 }
