@@ -1,5 +1,7 @@
 package com.bwbs.bookshop.entity;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -17,8 +19,8 @@ public class PickupEntity {
 	@Column(name = "USERID")
 	private String userId;
 	private String ptime, wrap, name, phone;
-	@Temporal(TemporalType.DATE)
-    private Date pdate;
+	private LocalDateTime regdate;
+    private LocalDate pdate;
 	
 	@OneToMany(mappedBy = "pickup", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PbookEntity> pbooks;

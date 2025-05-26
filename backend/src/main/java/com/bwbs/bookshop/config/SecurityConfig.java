@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -36,22 +37,22 @@ public class SecurityConfig {
                 .requestMatchers("/pickup/**").permitAll()
                 .requestMatchers("/board/**").permitAll()
                 .requestMatchers("/uploads/**").permitAll()
+                .requestMatchers("/mypage/**").permitAll()
                 .anyRequest().authenticated() 
                 //.anyRequest().permitAll()
             )
-            .formLogin(withDefaults());
-            /*
-            .formLogin(form -> form.disable())
-            .httpBasic(httpBasic -> httpBasic.disable())
-            .logout(logout -> logout.disable())
-        	.exceptionHandling(ex -> ex
-	            .authenticationEntryPoint((request, response, authException) -> {
-	                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-	                response.setContentType("application/json");
-	                response.getWriter().write("{\"error\": \"로그인이 필요합니다\"}");
-	            })
-	        );
-	        */
+            .formLogin(withDefaults())
+			.exceptionHandling(ex -> ex
+				.defaultAuthenticationEntryPointFor(
+					(request, response, authException) -> {
+						response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+						response.setContentType("application/json");
+						response.getWriter().write("{\"error\": \"로그인이 필요합니다.\"}");
+					},
+					new AntPathRequestMatcher("/mypage/**")
+				)
+			);
+	        
 
         return http.build();
     }
