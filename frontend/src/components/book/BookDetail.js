@@ -7,6 +7,7 @@ import DOMPurify from "dompurify";
 
 const BookDetail=()=>{
     const {no}=useParams()
+    const navigate=useNavigate();
     const [quantity, setQuantity]=useState(1);
     const [cartModal, setCartModal]=useState(false);
     const [loginUser, setLoginUser]=useState(null)
@@ -110,6 +111,19 @@ const BookDetail=()=>{
     const closeModal=()=>{
         setCartModal(false);
     }
+
+    const gopay=async(bno)=>{
+        try{
+            const res=await apiClient.get('/member/myinfo')
+            if(res.status===200 && res.data.userId){
+                navigate('/cart/order',{state:{directBuy:bno}})
+            }else{
+                alert('로그인이 필요합니다.')
+            }
+        }catch(error){
+            alert('로그인이 필요합니다.')
+        }
+    }
     
     return(
         <Fragment>
@@ -159,7 +173,7 @@ const BookDetail=()=>{
                             <div className="btns">
                                 <button onClick={addCart}>장바구니</button>
                                 <button onClick={goPickup}>바로픽업</button>
-                                <button>바로구매</button>
+                                <button onClick={()=>gopay(data.data.no)}>바로구매</button>
                             </div>
                         </div>
                     </div>
@@ -195,7 +209,7 @@ const BookDetail=()=>{
                             <div className="btns">
                                 <button onClick={addCart}>장바구니</button>
                                 <button onClick={goPickup}>바로픽업</button>
-                                <button>바로구매</button>
+                                <button onClick={()=>gopay(data.data.no)}>바로구매</button>
                             </div>
                         </div>
                     </div>

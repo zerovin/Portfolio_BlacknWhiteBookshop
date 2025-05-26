@@ -12,9 +12,19 @@ const CartOrder=()=>{
     const [addr1, setAddr1]=useState('');
     const [addr2, setAddr2]=useState('');
     const [msg, setMsg]=useState('');
-    const selectBooks=location.state?.selectBooks||[];
-    const directBuy=location.state?.directBuy||[];
-    const orderList=directBuy.length>0?directBuy:selectBooks;
+    const selectBooks=useMemo(() => location.state?.selectBooks || [], [location.state?.selectBooks]);
+    const directBuy = useMemo(() => {
+        const param = location.state?.directBuy;
+        return Array.isArray(param) ? param : param ? [param] : [];
+      }, [location.state?.directBuy]);
+    const [orderData, setOrderData]=useState([]);
+    
+    const {isLoading:memberLoading, error:memberError, data:memberInfo}=useQuery(['member_info'],
+        async()=>{
+            const res=await apiClient.get('/member/myinfo')
+            return res.data
+        }
+    )
 
     const {isLoading, error, data}=useQuery(['cart_list'],
         async()=>{
@@ -22,17 +32,10 @@ const CartOrder=()=>{
             return res.data.filter(item=>selectBooks.includes(item.cno))
         }
     )
-
+    
     const {isLoading:directLoading, error:directError, data:directBook}=useQuery(['direct_book',directBuy],
         async()=>{
             const res=await apiClient.get(`/book/detail/${directBuy}`,{withCredentials:true})
-            return res.data
-        }
-    )
-
-    const {isLoading:memberLoading, error:memberError, data:memberInfo}=useQuery(['member_info'],
-        async()=>{
-            const res=await apiClient.get('/member/myinfo')
             return res.data
         }
     )
@@ -46,24 +49,24 @@ const CartOrder=()=>{
             setAddr1(memberInfo.addr1)
             setAddr2(memberInfo.addr2)
         }
+        if(directBuy && directBuy.length>0 && directBook){
+            setOrderData([{ ...directBook, quantity:1}])
+        }else if(selectBooks.length>0 && data){
+            const filtered=data.filter(item=>selectBooks.includes(item.cno))
+            setOrderData(filtered)
+        }
         if(window.IMP){
             window.IMP.init('imp57640514')
         }
-    },[data, memberInfo, directBook])
+    },[data, memberInfo, directBuy, directBook, selectBooks])
 
     const total=useMemo(()=>{
-        const selectItem = new Set(orderList)
-        return data
-            .filter(item=>selectItem.has(item.cno))
-            .reduce((sum, item)=>sum+item.price*item.quantity, 0)
-    },[data, orderList])
+        return orderData.reduce((sum, item)=>sum+item.price*(item.quantity||1),0)
+    },[orderData])
 
     const allQuantity=useMemo(()=>{
-        const selectItem = new Set(orderList)
-        return data
-            .filter(item=>selectItem.has(item.cno))
-            .reduce((sum, item)=>sum+item.quantity,0)
-    },[data, orderList])
+        return orderData.reduce((sum,item)=>sum+(item.quantity||1),0)
+    },[orderData])
 
     if(isLoading || memberLoading || directLoading){
         return <p style={{textAlign:'center',height:'100vh',lineHeight:'100vh'}}>로딩중...</p>
@@ -131,7 +134,7 @@ const CartOrder=()=>{
             pg: 'html5_inicis',
             pay_method: 'card',
             merchant_uid: `mid_${new Date().getTime()}`,
-            name:`${data[0].title} 외 ${allQuantity}권`,
+            name:`${orderData[0].title} 외 ${allQuantity}권`,
             amount: total*0.9,
             buyer_email: memberInfo.email,
             buyer_name: name,
@@ -140,8 +143,8 @@ const CartOrder=()=>{
             buyer_postcode: postcode,
             },
             async function(afterPay){
-                const orders=data.map(item=>({
-                    bno:item.bno,
+                const orders=orderData.map(item=>({
+                    bno:item.bno||item.no,
                     title:item.title,
                     thumb:item.thumb,
                     quantity:item.quantity,
@@ -152,7 +155,7 @@ const CartOrder=()=>{
                     addr:`[${postcode}]${addr1} ${addr2}`,
                     msg:msg
                 }))
-                const cnoList=data.map(item=>item.cno)
+                const cnoList=orderData.map(item=>item.cno||item.no)
                 try{
                     await apiClient.post('/cart/order', {orders, cnoList})
                     navigate('/cart/paycomplete')
@@ -210,10 +213,10 @@ const CartOrder=()=>{
                                     </thead>
                                     <tbody>
                                         {
-                                            data.map(item=>(
-                                                <tr key={item.cno}>
+                                            orderData.map(item=>(
+                                                <tr key={item.cno||item.no}>
                                                     <td className="book_info">
-                                                        <Link to={`/book/detail/${item.bno}`}>
+                                                        <Link to={`/book/detail/${item.bno||item.no}`}>
                                                             <img src={item.thumb} alt={item.title}/>
                                                         </Link>
                                                         <div className="info_text">
