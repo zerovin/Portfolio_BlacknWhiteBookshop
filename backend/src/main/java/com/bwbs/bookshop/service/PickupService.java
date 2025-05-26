@@ -45,7 +45,7 @@ public class PickupService {
         
         if(dto.getCnoList() != null && !dto.getCnoList().isEmpty()) {
         	List<Integer> cleanList = dto.getCnoList().stream()
-        	        .filter(Objects::nonNull) // null 제거!
+        	        .filter(Objects::nonNull)
         	        .toList();
 
         	    if (!cleanList.isEmpty()) {
