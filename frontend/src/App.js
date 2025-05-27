@@ -18,6 +18,8 @@ import BoardDetail from "./components/board/BoardDetail";
 import BoardUpdate from "./components/board/BoardUpdate";
 import BoardDelete from "./components/board/BoardDelete";
 import QnaList from "./components/qna/QnaList";
+import QnaInsert from "./components/qna/QnaInsert";
+import QnaDetail from "./components/qna/QnaDetail";
 import MyPage from "./components/mypage/MyPage";
 import MyMain from "./components/mypage/MyMain";
 import MyInfo from "./components/mypage/MyInfo";
@@ -50,6 +52,8 @@ function App() {
               <Route path={"/board/update/:no"} element={<BoardUpdate/>}/>
               <Route path={"/board/delete"} element={<BoardDelete/>}/>
               <Route path={"/qna/list"} element={<QnaList/>}/>
+              <Route path={"/qna/insert"} element={<QnaInsert/>}/>
+              <Route path={"/qna/detail/:qno"} element={<QnaDetail/>}/>
               <Route path={"/mypage"} element={<MyPage/>}>
                 <Route index element={<MyMain/>}/>
                 <Route path="main" element={<MyMain/>}/>
