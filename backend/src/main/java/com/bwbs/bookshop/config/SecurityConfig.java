@@ -52,8 +52,13 @@ public class SecurityConfig {
 					},
 					new AntPathRequestMatcher("/mypage/**")
 				)
-			);
-	        
+				.accessDeniedHandler((request, response, accessDeniedException) -> {
+	                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+	                response.setContentType("application/json;charset=UTF-8");
+	                response.getWriter().write("{\"error\": \"비밀번호를 확인해주세요.\"}");
+	            })
+			)
+			.formLogin(login -> login.disable());
 
         return http.build();
     }
