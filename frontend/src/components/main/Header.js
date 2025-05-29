@@ -123,7 +123,7 @@ const Header=()=>{
                             }
                             {
                                 !guest && admin &&
-                                <li><Link to={''}>관리자페이지</Link></li>
+                                <li><Link to={'/admin/home'}>관리자페이지</Link></li>
                             }
                             {
                                 !guest &&

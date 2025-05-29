@@ -20,6 +20,7 @@ import BoardDelete from "./components/board/BoardDelete";
 import QnaList from "./components/qna/QnaList";
 import QnaInsert from "./components/qna/QnaInsert";
 import QnaDetail from "./components/qna/QnaDetail";
+import QnaUpdate from "./components/qna/QnaUpdate";
 import MyPage from "./components/mypage/MyPage";
 import MyMain from "./components/mypage/MyMain";
 import MyInfo from "./components/mypage/MyInfo";
@@ -29,6 +30,12 @@ import MyView from "./components/mypage/MyView";
 import MyWish from "./components/mypage/MyWish";
 import MyPost from "./components/mypage/MyPost";
 import MyQnA from "./components/mypage/MyQnA";
+import Admin from "./components/admin/AdminPage";
+import AdminHome from "./components/admin/AdminHome";
+import AdminMember from "./components/admin/AdminMember";
+import AdminOrder from "./components/admin/AdminOrder";
+import AdminBoard from "./components/admin/AdminBoard";
+import AdminQna from "./components/admin/AdminQna";
 
 function App() {
   return (
@@ -54,6 +61,7 @@ function App() {
               <Route path={"/qna/list"} element={<QnaList/>}/>
               <Route path={"/qna/insert"} element={<QnaInsert/>}/>
               <Route path={"/qna/detail/:qno"} element={<QnaDetail/>}/>
+              <Route path={"/qna/update/:qno"} element={<QnaUpdate/>}/>
               <Route path={"/mypage"} element={<MyPage/>}>
                 <Route index element={<MyMain/>}/>
                 <Route path="main" element={<MyMain/>}/>
@@ -64,6 +72,14 @@ function App() {
                 <Route path="wish" element={<MyWish/>}/>
                 <Route path="post" element={<MyPost/>}/>
                 <Route path="qna" element={<MyQnA/>}/>
+              </Route>
+              <Route path={"/admin"} element={<Admin/>}>
+                <Route index element={<AdminHome/>}/>
+                <Route path="home" element={<AdminHome/>}/>
+                <Route path="member" element={<AdminMember/>}/>
+                <Route path="order" element={<AdminOrder/>}/>
+                <Route path="board" element={<AdminBoard/>}/>
+                <Route path="qna" element={<AdminQna/>}/>
               </Route>
           </Routes>
           <Footer/>

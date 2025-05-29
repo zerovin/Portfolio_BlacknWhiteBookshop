@@ -1,0 +1,246 @@
+/* ----------------------- ADMIN PAGE ------------------------- */
+#adminpage{
+    padding-top: 80px;
+}
+#adminpage p{
+    text-align: center;
+    font-size: 15px;
+}
+#adminpage h3{
+    font-size: 20px;
+    font-weight:600;
+    text-align: center;
+    justify-content: space-between;
+}
+#adminpage .container{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px;
+}
+#adminpage .top{
+    margin-bottom: 80px;
+}
+#adminpage .tab-menu {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+#adminpage .tab-menu a {
+    padding: 10px 30px;
+    /* background: black; 
+    color: white; */
+}
+#adminpage .tab-menu a.active {
+    background: white;
+    color: black;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+}
+#adminpage .welcome {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 50px;
+}
+
+/* ----------------------- ADMIN HOME ------------------------- */
+#adminpage .section {
+    margin-bottom: 50px;
+}
+#adminpage .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #999;
+    padding-bottom: 8px;
+    margin-bottom: 30px;
+}
+#adminpage .section-header h3 {
+    font-size: 16px;
+}
+#adminpage .section-header a {
+    font-size: 13px;
+    color: #555;
+    text-decoration: none;
+}
+#adminpage .empty-box {
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+    padding: 100px 0;
+}
+#adminpage .grid-section {
+    display: flex;
+    gap: 25px;
+}
+#adminpage .grid-section .section {
+    flex: 1;
+}
+
+
+/* ----------------------- ADMIN ORDER ------------------------- */
+#adminorder{
+    padding-top: 20px;
+    padding-bottom:50px;
+}
+#adminorder .container{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+#adminorder .filter{
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: space-between;
+}
+#adminorder .filter .filter-select{
+    padding: 8px 15px;
+    border: none;
+    border-bottom: 1px solid black;
+    font-size: 14px;
+}
+#adminorder .filter .filter-search{
+    padding: 8px 12px;
+    border: none;
+    border-bottom: 1px solid black;
+    font-size: 14px;
+    width: 200px;
+}
+#adminorder .table {
+    width: 100%;
+    border-collapse: separate;
+    text-align: center;
+    font-size: 15px;
+}
+#adminorder .table th {
+    padding: 12px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+#adminorder .table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+#adminorder .table th:nth-child(1), 
+#adminorder .boardlist td:nth-child(1) { 
+    width: 10%; 
+}
+#adminorder .table th:nth-child(2), 
+#adminorder .boardlist td:nth-child(2) { 
+    width: 20%; 
+}
+#adminorder .table th:nth-child(3), 
+#adminorder .boardlist td:nth-child(3) { 
+    width: 30%; 
+    
+}
+#adminorder .table th:nth-child(4), 
+#adminorder .boardlist td:nth-child(4) { 
+    width: 10%; 
+}
+#adminorder .table th:nth-child(5), 
+#adminorder .boardlist td:nth-child(5) { 
+    width: 15%; 
+}
+#adminorder .table th:nth-child(6), 
+#adminorder .boardlist td:nth-child(6) { 
+    width: 15%; 
+}
+#adminorder .table img {
+    width: 60px;
+    height: 80px;
+    object-fit: cover;
+}
+#adminorder .table .title {
+    text-align: left;
+    padding-left: 10px;
+    font-weight: 600;
+}
+
+/* ----------------------- ADMIN BOARD ------------------------- */
+#adminboard{
+    padding-top: 30px;
+    padding-bottom: 50px;
+}
+#adminboard .container{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+}
+#adminboard h3{
+    font-size: 22px;
+    font-weight:600;
+    text-align: center;
+}
+#adminboard .boardlist {
+    width: 80%;
+    margin: 50px auto;
+    font-family: sans-serif;
+}
+#adminboard .boardlist_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+    margin: 0 auto 20px auto;
+}
+#adminboard .category {
+    padding: 8px 7px;
+    font-size: 14px;
+    border-bottom: 1px solid black;
+}
+#adminboard .insertBtn {
+    background-color: #000;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+#adminboard .boardlist table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    table-layout: fixed;
+}
+#adminboard .boardlist th{
+    padding: 10px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+#adminboard .boardlist th:nth-child(1), #adminboard .boardlist td:nth-child(1) { width: 10%; }
+#adminboard .boardlist th:nth-child(2), #adminboard .boardlist td:nth-child(2) { width: 15%; }
+#adminboard .boardlist th:nth-child(3), #adminboard .boardlist td:nth-child(3) { width: 30%; }
+#adminboard .boardlist th:nth-child(4), #adminboard .boardlist td:nth-child(4) { width: 15%; }
+#adminboard .boardlist th:nth-child(5), #adminboard .boardlist td:nth-child(5) { width: 15%; }
+#adminboard .boardlist th:nth-child(6), #adminboard .boardlist td:nth-child(6) { width: 10%; }
+#adminboard .boardlist td {
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+#adminboard .boardlist td:nth-child(3) {
+    text-align: left;
+}
+#adminboard .boardlist td a:hover {
+  color: gray;
+}
+#adminboard .pagination {
+    text-align: center;
+    margin-bottom: 20px;
+}
+#adminboard .pagination .page,
+.pagination button {
+    margin: 0 5px;
+    padding: 6px 12px;
+    border: 1px solid black;
+    background: none;
+    cursor: pointer;
+}
+#adminboard .pagination .active {
+    background-color: #000;
+    color: white;
+}

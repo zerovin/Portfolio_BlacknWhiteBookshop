@@ -11,6 +11,7 @@ const QnaList=()=>{
     const [pwBox, setPwbox]=useState(false)
     const [selectQno, setSelectQno]=useState(null)
     const [inputPw, setInputPw]=useState("")
+    const [userAuth, setUserAuth]=useState(null)
 
     const {isLoading,isError,error,data,refetch:qnaList}=useQuery(['qna_list',curpage],
         async ()=>{
@@ -19,7 +20,7 @@ const QnaList=()=>{
             })
         }
     )
-    console.log(data)
+
     const categoryLabels = {
         book: "도서/상품정보",
         order: "주문/결제",
@@ -29,8 +30,12 @@ const QnaList=()=>{
     
     useEffect(() => {
         apiClient.post("/member/isLogin").then(res=>{
-            if (res.data.loginOk) setIsLogin(true)
-            else setIsLogin(false)
+            if (res.data.loginOk){
+                setIsLogin(true)
+                setUserAuth(res.data.userAuth)
+            }else{
+                setIsLogin(false)
+            }
         }).catch(err=>{
             console.error(err)
             setIsLogin(false)
@@ -43,9 +48,9 @@ const QnaList=()=>{
         setCurpage(1)
     }
     if(isLoading)
-        return <h1 className={"text-center"}>서버에서 데이터 전송 지연...</h1>
+        return <h1 style={{textAlign:'center',lineHeight:'100vh'}}>로딩중...</h1>
     if(isError)
-        return <h1 className={"text-center"}>{error.message}</h1>
+        return <h1 className={{textAlign:'center',lineHeight:'100vh'}}>{error.message}</h1>
     const pageChange=(page)=>{
         setCurpage(page)
     }
@@ -69,6 +74,10 @@ const QnaList=()=>{
     }
 
     const goDetail=()=>{
+        if(inputPw.trim()===""){
+            alert('비밀번호를 입력하세요.')
+            return
+        }
         navigate(`/qna/detail/${selectQno}`,{state:{pw:inputPw}})
     }
 
@@ -112,21 +121,21 @@ const QnaList=()=>{
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.data.list && data.data.list.map((vo)=>
+                                {data.data.list && data.data.list.map((vo, idx)=>
                                     <tr key={vo.qno}>
-                                        <td>{vo.qno}</td>
+                                        <td>{data.data.list.length - idx}</td>
                                         <td>{categoryLabels[vo.cate]}</td>
                                         <td>
-                                            {vo.issecret==='y'?(
-                                                <p className="title" onClick={()=>openPwBox(vo.qno)}><span>🔐</span>{vo.title}</p>
-                                            ):(
+                                            {userAuth==="ROLE_ADMIN"||vo.issecret==='n'?(
                                                 <Link to={`/qna/detail/${vo.qno}`}><span>🔓</span>{vo.title}</Link>
+                                            ):(
+                                                <p className="title" onClick={()=>openPwBox(vo.qno)}><span>🔐</span>{vo.title}</p>
                                             )}
                                         </td>
                                         <td>{vo.writer}</td>
-                                        <td>{new Date(vo.regdate).toLocaleDateString("ko-KR")}</td>
+                                        <td>{vo.regdate.substring(0, 10)}</td>
                                         <td>
-                                            <span className={vo.aContent?"done":""}>{vo.aContent?"답변완료":"답변대기"}</span>
+                                            <span className={vo.a_content?"done":""}>{vo.a_content?"답변완료":"답변대기"}</span>
                                         </td>
                                     </tr>
                                 )}
@@ -143,7 +152,7 @@ const QnaList=()=>{
                     <div id="pwcheck" className={pwBox?"active":""}>
                         <input type="password" value={inputPw} onChange={(e)=>setInputPw(e.target.value)} placeholder="게시글의 비밀번호를 입력하세요."/>
                         <div className="modal_btn">
-                            <button className="ok" onClick={goDetail}>확인</button>
+                            <button className="ok" onClick={()=>goDetail()}>확인</button>
                             <button className="cancel" onClick={closePwBox}>취소</button>
                         </div>
                     </div>

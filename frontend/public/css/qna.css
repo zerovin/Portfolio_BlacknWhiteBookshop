@@ -309,6 +309,7 @@
     font-size: 15px;
     margin-bottom: 50px;
     min-height: 300px;
+    line-height:1.25em;
   }
   #qnadetail .btn-group {
     display: flex;
@@ -323,36 +324,74 @@
     background-color: black;
     color: white;
   }
-  #qnadetail .comment-section {
-    padding: 20px;
-    margin-top: 30px;
+
+  /* ---------------------- QNA ANSWER ------------------------ */
+  #qnadetail .answer_wrap{
+    margin:30px 0;
   }
-  #qnadetail .comment-section h4 {
+  #qnadetail .answer_wrap h4 {
+    display:inline-block;
+    font-size:18px;
+    font-weight:600;
+    padding:0 20px 10px 0;
+    border-bottom:2px solid #000;
     margin-bottom: 30px;
   }
-  #qnadetail  .comment-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 20px;
+  #qnadetail .answer_answer{
+    background:#eee;
+    padding:20px;
+    margin-bottom:30px;
   }
-  #qnadetail  .comment-list li {
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
+  #qnadetail .answer_answer .answer_top{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
   }
-  #qnadetail .comment-form {
-    display: flex;
-    gap: 10px;
+  #qnadetail .answer_answer .answer_top p{
+    background:#ccc;
+    font-size:15px;
+    font-weight:600;
+    padding:5px;
   }
-  #qnadetail .comment-form input[type="text"] {
+  #qnadetail .answer_answer .answer_top .right{
+    display:flex;
+    align-items:center;
+    gap:5px;
+  }
+  #qnadetail .answer_answer .answer_top .right .btns{
+    display:flex;
+    gap:5px;
+  }
+  #qnadetail .answer_answer .answer_top .right button{
+    background:#ccc;
+    font-size:14px;
+  }
+  #qnadetail .answer_answer .answer_top span{
+    color:#999;
+    font-size:14px;
+  }
+  #qnadetail .answer_answer pre{
+    font-size:15px;
+    white-space:pre-wrap;
+    line-height:1.25em;
+  }
+  #qnadetail .answer_input{
+    display:flex;
+    gap:20px;
+  }
+  #qnadetail .answer_input textarea{
+    resize:none;
     flex: 1;
     padding: 10px;
     font-size: 14px;
     border: 1px solid #ccc;
   }
-  #qnadetail .comment-form button {
+  #qnadetail .answer_input button {
     padding: 10px 40px;
     background-color: #000;
     color: #fff;
     border: none;
     cursor: pointer;
   }
+
+
