@@ -7,6 +7,7 @@ const AdminPage=()=>{
     const [userName, setUserName]=useState("")
 
     useEffect(()=>{
+        window.scrollTo({top:0, behavior:'auto'})
         const getUser=async()=>{
             try{
                 const res=await apiClient.get("/member/myinfo")

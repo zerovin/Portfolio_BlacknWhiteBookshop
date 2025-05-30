@@ -1,96 +1,160 @@
 import { Fragment, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../../http-commons";
+import { useQuery } from "react-query";
 
 const AdminQna=()=>{
+    const navigate=useNavigate()
+    const [isLogin, setIsLogin]=useState(false)
+    const [category, setCategory]=useState("")
     const [curpage, setCurpage]=useState(1)
-    const [postList, setPostList]=useState([])
-    const [totalPages, setTotalPages]=useState(1)
-    const [isLoading, setIsLoading]=useState(false)
+    const [pwBox, setPwbox]=useState(false)
+    const [selectQno, setSelectQno]=useState(null)
+    const [inputPw, setInputPw]=useState("")
+    const [userAuth, setUserAuth]=useState(null)
 
-    const categoryLabels={
-        review: "구매 후기",
-        proof: "책 인증샷",
-        event: "이벤트 참여",
-        free: "자유글"
+    const {isLoading,isError,error,data,refetch:qnaList}=useQuery(['qna_list',curpage],
+        async ()=>{
+            return await apiClient.get(`/qna/list/${curpage}`,{
+                params:{category}
+            })
+        }
+    )
+
+    const categoryLabels = {
+        book: "도서/상품정보",
+        order: "주문/결제",
+        delivery: "배송/수령일",
+        etc: "기타문의"
+    }
+    
+    useEffect(() => {
+        window.scrollTo({top:0, behavior:'auto'})
+        apiClient.post("/member/isLogin").then(res=>{
+            if (res.data.loginOk){
+                setIsLogin(true)
+                setUserAuth(res.data.userAuth)
+            }else{
+                setIsLogin(false)
+            }
+        }).catch(err=>{
+            console.error(err)
+            setIsLogin(false)
+        })
+        qnaList()
+    }, [curpage, category, qnaList])
+    
+    const handleCategoryChange=(e)=>{
+        setCategory(e.target.value)
+        setCurpage(1)
+    }
+    if(isLoading)
+        return <h1 style={{textAlign:'center',lineHeight:'100vh'}}>로딩중...</h1>
+    if(isError)
+        return <h1 className={{textAlign:'center',lineHeight:'100vh'}}>{error.message}</h1>
+    const pageChange=(page)=>{
+        setCurpage(page)
+    }
+    const prev=()=>{
+        setCurpage(curpage>1?curpage-1:curpage)
+    }
+    const next=()=>{
+        setCurpage(data.data.totalPage && curpage<data.data.totalPage?curpage+1:curpage)
+    }
+    let pageArr=[]
+    for (let i = data.data.startPage; i <= data.data.endPage; i++) {
+        pageArr.push(
+          <button key={i} className={curpage === i ? "page active" : "page"}
+            onClick={() => pageChange(i)}>{i} </button>)  
     }
 
-    useEffect(()=>{
-        const postData=async()=>{
-            setIsLoading(true)
-            try {
-                const res = await apiClient.get("/board/list", {
-                params: { page: curpage },
-                })
+    const openPwBox=(qno)=>{
+        setSelectQno(qno)
+        setInputPw('')
+        setPwbox(true)
+    }
 
-                if(curpage === 1){
-                    setPostList(res.data.content)
-                }else{
-                    setPostList((prev)=>[...prev, ...res.data.content])
-                }
-                    setTotalPages(res.data.totalPages)
-            }catch(error){
-                console.error("불러오기 실패:", error)
-            }finally{
-                setIsLoading(false)
-            }
+    const goDetail=()=>{
+        if(inputPw.trim()===""){
+            alert('비밀번호를 입력하세요.')
+            return
         }
-        postData()
-    }, [curpage])
+        navigate(`/qna/detail/${selectQno}`,{state:{pw:inputPw}})
+    }
 
-    const postMore=()=>{
-        if (curpage < totalPages){
-            setCurpage(curpage + 1)
-        }
+    const closePwBox=()=>{
+        setPwbox(false)
     }
 
     return(
         <Fragment>
-            <div id="adminboard">
-                <div className="boardlist">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>분류</th>
-                                <th>제목</th>
-                                <th>작성자</th>
-                                <th>날짜</th>
-                                <th>조회수</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {/* {postList.length === 0 ? ( */}
-                            <tr>
-                                <td colSpan="6" style={{ textAlign: "center", padding: "40px 0", color: "#888" }}>
-                                작성 글이 없습니다.
-                                </td>
-                            </tr>
-                            {/* ) : (
-                            postList.map((vo)=>( */}
-                                <tr key="">
-                                    <td></td>
-                                    <td>{/*categoryLabels[vo.category]*/}</td>
-                                    <td>
-                                        <Link to=""></Link>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+            <div id="qnalist">
+                <div className="container">
+                    <div className="list_wrap">
+                        <div className="list_wrap_top">
+                            <div className="left">
+                                <select className="category" value={category} onChange={handleCategoryChange}>
+                                    <option value="">전체</option>
+                                    <option value="book">도서/상품정보</option>
+                                    <option value="order">주문/결제</option>
+                                    <option value="delivery">배송/수령일</option>
+                                    <option value="etc">기타문의</option>
+                                </select>
+                            </div>
+                            <div className="right">
+                                {isLogin?(
+                                <Link to="/qna/insert" className="insertBtn">글쓰기</Link>):
+                                <p style={{color: "gray"}}>로그인 후 글쓰기가 가능합니다.</p>}
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>분류</th>
+                                    <th>제목</th>
+                                    <th>작성자</th>
+                                    <th>날짜</th>
+                                    <th>답변상태</th>
                                 </tr>
-                            {/* ))
-                            )} */}
-                        </tbody>
-                    </table>
-                </div>
-
-                {curpage < totalPages && (
-                    <div style={{ textAlign: "center", marginTop: "20px" }}>
-                        <button onClick={postMore} disabled={isLoading}>
-                        {isLoading ? "로딩 중..." : "더보기"}
-                        </button>
+                            </thead>
+                            <tbody>
+                                {data.data.list && data.data.list.map((vo, idx)=>
+                                    <tr key={vo.qno}>
+                                        <td>{data.data.list.length - idx}</td>
+                                        <td>{categoryLabels[vo.cate]}</td>
+                                        <td>
+                                            {userAuth==="ROLE_ADMIN"||vo.issecret==='n'?(
+                                                <Link to={`/qna/detail/${vo.qno}`}><span>🔓</span>{vo.title}</Link>
+                                            ):(
+                                                <p className="title" onClick={()=>openPwBox(vo.qno)}><span>🔐</span>{vo.title}</p>
+                                            )}
+                                        </td>
+                                        <td>{vo.writer}</td>
+                                        <td>{vo.regdate.substring(0, 10)}</td>
+                                        <td>
+                                            <span className={vo.a_content?"done":""}>{vo.a_content?"답변완료":"답변대기"}</span>
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
                     </div>
-                )}
+                    <div className="pagination">
+                        {data.data.startPage && data.data.startPage > 1 &&
+                         <button onClick={prev}>&lt;</button>}
+                        {pageArr}
+                        {data.data.endPage && data.data.endPage < data.data.totalPage &&   
+                        <button onClick={next}>&gt;</button>}
+                    </div>
+                    <div id="pwcheck" className={pwBox?"active":""}>
+                        <input type="password" value={inputPw} onChange={(e)=>setInputPw(e.target.value)} placeholder="게시글의 비밀번호를 입력하세요."/>
+                        <div className="modal_btn">
+                            <button className="ok" onClick={()=>goDetail()}>확인</button>
+                            <button className="cancel" onClick={closePwBox}>취소</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </Fragment>
     )

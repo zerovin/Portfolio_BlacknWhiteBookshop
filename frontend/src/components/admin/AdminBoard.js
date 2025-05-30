@@ -1,96 +1,118 @@
 import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import apiClient from "../../http-commons";
+import { useQuery } from "react-query";
 
 const AdminBoard=()=>{
+    const [isLogin, setIsLogin]=useState(false)
+    const [category, setCategory]=useState("")
     const [curpage, setCurpage]=useState(1)
-    const [postList, setPostList]=useState([])
-    const [totalPages, setTotalPages]=useState(1)
-    const [isLoading, setIsLoading]=useState(false)
-
-    const categoryLabels={
+    const {isLoading,isError,error,data,refetch:loadingNotExecute}=useQuery(['board-list',curpage],
+        async ()=>{
+            return await apiClient.get(`/board/list/${curpage}`,{
+                params:{category}
+            })
+        }
+    )
+    const categoryLabels = {
         review: "구매 후기",
         proof: "책 인증샷",
         event: "이벤트 참여",
         free: "자유글"
     }
+    useEffect(() => {
+        window.scrollTo({top:0, behavior:'auto'})
+        apiClient.post("/member/isLogin").then(res=>{
+            if (res.data.loginOk) setIsLogin(true)
+            else setIsLogin(false)
+        }).catch(err=>{
+            console.error(err)
+            setIsLogin(false)
+        })
+    }, [])
 
     useEffect(()=>{
-        // const postData=async()=>{
-        //     setIsLoading(true)
-        //     try {
-        //         const res = await apiClient.get("/board/list", {
-        //         params: { page: curpage },
-        //         })
+        loadingNotExecute()
+    },[loadingNotExecute])
 
-        //         if(curpage === 1){
-        //             setPostList(res.data.content)
-        //         }else{
-        //             setPostList((prev)=>[...prev, ...res.data.content])
-        //         }
-        //             setTotalPages(res.data.totalPages)
-        //     }catch(error){
-        //         console.error("불러오기 실패:", error)
-        //     }finally{
-        //         setIsLoading(false)
-        //     }
-        // }
-        // postData()
-    }, [curpage])
-
-    const postMore=()=>{
-        if (curpage < totalPages){
-            setCurpage(curpage + 1)
-        }
+    const handleCategoryChange=(e)=>{
+        setCategory(e.target.value)
+        setCurpage(1)
+    }
+    if(isLoading)
+        return <h1 className={"text-center"}>서버에서 데이터 전송 지연...</h1>
+    if(isError)
+        return <h1 className={"text-center"}>{error.message}</h1>
+    const pageChange=(page)=>{
+        setCurpage(page)
+    }
+    const prev=()=>{
+        setCurpage(curpage>1?curpage-1:curpage)
+    }
+    const next=()=>{
+        setCurpage(data.data.totalPage && curpage<data.data.totalPage?curpage+1:curpage)
+    }
+    let pageArr=[]
+    for (let i = data.data.startPage; i <= data.data.endPage; i++) {
+        pageArr.push(
+          <button key={i} className={curpage === i ? "page active" : "page"}
+            onClick={() => pageChange(i)}>{i} </button>)  
     }
 
     return(
         <Fragment>
-            <div id="adminboard">
-                <div className="boardlist">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>분류</th>
-                                <th>제목</th>
-                                <th>작성자</th>
-                                <th>날짜</th>
-                                <th>조회수</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {/* {postList.length === 0 ? ( */}
-                            <tr>
-                                <td colSpan="6" style={{ textAlign: "center", padding: "40px 0", color: "#888" }}>
-                                작성 글이 없습니다.
-                                </td>
-                            </tr>
-                            {/* ) : (
-                            postList.map((vo)=>( */}
-                                <tr key="">
-                                    <td></td>
-                                    <td>{/*categoryLabels[vo.category]*/}</td>
-                                    <td>
-                                        <Link to=""></Link>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+            <div id="BoardList">
+                <div className="container">
+                    <div className="boardlist">
+                        <div className="boardlist_top">
+                            <div className="left">
+                                <select className="category" value={category} onChange={handleCategoryChange}>
+                                    <option value="">전체</option>
+                                    <option value="review">구매 후기</option>
+                                    <option value="proof">책 인증샷</option>
+                                    <option value="event">이벤트 참여</option>
+                                    <option value="free">자유글</option>
+                                </select>
+                            </div>
+                            <div className="right">
+                                {isLogin?(
+                                <Link to="/board/insert" className="insertBtn">글쓰기</Link>):
+                                <p style={{color: "gray"}}>로그인 후 글쓰기가 가능합니다.</p>}
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>분류</th>
+                                    <th>제목</th>
+                                    <th>작성자</th>
+                                    <th>날짜</th>
+                                    <th>조회수</th>
                                 </tr>
-                            {/* ))
-                            )} */}
-                        </tbody>
-                    </table>
-                </div>
-
-                {curpage < totalPages && (
-                    <div style={{ textAlign: "center", marginTop: "20px" }}>
-                        <button onClick={postMore} disabled={isLoading}>
-                        {isLoading ? "로딩 중..." : "더보기"}
-                        </button>
+                            </thead>
+                            <tbody>
+                                {data.data.list && data.data.list.map((vo, idx)=>
+                                    <tr key={vo.no}>
+                                        <td>{data.data.totalCount-((curpage-1)*10+idx)}</td>
+                                        <td>{categoryLabels[vo.category]}</td>
+                                        <td><Link to={`/board/detail/${vo.no}`}>{vo.title}{vo.filename ? <span style={{ marginLeft: "5px" }}>📎</span> : null}</Link></td>
+                                        <td>{vo.userName}</td>
+                                        <td>{vo.regdate && vo.regdate.substring(0, 10)}</td>
+                                        <td>{vo.hit}</td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
                     </div>
-                )}
+                    <div className="pagination">
+                        {data.data.startPage && data.data.startPage > 1 &&
+                         <button onClick={prev}>&lt;</button>}
+                        {pageArr}
+                        {data.data.endPage && data.data.endPage < data.data.totalPage &&   
+                        <button onClick={next}>&gt;</button>}
+                    </div>                   
+                </div>
             </div>
         </Fragment>
     )

@@ -18,6 +18,7 @@ const QnaUpdate=()=>{
     },[isSecret])
 
     useEffect(()=>{
+        window.scrollTo({top:0, behavior:'auto'})
         const updateData=async()=>{
             try{
                 const res=await apiClient.post(`/qna/updatedata/${qno.qno}`,qno)

@@ -11,6 +11,7 @@ const QnaInsert=()=>{
     const [pw, setPw]=useState('')
 
     useEffect(()=>{
+        window.scrollTo({top:0, behavior:'auto'})
         if(!isSecret){
             setPw("")
         }

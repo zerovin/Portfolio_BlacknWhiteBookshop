@@ -8,12 +8,12 @@
 }
 #adminpage h3{
     font-size: 20px;
-    font-weight:600;
+    font-weight:700;
     text-align: center;
     justify-content: space-between;
 }
 #adminpage .container{
-    max-width: 1100px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 30px;
 }
@@ -27,8 +27,6 @@
 }
 #adminpage .tab-menu a {
     padding: 10px 30px;
-    /* background: black; 
-    color: white; */
 }
 #adminpage .tab-menu a.active {
     background: white;
@@ -44,15 +42,14 @@
 
 /* ----------------------- ADMIN HOME ------------------------- */
 #adminpage .section {
-    margin-bottom: 50px;
+    margin:50px 0;
 }
 #adminpage .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #999;
     padding-bottom: 8px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 #adminpage .section-header h3 {
     font-size: 16px;
@@ -66,7 +63,6 @@
     text-align: center;
     color: #999;
     font-size: 14px;
-    padding: 100px 0;
 }
 #adminpage .grid-section {
     display: flex;
@@ -75,12 +71,65 @@
 #adminpage .grid-section .section {
     flex: 1;
 }
+#adminhome table{
+    width:100%;
+}
+#adminhome table.home_order td:nth-child(4){
+    text-align:left;
+    font-weight:600;
+}
+
+/* ----------------------- ADMIN MEMBER ------------------------- */
+#adminorder.member .container{
+    max-width:1400px;
+    width:100%;
+}
+#adminorder.member .table th:nth-child(1), 
+#adminorder.member .memberlist td:nth-child(1) { 
+    width: 5%; 
+}
+#adminorder.member .table th:nth-child(2), 
+#adminorder.member .memberlist td:nth-child(2) { 
+    width: 8%; 
+}
+#adminorder.member .table th:nth-child(3), 
+#adminorder.member .memberlistt td:nth-child(3) { 
+    width: 8%; 
+}
+#adminorder.member .table th:nth-child(4), 
+#adminorder.member .memberlist td:nth-child(4) { 
+    width: 14%; 
+}
+#adminorder.member .table th:nth-child(5), 
+#adminorder.member .memberlist td:nth-child(5) { 
+    width: 10%; 
+}
+#adminorder.member .table th:nth-child(6), 
+#adminorder.member .memberlist td:nth-child(6) { 
+    width: 27%; 
+}
+#adminorder.member .table th:nth-child(7), 
+#adminorder.member .memberlist td:nth-child(7) { 
+    width: 10%; 
+}
+#adminorder.member .table th:nth-child(8), 
+#adminorder.member .memberlist td:nth-child(8) { 
+    width: 10%; 
+}
+#adminorder.member .table th:nth-child(9), 
+#adminorder.member .memberlist td:nth-child(9) { 
+    width: 8%; 
+}
+#adminorder.member .memberlist td:nth-child(6){
+    text-align:left;
+}
 
 
 /* ----------------------- ADMIN ORDER ------------------------- */
 #adminorder{
     padding-top: 20px;
     padding-bottom:50px;
+    min-height:500px;
 }
 #adminorder .container{
     max-width: 1200px;
@@ -105,46 +154,60 @@
     font-size: 14px;
     width: 200px;
 }
+#adminhome .home_order,
 #adminorder .table {
     width: 100%;
     border-collapse: separate;
     text-align: center;
     font-size: 15px;
+    margin-bottom:50px;
 }
+#adminhome .home_order th,
 #adminorder .table th {
-    padding: 12px;
+    padding: 12px 10px;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
 }
+#adminhome .home_order td,
 #adminorder .table td {
     padding: 12px;
     border-bottom: 1px solid #eee;
     vertical-align: middle;
 }
+#adminhome .home_order th:nth-child(1),
 #adminorder .table th:nth-child(1), 
-#adminorder .boardlist td:nth-child(1) { 
+#adminorder .boardlist td:nth-child(1){ 
     width: 10%; 
 }
+#adminhome .home_order th:nth-child(2),
 #adminorder .table th:nth-child(2), 
 #adminorder .boardlist td:nth-child(2) { 
-    width: 20%; 
+    width: 12%; 
 }
+#adminhome .home_order th:nth-child(3),
 #adminorder .table th:nth-child(3), 
 #adminorder .boardlist td:nth-child(3) { 
-    width: 30%; 
-    
+    width: 13%; 
 }
+#adminhome .home_order th:nth-child(4),
 #adminorder .table th:nth-child(4), 
 #adminorder .boardlist td:nth-child(4) { 
-    width: 10%; 
+    width: 35%;
 }
+#adminhome .home_order th:nth-child(5),
 #adminorder .table th:nth-child(5), 
 #adminorder .boardlist td:nth-child(5) { 
-    width: 15%; 
+    width: 10%; 
 }
+#adminhome .home_order th:nth-child(6),
 #adminorder .table th:nth-child(6), 
 #adminorder .boardlist td:nth-child(6) { 
-    width: 15%; 
+    width: 10%; 
+}
+#adminhome .home_order th:nth-child(7),
+#adminorder .table th:nth-child(7), 
+#adminorder .boardlist td:nth-child(7) { 
+    width: 10%; 
 }
 #adminorder .table img {
     width: 60px;
@@ -199,32 +262,75 @@
     text-decoration: none;
     display: inline-block;
 }
+#adminhome .home_board,
 #adminboard .boardlist table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
     table-layout: fixed;
 }
+#adminhome .home_qna th,
+#adminhome .home_board th,
 #adminboard .boardlist th{
     padding: 10px;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     text-align: center;
 }
-#adminboard .boardlist th:nth-child(1), #adminboard .boardlist td:nth-child(1) { width: 10%; }
-#adminboard .boardlist th:nth-child(2), #adminboard .boardlist td:nth-child(2) { width: 15%; }
-#adminboard .boardlist th:nth-child(3), #adminboard .boardlist td:nth-child(3) { width: 30%; }
-#adminboard .boardlist th:nth-child(4), #adminboard .boardlist td:nth-child(4) { width: 15%; }
-#adminboard .boardlist th:nth-child(5), #adminboard .boardlist td:nth-child(5) { width: 15%; }
-#adminboard .boardlist th:nth-child(6), #adminboard .boardlist td:nth-child(6) { width: 10%; }
+
+#adminhome .home_board th:nth-child(1),
+#adminboard .boardlist th:nth-child(1), 
+#adminboard .boardlist td:nth-child(1) {
+    width: 10%;
+}
+#adminhome .home_board th:nth-child(2), 
+#adminboard .boardlist th:nth-child(2), 
+#adminboard .boardlist td:nth-child(2) { 
+    width: 15%; 
+}
+#adminhome .home_board th:nth-child(3),
+#adminboard .boardlist th:nth-child(3),
+#adminboard .boardlist td:nth-child(3) { 
+    width: 30%; 
+}
+#adminhome .home_board th:nth-child(4), 
+#adminboard .boardlist th:nth-child(4), 
+#adminboard .boardlist td:nth-child(4) { 
+    width: 15%; 
+}
+#adminhome .home_board th:nth-child(5), 
+#adminboard .boardlist th:nth-child(5), 
+#adminboard .boardlist td:nth-child(5) { 
+    width: 15%; 
+}
+#adminhome .home_board th:nth-child(6), 
+#adminboard .boardlist th:nth-child(6), 
+#adminboard .boardlist td:nth-child(6) {
+    width: 10%; 
+}
+#adminhome .home_qna td:nth-child(3) a,
+#adminhome .home_board td:nth-child(3) a,
+#adminboard .boardlist td:nth-child(3) a{
+    text-align:left;
+    display:inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width:100%;
+}
+#adminhome .home_board td,
+#adminhome .home_qna td,
 #adminboard .boardlist td {
     padding: 12px;
     border-bottom: 1px solid #ccc;
     text-align: center;
 }
+#adminhome .home_board td:nth-child(3),
 #adminboard .boardlist td:nth-child(3) {
     text-align: left;
 }
+#adminhome .home_board td a:hover,
+#adminhome .home_qna td a:hover,
 #adminboard .boardlist td a:hover {
   color: gray;
 }
@@ -233,7 +339,7 @@
     margin-bottom: 20px;
 }
 #adminboard .pagination .page,
-.pagination button {
+#adminboard .pagination button {
     margin: 0 5px;
     padding: 6px 12px;
     border: 1px solid black;
@@ -243,4 +349,46 @@
 #adminboard .pagination .active {
     background-color: #000;
     color: white;
+}
+/* ----------------------- ADMIN QNA ------------------------- */
+#adminpage #qnalist,
+#adminpage #BoardList{
+    padding:0;
+    min-height:500px;
+}
+#adminpage #qnalist .container,
+#adminpage #BoardList .container{
+    width:auto;
+}
+#adminpage .home_qna th:nth-child(1){ width: 15%; }
+#adminpage .home_qna th:nth-child(2){ width: 25%; }
+#adminpage .home_qna th:nth-child(4){ width: 15%; }
+#adminpage .home_qna th:nth-child(5){ width: 20%; }
+#adminpage .home_qna th:nth-child(6){ width: 25%; }
+#adminpage .home_qna td:nth-child(2),
+#adminpage .home_qna td:nth-child(6){
+    font-size:12px;
+}
+#adminpage .home_qna td:nth-child(3) a{
+    width:150px;
+}
+
+/* ------------------------ PAGINATION -------------------------- */
+#adminpage .pagination{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+}
+#adminpage .pagination button{
+    display:inline-block;
+    padding:5px 10px;
+    border:1px solid #1E1A1A;
+    cursor: pointer;
+    margin:0;
+}
+#adminpage .pagination .active button{
+    background:#1E1A1A;
+    color:#fff;
+    font-weight:600;
 }

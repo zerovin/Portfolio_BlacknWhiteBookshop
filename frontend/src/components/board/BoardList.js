@@ -1,10 +1,9 @@
 import {useQuery} from "react-query"
 import {useEffect, useState,Fragment} from 'react'
-import {Link, Navigate, useNavigate} from "react-router-dom"
+import {Link} from "react-router-dom"
 import apiClient from "../../http-commons"
 
 const BoardList=()=>{
-    const navigate=useNavigate()
     const [isLogin, setIsLogin]=useState(false)
     const [category, setCategory]=useState("")
     const [curpage, setCurpage]=useState(1)
@@ -32,7 +31,7 @@ const BoardList=()=>{
     }, [])
     useEffect(()=>{
         loadingNotExecute()
-    },[curpage, category])
+    },[loadingNotExecute])
     const handleCategoryChange=(e)=>{
         setCategory(e.target.value)
         setCurpage(1)
@@ -92,9 +91,9 @@ const BoardList=()=>{
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.data.list && data.data.list.map((vo)=>
+                                {data.data.list && data.data.list.map((vo, idx)=>
                                     <tr key={vo.no}>
-                                        <td>{vo.no}</td>
+                                        <td>{data.data.totalCount-((curpage-1)*10+idx)}</td>
                                         <td>{categoryLabels[vo.category]}</td>
                                         <td><Link to={`/board/detail/${vo.no}`}>{vo.title}{vo.filename ? <span style={{ marginLeft: "5px" }}>📎</span> : null}</Link></td>
                                         <td>{vo.userName}</td>

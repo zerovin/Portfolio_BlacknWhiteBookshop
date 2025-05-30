@@ -94,7 +94,7 @@ const BoardDetail=()=>{
                         </table>
 
                         <div className="content">
-                            <p>{post.content}</p>
+                            <pre>{post.content}</pre>
                             {post.filepath ? (
                             <div style={{ marginTop: "20px" }}>
                                 <img src={`http://localhost/board/download?filename=${encodeURIComponent(storedFilename)}`}

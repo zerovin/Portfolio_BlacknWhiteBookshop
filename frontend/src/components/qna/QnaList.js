@@ -29,6 +29,7 @@ const QnaList=()=>{
     }
     
     useEffect(() => {
+        window.scrollTo({top:0, behavior:'auto'})
         apiClient.post("/member/isLogin").then(res=>{
             if (res.data.loginOk){
                 setIsLogin(true)
