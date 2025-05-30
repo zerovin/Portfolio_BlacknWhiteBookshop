@@ -42,6 +42,7 @@ const QnaDetail=()=>{
     },[qno, state?.pw, navigate])
 
     useEffect(()=>{
+        window.scrollTo({top:0, behavior:'auto'})
         apiClient.post("/member/isLogin")
           .then(res => {
             if (res.data.loginOk) {
