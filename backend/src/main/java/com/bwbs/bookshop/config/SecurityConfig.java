@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .requestMatchers("/qna/**").permitAll()
                 .requestMatchers("/uploads/**").permitAll()
                 .requestMatchers("/mypage/**").permitAll()
+                .requestMatchers("/admin/**").permitAll()
                 .anyRequest().authenticated() 
                 //.anyRequest().permitAll()
             )

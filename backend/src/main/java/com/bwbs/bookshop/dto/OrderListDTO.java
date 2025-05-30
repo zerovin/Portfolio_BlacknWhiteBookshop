@@ -14,4 +14,5 @@ public class OrderListDTO {
 	private int quantity;
 	private int total;
 	private String method;
+	private String userid;
 }

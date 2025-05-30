@@ -80,6 +80,7 @@ public class BoardRestController {
 		    dto.setTotalPage(totalPage);
 		    dto.setStartPage(startPage);
 		    dto.setEndPage(endPage);
+		    dto.setTotalCount((int)total);
 		    
 		    return ResponseEntity.ok(dto);
 		}catch(Exception ex) {

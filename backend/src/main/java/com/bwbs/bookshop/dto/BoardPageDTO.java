@@ -10,5 +10,5 @@ public class BoardPageDTO {
 	private int totalPage;
 	private int startPage;
 	private int endPage;
-	
+	private int totalCount;
 }

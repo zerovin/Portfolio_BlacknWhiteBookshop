@@ -78,10 +78,8 @@ public class MemberRestController {
 				MemberEntity vo=memberRepository.findById(userId).get();
 				if(passwordEncoder.matches(userPw, vo.getUserPwd())) {
 					result.put("msg", "LOGIN");
-//					result.put("userId", vo.getUserId());
-//					result.put("userName", vo.getUserName());
-//					result.put("userAuth", vo.getAuthority());
 					vo.setLastlogin(new Date());
+					memberRepository.save(vo);
 					
 					session.setAttribute("bwbs_userId", vo.getUserId());
 					session.setAttribute("bwbs_userName", vo.getUserName());
@@ -91,7 +89,7 @@ public class MemberRestController {
 				}
 			}
 		}catch(Exception ex) {
-			return new ResponseEntity<Map>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
@@ -208,4 +206,9 @@ public class MemberRestController {
             return ResponseEntity.notFound().build();
         }
     }
+	
+	@GetMapping("/all")
+	public ResponseEntity<List<MemberEntity>> memberAll(){
+		return ResponseEntity.ok(memberRepository.findAll());
+	}
 }
