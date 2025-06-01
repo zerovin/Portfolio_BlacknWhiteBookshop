@@ -1,0 +1,60 @@
+#Myqna{
+    padding-top: 30px;
+    padding-bottom: 50px;
+}
+#Myqna .container{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+}
+#Myqna h3{
+    font-size: 22px;
+    font-weight:600;
+    text-align: center;
+}
+#Myqna .list_wrap {
+    width: 80%;
+    margin: 50px auto;
+}
+#Myqna .list_wrap table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    table-layout: fixed;
+}
+#Myqna .list_wrap th:nth-child(1), #qnalist .list_wrap td:nth-child(1) { width: 10%; }
+#Myqna .list_wrap th:nth-child(2), #qnalist .list_wrap td:nth-child(2) { width: 15%; }
+#Myqna .list_wrap th:nth-child(3), #qnalist .list_wrap td:nth-child(3) { width: 35%; }
+#Myqna .list_wrap th:nth-child(4), #qnalist .list_wrap td:nth-child(4) { width: 15%; }
+#Myqna .list_wrap th:nth-child(5), #qnalist .list_wrap td:nth-child(5) { width: 15%; }
+#Myqna .list_wrap th:nth-child(6), #qnalist .list_wrap td:nth-child(6) { width: 10%; }
+#Myqna .list_wrap th{
+    padding: 10px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+#Myqna .list_wrap td {
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+#Myqna .list_wrap td .title{
+    cursor:pointer;
+}
+#Myqna .list_wrap td:nth-child(3) {
+    text-align: left;
+}
+#Myqna .list_wrap td .title:hover,
+#Myqna .list_wrap td a:hover {
+  color: gray;
+}
+#Myqna .list_wrap td:last-child span{
+    border:1px solid #000;
+    padding:2px 5px;
+    font-size:15px;
+}
+#Myqna .list_wrap td:last-child span.done{
+    background:#000;
+    color:#fff;
+}

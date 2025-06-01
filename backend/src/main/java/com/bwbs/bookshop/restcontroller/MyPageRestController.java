@@ -1,15 +1,22 @@
 package com.bwbs.bookshop.restcontroller;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bwbs.bookshop.dao.QnaDAO;
 import com.bwbs.bookshop.dto.OrderListDTO;
+import com.bwbs.bookshop.entity.QnaEntity;
 import com.bwbs.bookshop.service.MypageService;
 
 import jakarta.servlet.http.HttpSession;
@@ -18,8 +25,10 @@ import jakarta.servlet.http.HttpSession;
 public class MyPageRestController {
 	@Autowired
 	private MypageService mService;
+	@Autowired
+	private QnaDAO qDao;
 	
-	@GetMapping("mypage/orders")
+	@GetMapping("/mypage/orders")
 	public ResponseEntity<List<OrderListDTO>> MyOrders(HttpSession session){
 		String userId=(String) session.getAttribute("bwbs_userId");
 		if(userId==null) {
@@ -27,6 +36,17 @@ public class MyPageRestController {
 		}
 	    
 		List<OrderListDTO> result = mService.myorders(userId);
+		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping("/mypage/qna")
+	public ResponseEntity<Page<QnaEntity>> MyQna(HttpSession session, @RequestParam int page){
+		String userId=(String)session.getAttribute("bwbs_userName");
+		if(userId == null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		Pageable pageable=PageRequest.of(page-1, 10, Sort.by("qno").descending());
+		Page<QnaEntity> result=qDao.findByWriterOrderByQnoDesc(userId, pageable);
 		return ResponseEntity.ok(result);
 	}
 }
