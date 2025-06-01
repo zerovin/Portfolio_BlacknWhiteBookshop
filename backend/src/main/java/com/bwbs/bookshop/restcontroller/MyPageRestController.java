@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bwbs.bookshop.dao.QnaDAO;
+import com.bwbs.bookshop.dto.BoardListDTO;
 import com.bwbs.bookshop.dto.OrderListDTO;
 import com.bwbs.bookshop.entity.QnaEntity;
 import com.bwbs.bookshop.service.MypageService;
@@ -38,7 +39,6 @@ public class MyPageRestController {
 		List<OrderListDTO> result = mService.myorders(userId);
 		return ResponseEntity.ok(result);
 	}
-	
 	@GetMapping("/mypage/qna")
 	public ResponseEntity<Page<QnaEntity>> MyQna(HttpSession session, @RequestParam int page){
 		String userId=(String)session.getAttribute("bwbs_userName");
@@ -49,4 +49,20 @@ public class MyPageRestController {
 		Page<QnaEntity> result=qDao.findByWriterOrderByQnoDesc(userId, pageable);
 		return ResponseEntity.ok(result);
 	}
+	@GetMapping("/myhome/post")
+    public ResponseEntity<List<BoardListDTO>> getMyPost(HttpSession session) {
+        String userId = (String) session.getAttribute("bwbs_userId");
+        if (userId == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+        List<BoardListDTO> result = mService.getMyPosts(userId);
+        return ResponseEntity.ok(result);
+    }
+    @GetMapping("/myhome/qna")
+    public ResponseEntity<List<QnaEntity>> getMyQna(HttpSession session) {
+        String userName = (String) session.getAttribute("bwbs_userName");
+        if (userName == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+        List<QnaEntity> result = mService.getMyQna(userName);
+        return ResponseEntity.ok(result);
+    }
 }

@@ -15,6 +15,7 @@ public interface QnaDAO extends JpaRepository<QnaEntity, Integer>{
 	public List<QnaEntity> findAllByOrderByQnoDesc(Pageable pageable);
 	public List<QnaEntity> findByCateOrderByQnoDesc(String cate, Pageable pageable);
 	public Page<QnaEntity> findByWriterOrderByQnoDesc(String userId, Pageable pageable);
+	public List<QnaEntity> findTop5ByWriterOrderByQnoDesc(String writer);
 	
 	public int countByCate(String cate);	
 	public QnaEntity findByQno(int qno);

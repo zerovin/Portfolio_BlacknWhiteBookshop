@@ -8,11 +8,16 @@ import org.springframework.stereotype.Service;
 
 import com.bwbs.bookshop.dao.BookDAO;
 import com.bwbs.bookshop.dao.OrderDAO;
+import com.bwbs.bookshop.dao.QnaDAO;
+import com.bwbs.bookshop.dto.BoardListDTO;
 import com.bwbs.bookshop.dto.OrderListDTO;
+import com.bwbs.bookshop.entity.BoardEntity;
 import com.bwbs.bookshop.entity.BookEntity;
 import com.bwbs.bookshop.entity.OrderEntity;
 import com.bwbs.bookshop.entity.PbookEntity;
 import com.bwbs.bookshop.entity.PickupEntity;
+import com.bwbs.bookshop.entity.QnaEntity;
+import com.bwbs.bookshop.repository.BoardRepository;
 import com.bwbs.bookshop.repository.PickupRepository;
 
 @Service
@@ -23,6 +28,10 @@ public class MypageService {
 	private PickupRepository pRepository;
 	@Autowired
 	private BookDAO bDAO;
+	@Autowired
+    private BoardRepository bRepository;
+	@Autowired
+	private QnaDAO qDAO;
 	
 	public List<OrderListDTO> myorders(String userId){
 		List<OrderListDTO> result = new ArrayList<>();
@@ -59,4 +68,14 @@ public class MypageService {
 		
 		return result;
 	}
+	public List<BoardListDTO> getMyPosts(String userId) {
+        List<BoardEntity> list = bRepository.findTop5ByUserIdOrderByNoDesc(userId);
+        return list.stream()
+                   .map(BoardListDTO::new)
+                   .toList();
+    }
+
+    public List<QnaEntity> getMyQna(String writer) {
+        return qDAO.findTop5ByWriterOrderByQnoDesc(writer);
+    }
 }

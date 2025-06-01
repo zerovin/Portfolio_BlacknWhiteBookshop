@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .requestMatchers("/uploads/**").permitAll()
                 .requestMatchers("/mypage/**").permitAll()
                 .requestMatchers("/admin/**").permitAll()
+                .requestMatchers("/myhome/**").permitAll()
                 .anyRequest().authenticated() 
                 //.anyRequest().permitAll()
             )

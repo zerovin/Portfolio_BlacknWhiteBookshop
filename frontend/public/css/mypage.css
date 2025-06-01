@@ -12,7 +12,7 @@
     justify-content: space-between;
 }
 #Mypage .container{
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 30px;
 }
@@ -40,6 +40,7 @@
     font-size: 20px;
     margin-bottom: 50px;
 }
+/*============= 홈 =============*/
 #Mypage .section {
     margin-bottom: 50px;
 }
@@ -47,9 +48,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #999;
     padding-bottom: 8px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 #Mypage .section-header h3 {
     font-size: 16px;
@@ -61,9 +61,13 @@
 }
 #Mypage .empty-box {
     text-align: center;
-    color: #999;
+    color: black;
     font-size: 14px;
-    padding: 100px 0;
+}
+#Mypage .empty-msg {
+  padding: 70px 0;
+  text-align: center;
+  font-size: 15px;
 }
 #Mypage .grid-section {
     display: flex;
@@ -71,6 +75,130 @@
 }
 #Mypage .grid-section .section {
     flex: 1;
+}
+#Mypage .home_qna th:nth-child(1),
+#Mypage .home_qna td:nth-child(1) {
+  width: 10%;
+}
+#Mypage .home_qna th:nth-child(2),
+#Mypage .home_qna td:nth-child(2) {
+  width: 20%;
+}
+#Mypage .home_qna th:nth-child(3),
+#Mypage .home_qna td:nth-child(3) {
+  width: 40%;
+}
+#Mypage .home_qna th:nth-child(4),
+#Mypage .home_qna td:nth-child(4) {
+  width: 15%;
+}
+#Mypage .home_qna th:nth-child(5),
+#Mypage .home_qna td:nth-child(5) {
+  width: 20%;
+}
+#Mypage .home_qna td:nth-child(2),
+#Mypage .home_qna {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+#Mypage .home_board{
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    table-layout: fixed;
+}
+#Mypage .home_qna th,
+#Mypage .home_board th{
+    padding: 10px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+
+#Mypage .home_board th:nth-child(1){
+    width: 10%;
+}
+#Mypage .home_board th:nth-child(2){ 
+    width: 15%; 
+}
+#Mypage .home_board th:nth-child(3){ 
+    width: 30%; 
+}
+#Mypage .home_board th:nth-child(4){ 
+    width: 15%; 
+}
+#Mypage .home_board th:nth-child(5){ 
+    width: 15%; 
+}
+#Mypage .home_board th:nth-child(6){
+    width: 10%; 
+}
+#Mypage .home_qna td:nth-child(3) a,
+#Mypage .home_board td:nth-child(3) a{
+    text-align:left;
+    display:inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width:100%;
+}
+#Mypage .home_board td,
+#Mypage .home_qna td{
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+#Mypage .home_board td:nth-child(3){
+    text-align: left;
+}
+#Mypage .home_board td a:hover,
+#Mypage .home_qna td a:hover{
+  color: gray;
+}
+#Mypage .home_order {
+    width: 100%;
+    border-collapse: separate;
+    text-align: center;
+    font-size: 15px;
+}
+#Mypage .home_order th {
+    padding: 12px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+#Mypage .home_order td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+#Mypage .home_order th:nth-child(1){ 
+    width: 10%; 
+}
+#Mypage .home_order th:nth-child(2){ 
+    width: 20%; 
+}
+#Mypage .home_order th:nth-child(3){ 
+    width: 30%; 
+    
+}
+#Mypage .home_order th:nth-child(4){ 
+    width: 10%; 
+}
+#Mypage .home_order th:nth-child(5){ 
+    width: 15%; 
+}
+#Mypage .home_order th:nth-child(6){ 
+    width: 15%; 
+}
+#Mypage .home_order .title {
+    text-align: left;
+    padding-left: 10px;
+    font-weight: 600;
+    max-width: 200px;          
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 /*========= 회원정보 변경 =========*/
 #Mypage form {

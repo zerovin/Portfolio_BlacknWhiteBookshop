@@ -15,6 +15,7 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer>{
 	List<BoardEntity> findAllByOrderByNoDesc(Pageable pageable);
 	List<BoardEntity> findByCategoryOrderByNoDesc(String category, Pageable pageable);
 	Page<BoardEntity> findByUserIdOrderByNoDesc(String userId, Pageable pageable);
+	List<BoardEntity> findTop5ByUserIdOrderByNoDesc(String userId);
 	
 	int countByCategory(String category);	
 	public BoardEntity findByNo(int no);
