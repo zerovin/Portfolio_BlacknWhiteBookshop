@@ -48,8 +48,8 @@ const QnaDetail=()=>{
             if (res.data.loginOk) {
               setLoginUserId(res.data.userId);
               setUserAuth(res.data.userAuth)
-              fetchDetail(res.data.userAuth)
             }
+            fetchDetail(res.data.userAuth)
         })
     }, [fetchDetail])
 
