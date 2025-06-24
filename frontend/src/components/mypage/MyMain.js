@@ -33,7 +33,7 @@ const MyMain=()=>{
                     const orderRes = await apiClient.get("/mypage/orders")
                     setBoard(boardRes.data.slice(0, 5))
                     setQna(qnaRes.data.slice(0, 5))
-                    setOrders(orderRes.data.slice(0, 8))
+                    setOrders(orderRes.data.slice(0, 5))
                 }else{
                     setIsLogin(false)
                 }
@@ -67,7 +67,7 @@ const MyMain=()=>{
                                 </thead>
                                 <tbody>
                                     {orders.length > 0 ? (
-                                    orders.slice(0, 8).map((order)=>(
+                                    orders.slice(0, 5).map((order)=>(
                                         <tr key={order.orderNoText}>
                                         <td>{order.orderNoText}</td>
                                         <td>{order.orderDate?.substring(0, 10)}</td>

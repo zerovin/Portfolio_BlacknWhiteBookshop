@@ -1,5 +1,6 @@
 package com.bwbs.bookshop.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,6 +30,7 @@ public class PickupService {
         pickup.setPdate(dto.getPdate());
         pickup.setPtime(dto.getPtime());
         pickup.setWrap(dto.getWrap());
+        pickup.setRegdate(LocalDateTime.now());
 
         List<PbookEntity> itemList = dto.getItems().stream().map(i -> {
             PbookEntity book = new PbookEntity();

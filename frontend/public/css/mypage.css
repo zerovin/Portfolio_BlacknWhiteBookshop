@@ -1,5 +1,5 @@
 #Mypage{
-    padding-top: 80px;
+    padding-top: 50px;
 }
 #Mypage p{
     text-align: center;
@@ -171,6 +171,9 @@
     padding: 12px;
     border-bottom: 1px solid #eee;
     vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 #Mypage .home_order th:nth-child(1){ 
     width: 10%; 
