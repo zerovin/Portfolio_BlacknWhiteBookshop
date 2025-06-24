@@ -51,7 +51,7 @@ public class QnaService {
 		QnaEntity qna=qDAO.findById(qno).orElseThrow();
 		if("y".equalsIgnoreCase(String.valueOf(qna.getIssecret()))&&(userAuth==null||!userAuth.equalsIgnoreCase("ROLE_ADMIN"))&&!qna.getPw().equals(pw)) {
 			throw new AccessDeniedException("비밀번호를 확인해주세요.");
-		}
+		} 
 		return qna;
 	}
 	
