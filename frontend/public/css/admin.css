@@ -14,6 +14,7 @@
 }
 #adminpage .container{
     max-width: 1300px;
+    width:auto;
     margin: 0 auto;
     padding: 30px;
 }
