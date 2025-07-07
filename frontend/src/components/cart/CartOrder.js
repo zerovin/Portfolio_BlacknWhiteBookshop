@@ -37,6 +37,9 @@ const CartOrder=()=>{
         async()=>{
             const res=await apiClient.get(`/book/detail/${directBuy}`,{withCredentials:true})
             return res.data
+        },
+        {
+            enabled:directBuy.length > 0
         }
     )
 
