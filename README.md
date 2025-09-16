@@ -19,7 +19,7 @@
 <ul>
   <li>
     <p>메인페이지</p>
-    <img src="https://github.com/user-attachments/assets/6d836065-77fe-4ea2-b32e-88627cba5fd3" alt="흑백책방 메인페이지"/>
+    <img src="./images/main.png" alt="흑백책방 메인페이지"/>
     <ul>
       <li>React - 메인 페이지 UI 구현</li>
       <li>JPA - 조건에 맞는 목록 출력</li>
@@ -27,21 +27,21 @@
   </li>
   <li>
     <p>로그인/로그아웃</p>
-    <img src="https://github.com/user-attachments/assets/33147c1a-02ac-4623-8b87-36e522c5734e" alt="로그인/로그아웃 화면"/>
+    <img src="./images/login.png" alt="로그인/로그아웃 화면"/>
     <ul>
       <li>axios - 로그인/로그아웃 기능 구현</li>
     </ul>
   </li>
   <li>
     <p>도서 목록/상세 페이지</p>
-    <img src="https://github.com/user-attachments/assets/62693af3-8b68-4a54-97e6-a884dc9d74e4" alt="도서 목록/상세 페이지"/>
+    <img src="./images/list.png" alt="도서 목록/상세 페이지"/>
     <ul>
       <li>useQuery - 도서 목록 출력, 정렬, 페이지네이션</li>
     </ul>
   </li>
   <li>
     <p>상품 장바구니/결제 페이지</p>
-    <img src="https://github.com/user-attachments/assets/439d2a14-8761-4f28-9ce3-13c2b26884bb" alt="상품 장바구니/결제 페이지"/>
+    <img src="./images/cart.png" alt="상품 장바구니/결제 페이지"/>
     <ul>
       <li>useQuery - 장바구니 목록 출력</li>
       <li>useMutation - 장바구니 목록 수정, 삭제</li>
@@ -50,14 +50,14 @@
   </li>
   <li>
     <p>답변형 QNA 페이지</p>
-    <img src="https://github.com/user-attachments/assets/38ac27a0-6f5a-44ed-89a7-09acd70c5674" alt="답변형 QNA 페이지"/>
+    <img src="./images/qna.png" alt="답변형 QNA 페이지"/>
     <ul>
       <li>React, JPA - 관리자/글쓴이/일반회원의 권한에 따른 답변형 게시판 CRUD</li>
     </ul>
   </li>
   <li>
     <p>관리자 페이지</p>
-    <img src="https://github.com/user-attachments/assets/2734f8a4-264a-4a53-adba-0140e0ac4237" alt="관리자 페이지"/>
+    <img src="./images/admin.png" alt="관리자 페이지"/>
     <ul>
       <li>useEffect, JPA - 전체 회원/주문/게시판/문의 목록 출력</li>
     </ul>
